@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+if [ -f "manage.py" ]; then
+    rm manage.py
+    echo "Deleted manage.py"
+fi
+
+if [ -d "config" ]; then
+    rm -rf config
+    echo "Deleted config directory"
+fi
+
+if ls Moit* 1> /dev/null 2>&1; then
+    rm -rf Moit*
+    echo "Deleted Moit* files/folders"
+fi
+
+echo "✅ Cleanup complete."
+
+echo "🚀 Starting new Django project named 'config'..."
+django-admin startproject config .
