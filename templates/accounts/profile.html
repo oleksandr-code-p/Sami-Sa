@@ -1,15 +1,146 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="max-w-md mx-auto mt-10">
-  <h2 class="text-2xl font-bold mb-4 text-center">Profile</h2>
+{% extends 'base.html' %} {% block title %}Profile - Samisa{% endblock %} {%
+block content %}
+<div class="max-w-4xl mx-auto">
+  <div class="mb-8">
+    <h1 class="text-4xl font-bold text-gray-800">My Profile</h1>
+    <p class="text-gray-600 mt-2">
+      Manage your account settings and preferences
+    </p>
+  </div>
 
-  <form method="POST">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
-    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Save</button>
-  </form>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Profile Card -->
+    <div class="md:col-span-1">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="text-center">
+          <div
+            class="w-24 h-24 mx-auto bg-blue-600 rounded-full flex items-center justify-center mb-4"
+          >
+            <span class="text-4xl text-white font-bold"
+              >{{ user.username|first|upper }}</span
+            >
+          </div>
+          <h2 class="text-2xl font-bold text-gray-800">{{ user.username }}</h2>
+          <p class="text-gray-600 mt-1">{{ user.email }}</p>
+          {% if user.first_name or user.last_name %}
+          <p class="text-gray-700 font-semibold mt-2">
+            {{ user.first_name }} {{ user.last_name }}
+          </p>
+          {% endif %}
+        </div>
 
-  <a href="{% url 'logout' %}" class="block text-center text-red-500 mt-4">Logout</a>
+        <div class="mt-6 pt-6 border-t border-gray-200">
+          <p class="text-sm text-gray-600">
+            <span class="font-semibold">Member since:</span><br />
+            {{ profile.date_joined|date:"F d, Y" }}
+          </p>
+        </div>
+
+        <a
+          href="{% url 'logout' %}"
+          class="w-full mt-6 block text-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+        >
+          Logout
+        </a>
+      </div>
+    </div>
+
+    <!-- Edit Form -->
+    <div class="md:col-span-2">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-2xl font-bold text-gray-800 mb-6">Edit Profile</h3>
+
+        <form method="POST" class="space-y-6">
+          {% csrf_token %}
+
+          <!-- First Name -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label
+                for="{{ user_form.first_name.id_for_label }}"
+                class="block text-sm font-medium text-gray-700 mb-2"
+              >
+                {{ user_form.first_name.label }}
+              </label>
+              {{ user_form.first_name }} {% if user_form.first_name.errors %}
+              <div class="text-red-600 text-sm mt-2">
+                {% for error in user_form.first_name.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+
+            <!-- Last Name -->
+            <div>
+              <label
+                for="{{ user_form.last_name.id_for_label }}"
+                class="block text-sm font-medium text-gray-700 mb-2"
+              >
+                {{ user_form.last_name.label }}
+              </label>
+              {{ user_form.last_name }} {% if user_form.last_name.errors %}
+              <div class="text-red-600 text-sm mt-2">
+                {% for error in user_form.last_name.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label
+              for="{{ user_form.email.id_for_label }}"
+              class="block text-sm font-medium text-gray-700 mb-2"
+            >
+              {{ user_form.email.label }}
+            </label>
+            {{ user_form.email }} {% if user_form.email.errors %}
+            <div class="text-red-600 text-sm mt-2">
+              {% for error in user_form.email.errors %}
+              <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+
+          <!-- Bio -->
+          <div>
+            <label
+              for="{{ profile_form.bio.id_for_label }}"
+              class="block text-sm font-medium text-gray-700 mb-2"
+            >
+              {{ profile_form.bio.label }}
+            </label>
+            {{ profile_form.bio }} {% if profile_form.bio.errors %}
+            <div class="text-red-600 text-sm mt-2">
+              {% for error in profile_form.bio.errors %}
+              <p>{{ error }}</p>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+
+          <!-- Submit Button -->
+          <div class="flex gap-4 pt-4">
+            <button
+              type="submit"
+              class="flex-1 bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition"
+            >
+              Save Changes
+            </button>
+            <a
+              href="{% url 'home' %}"
+              class="flex-1 text-center bg-gray-200 text-gray-800 font-semibold py-3 rounded-lg hover:bg-gray-300 transition"
+            >
+              Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

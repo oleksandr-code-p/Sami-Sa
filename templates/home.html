@@ -1,0 +1,77 @@
+{% extends 'base.html' %} {% block title %}Home - Samisa{% endblock %} {% block
+content %}
+<div class="text-center py-12">
+  {% if user.is_authenticated %}
+  <h1 class="text-5xl font-bold text-gray-800 mb-4">
+    Welcome, {{ user.username }}!
+  </h1>
+  <p class="text-xl text-gray-600 mb-8">
+    Ready to continue learning English from Slovak?
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+      <div class="text-4xl mb-4">📚</div>
+      <h3 class="text-xl font-bold text-gray-800 mb-2">Lessons</h3>
+      <p class="text-gray-600">Explore our comprehensive lessons</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+      <div class="text-4xl mb-4">📝</div>
+      <h3 class="text-xl font-bold text-gray-800 mb-2">Exercises</h3>
+      <p class="text-gray-600">Practice with interactive exercises</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+      <div class="text-4xl mb-4">📊</div>
+      <h3 class="text-xl font-bold text-gray-800 mb-2">Progress</h3>
+      <p class="text-gray-600">Track your learning progress</p>
+    </div>
+  </div>
+  {% else %}
+  <h1 class="text-5xl font-bold text-gray-800 mb-4">
+    Learn English from Slovak
+  </h1>
+  <p class="text-xl text-gray-600 mb-8">
+    Master English through our interactive lessons and exercises
+  </p>
+
+  <div class="space-x-4 mb-12">
+    <a
+      href="{% url 'register' %}"
+      class="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+    >
+      Get Started
+    </a>
+    <a
+      href="{% url 'login' %}"
+      class="inline-block px-8 py-3 bg-gray-300 text-gray-800 rounded-lg font-semibold hover:bg-gray-400 transition"
+    >
+      Login
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <div class="text-4xl mb-4">🎯</div>
+      <h3 class="text-xl font-bold text-gray-800 mb-2">
+        Personalized Learning
+      </h3>
+      <p class="text-gray-600">
+        Learn at your own pace with customized lessons
+      </p>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <div class="text-4xl mb-4">💬</div>
+      <h3 class="text-xl font-bold text-gray-800 mb-2">
+        Interactive Exercises
+      </h3>
+      <p class="text-gray-600">Engage with various exercise types</p>
+    </div>
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <div class="text-4xl mb-4">🏆</div>
+      <h3 class="text-xl font-bold text-gray-800 mb-2">Track Progress</h3>
+      <p class="text-gray-600">Monitor your learning achievements</p>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
