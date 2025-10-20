@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import 
+from . import views
+app_name = 'alphabet'
+
 
 urlpatterns = [
-    path('alphabet/', views.alphabet_list, name='alphabet'),
-    path('', , name='pronunciation_alphabet'),
-    path('', , name=''),
-    path('', , name=''),
+    path('', views.alphabet_list, name='alphabet_list'),
+    path('pronunciation', views.alphabet_pronunciation, name='alphabet_pronunciation')
 ]
