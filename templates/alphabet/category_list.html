@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }} - Samisa
+{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="text-center py-8">
+        <h1 class="text-5xl font-bold text-gray-800 mb-4">
+            {{ title }}
+        </h1>
+        <p class="text-xl text-gray-600 mb-6">
+            {% if category == 'vowel' %}
+            Master the 5 essential vowel sounds in English
+            {% else %}
+            Learn all 21 consonants in English
+            {% endif %}
+        </p>
+
+        <!-- Navigation -->
+        <div class="flex justify-center gap-4 mb-8">
+            <a href="{% url 'alphabet:alphabet_list' %}"
+                class="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition font-semibold">
+                ← All Letters
+            </a>
+            {% if category == 'vowel' %}
+            <a href="{% url 'alphabet:consonants' %}"
+                class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold">
+                View Consonants →
+            </a>
+            {% else %}
+            <a href="{% url 'alphabet:vowels' %}"
+                class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-semibold">
+                View Vowels →
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Info Box -->
+    <div
+        class="{% if category == 'vowel' %}bg-green-50 border-green-500{% else %}bg-blue-50 border-blue-500{% endif %} border-l-4 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-3">
+            {% if category == 'vowel' %}
+            📗 About Vowels (O samohláskach)
+            {% else %}
+            📘 About Consonants (O spoluhlásákach)
+            {% endif %}
+        </h2>
+        <p class="text-gray-700">
+            {% if category == 'vowel' %}
+            Vowels are the foundation of English pronunciation. Every English word contains at least one vowel.
+            The five vowels (A, E, I, O, U) can make many different sounds depending on the word.
+            <br><br>
+            <strong>Samohlásky</strong> sú základom anglickej výslovnosti. Každé anglické slovo obsahuje aspoň jednu
+            samohlásku.
+            {% else %}
+            Consonants make up the majority of the English alphabet. They work together with vowels to create words.
+            Each consonant has its own unique sound and is essential for clear communication.
+            <br><br>
+            <strong>Spoluhlásky</strong> tvoria väčšinu anglickej abecedy. Spolu so samohláskami vytvárajú slová.
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- Letters Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-12">
+        {% for letter in letters %}
+        <div
+            class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+            <div class="p-6 text-center">
+                <!-- Letter Display -->
+                <div
+                    class="text-5xl font-bold {% if category == 'vowel' %}text-green-600{% else %}text-blue-600{% endif %} mb-3">
+                    {{ letter.uppercase }}
+                </div>
+                <div class="text-3xl text-gray-600 mb-4">
+                    {{ letter.lowercase }}
+                </div>
+
+                <!-- Pronunciation in Slovak -->
+                <p class="text-sm text-gray-600 mb-3 font-medium">
+                    <span class="text-gray-800">{{ letter.pronunciation_in_slovak }}</span>
+                </p>
+
+                <!-- Audio Button -->
+                {% if letter.pronunciation %}
+                <button onclick="document.getElementById('audio{{ letter.id }}').play()"
+                    class="w-full px-4 py-2 {% if category == 'vowel' %}bg-green-600 hover:bg-green-700{% else %}bg-blue-600 hover:bg-blue-700{% endif %} text-white rounded-lg transition font-semibold text-sm mb-2">
+                    🔊 Play
+                </button>
+                <audio id="audio{{ letter.id }}" src="{{ letter.pronunciation.url }}"></audio>
+                {% endif %}
+
+                <!-- Detail Link -->
+                <a href="{% url 'alphabet:letter_detail' letter.id %}"
+                    class="block text-{% if category == 'vowel' %}green{% else %}blue{% endif %}-600 hover:text-{% if category == 'vowel' %}green{% else %}blue{% endif %}-800 text-sm font-medium">
+                    Details →
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Summary Section -->
+    <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+            {% if category == 'vowel' %}
+            🎯 Vowel Summary
+            {% else %}
+            🎯 Consonant Summary
+            {% endif %}
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <div
+                class="text-center p-6 {% if category == 'vowel' %}bg-green-50{% else %}bg-blue-50{% endif %} rounded-lg">
+                <div
+                    class="text-4xl font-bold {% if category == 'vowel' %}text-green-600{% else %}text-blue-600{% endif %} mb-2">
+                    {{ letters.count }}
+                </div>
+                <p class="text-gray-700 font-semibold">
+                    {% if category == 'vowel' %}
+                    Total Vowels
+                    {% else %}
+                    Total Consonants
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="text-center p-6 bg-purple-50 rounded-lg">
+                <div class="text-4xl font-bold text-purple-600 mb-2">
+                    26
+                </div>
+                <p class="text-gray-700 font-semibold">
+                    Letters in English Alphabet
+                </p>
+            </div>
+
+            <div class="text-center p-6 bg-yellow-50 rounded-lg">
+                <div class="text-4xl mb-2">
+                    {% if category == 'vowel' %}📗{% else %}📘{% endif %}
+                </div>
+                <p class="text-gray-700 font-semibold">
+                    Essential for Learning
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Practice Tips -->
+    <div
+        class="{% if category == 'vowel' %}bg-gradient-to-r from-green-50 to-green-100{% else %}bg-gradient-to-r from-blue-50 to-blue-100{% endif %} rounded-xl p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">
+            ✍️ Practice Tips (Tipy na cvičenie)
+        </h2>
+        <ul class="space-y-3 text-gray-700">
+            {% if category == 'vowel' %}
+            <li class="flex items-start gap-2">
+                <span class="text-green-600 font-bold mt-1">✓</span>
+                <span>Practice each vowel sound individually - they can sound very different from Slovak vowels</span>
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="text-green-600 font-bold mt-1">✓</span>
+                <span>Remember that vowels can have multiple pronunciations in different words</span>
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="text-green-600 font-bold mt-1">✓</span>
+                <span>Listen to the audio pronunciation carefully and repeat several times</span>
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="text-green-600 font-bold mt-1">✓</span>
+                <span>Vowels are the "singing" part of English - practice holding the sounds longer</span>
+            </li>
+            {% else %}
+            <li class="flex items-start gap-2">
+                <span class="text-blue-600 font-bold mt-1">✓</span>
+                <span>Learn consonants in groups with similar sounds (B, P, D, T)</span>
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="text-blue-600 font-bold mt-1">✓</span>
+                <span>Practice combining consonants with vowels to make simple sounds</span>
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="text-blue-600 font-bold mt-1">✓</span>
+                <span>Pay attention to consonants that sound different from Slovak (like H, J, W)</span>
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="text-blue-600 font-bold mt-1">✓</span>
+                <span>Consonants provide structure - practice writing them clearly</span>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
