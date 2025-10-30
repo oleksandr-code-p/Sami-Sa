@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="bg-purple-600 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-6">
+        <nav class="mb-4">
+            <a href="{% url 'lesson_dashboard' %}" class="text-purple-100 hover:text-white">← Back to Dashboard</a>
+        </nav>
+        <h1 class="text-3xl font-bold">{{ page_title }}</h1>
+        <p class="mt-2 text-purple-100">{{ overview }}</p>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="container mx-auto px-4 py-8">
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Family Lessons</h2>
+        <p class="text-gray-600">Click on any family term to learn more about it and practice pronunciation.</p>
+    </div>
+
+    <!-- Family Terms Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for family in family_terms %}
+        <a href="{% url 'family_lesson_detail' family.id %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6 border-2 border-transparent hover:border-purple-500">
+                <div class="flex items-start justify-between mb-3">
+                    <div class="flex-1">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ family.slovak_word }}</h3>
+                        <p class="text-gray-600">{{ family.english_word }}</p>
+                    </div>
+                    <span class="text-3xl ml-2">👤</span>
+                </div>
+            </div>
+        </a>
+        {% empty %}
+        <div class="col-span-full text-center py-12">
+            <p class="text-gray-500 text-lg">No family lessons available yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="bg-blue-600 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-6">
+        <h1 class="text-3xl font-bold">{{ page_title }}</h1>
+        <p class="mt-2 text-blue-100">{{ welcome_message }}</p>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="container mx-auto px-4 py-8">
+    <!-- Welcome Section -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Start Learning</h2>
+        <p class="text-gray-600">Choose a category below to begin your Slovak language journey.</p>
+    </div>
+
+    <!-- Lesson Categories Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Numbers Card -->
+        <a href="{% url 'number_lesson_list' %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-blue-500">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Čísla</h3>
+                    <span class="text-3xl">🔢</span>
+                </div>
+                <p class="text-gray-600 mb-4">Numbers</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-500">{{ number_count }} lessons</span>
+                    <span class="text-blue-600 font-semibold">Learn →</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- Colours Card -->
+        <a href="{% url 'colour_lesson_list' %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-green-500">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Farby</h3>
+                    <span class="text-3xl">🎨</span>
+                </div>
+                <p class="text-gray-600 mb-4">Colours</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-500">{{ colour_count }} lessons</span>
+                    <span class="text-green-600 font-semibold">Learn →</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- Family Card -->
+        <a href="{% url 'family_lesson_list' %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-purple-500">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Rodina</h3>
+                    <span class="text-3xl">👨‍👩‍👧‍👦</span>
+                </div>
+                <p class="text-gray-600 mb-4">Family</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-500">{{ family_count }} lessons</span>
+                    <span class="text-purple-600 font-semibold">Learn →</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- Food Card -->
+        <a href="{% url 'food_lesson_list' %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-orange-500">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Jedlo</h3>
+                    <span class="text-3xl">🍽️</span>
+                </div>
+                <p class="text-gray-600 mb-4">Food</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-500">{{ food_count }} lessons</span>
+                    <span class="text-orange-600 font-semibold">Learn →</span>
+                </div>
+            </div>
+        </a>
+    </div>
+</main>
+{% endblock %}
