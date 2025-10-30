@@ -4,7 +4,6 @@ from django.http import HttpResponse, Http404
 
 
 def alphabet_list(request):
-    """Display all letters from the database"""
     letters = Letter.objects.all()
     vowels = letters.filter(category='vowel')
     consonants = letters.filter(category='consonant')
@@ -18,7 +17,6 @@ def alphabet_list(request):
 
 
 def letter_detail(request, letter_id):
-    """Display detailed information about a specific letter"""
     letter = get_object_or_404(Letter, id=letter_id)
     context = {
         'letter': letter,
@@ -27,7 +25,6 @@ def letter_detail(request, letter_id):
 
 
 def pronunciation_guide(request):
-    """Display pronunciation guide for the alphabet"""
     pronunciation_in_slovak = {
         "A": "ej", "B": "bí", "C": "cí", "D": "dí", 
         "E": "í", "F": "ef", "G": "dží", "H": "ejč", 
@@ -45,7 +42,6 @@ def pronunciation_guide(request):
 
 
 def vowels_list(request):
-    """Display only vowels"""
     vowels = Letter.objects.filter(category='vowel')
     context = {
         'letters': vowels,
@@ -56,7 +52,6 @@ def vowels_list(request):
 
 
 def consonants_list(request):
-    """Display only consonants"""
     consonants = Letter.objects.filter(category='consonant')
     context = {
         'letters': consonants,
