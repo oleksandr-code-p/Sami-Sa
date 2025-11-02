@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import NumberLesson, ColourLesson, FamilyLesson, FoodLesson
+from .models import NumberLesson, ColourLesson, FamilyLesson, FoodLesson, SchoolLesson, AnimalLesson
 
 
 
@@ -102,10 +102,48 @@ def food_lesson_detail(request, food_id):
     return render(request, 'lessons/food_detail.html', context)
 
 
+def school_lesson_list(request):
+    school_terms = SchoolLesson.objects.all()
+
+    context = {
+        'school_terms': school_terms,
+        'page_title': 'škola v angličtine',
+        'overview': 'short description',
+    }
+
+    return render(request, 'lessons/school_list.html', context)
 
 
+def school_lesson_detail(request, school_id):
+    school = get_object_or_404(SchoolLesson, id=school_id)
+
+    context = {
+        'school': school,
+    }
+
+    return render(request, 'lessons/school_detail.html', context)
 
 
+def animal_lesson_list(request):
+    animals = AnimalLesson.objects.all()
+
+    context = {
+        'animals': animals,
+        'page_title': 'zvierata v angličtine',
+        'overview': 'short description',
+    }
+
+    return render(request, 'lessons/animal_list.html', context)
+
+
+def animal_lesson_detail(request, animal_id):
+    animal = get_object_or_404(AnimalLesson, id=animal_id)
+
+    context = {
+        'animal': animal,
+    }
+
+    return render(request, 'lessons/animal_detail.html', context)
 
 # def family_voc_pronun(request):
 #     lessons = FamilyLesson.objects.all()

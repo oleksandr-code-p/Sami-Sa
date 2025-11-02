@@ -17,5 +17,11 @@ urlpatterns = [
     
     path('food_terms/', views.food_lesson_list, name='food_terms'),
     path('food_terms/<int:food_id>/', views.food_lesson_detail, name='food_detail'),
-    
+
+    path('school_terms', views.school_lesson_list, name='school_lesson_list'),
+    path('school_terms/<int:school_id>/', views.school_lesson_detail, name='school_detail'),
+
+    path('animals', views.animal_lesson_list, name='animal_lesson_list'),
+    path('animals/<int:animal_id>/', views.animal_lesson_detail, name='animal_detail'),
+ 
 ]
