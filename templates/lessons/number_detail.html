@@ -8,7 +8,7 @@
 <header class="bg-blue-600 text-white shadow-lg">
     <div class="container mx-auto px-4 py-6">
         <nav class="mb-4">
-            <a href="{% url 'number_lesson_list' %}" class="text-blue-100 hover:text-white">← Back to Numbers</a>
+            <a href="{% url 'lesson:number_lesson_list' %}" class="text-blue-100 hover:text-white">← Back to Numbers</a>
         </nav>
         <h1 class="text-3xl font-bold">Number Lesson</h1>
     </div>
@@ -56,10 +56,10 @@
 
         <!-- Navigation Buttons -->
         <div class="flex justify-between items-center mt-8">
-            <a href="{% url 'number_lesson_list' %}" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300">
+            <a href="{% url 'lesson:number_lesson_list' %}" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300">
                 ← All Numbers
             </a>
-            <a href="{% url 'lesson_dashboard' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300">
+            <a href="{% url 'lesson:lesson_dashboard' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300">
                 Dashboard
             </a>
         </div>

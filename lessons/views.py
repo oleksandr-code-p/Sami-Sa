@@ -59,7 +59,7 @@ def colour_lesson_detail(request, colour_id):
 
 
 def family_lesson_list(request):
-    family_terms = FamilyLesson.object.all()
+    family_terms = FamilyLesson.objects.all()
 
     context = {
         'family_terms': family_terms,
@@ -143,7 +143,7 @@ def animal_lesson_detail(request, animal_id):
         'animal': animal,
     }
 
-    return render(request, 'lessons/animal_detail.html', context)
+    return render(request, 'lessons/animal_detail.html', context),
 
 # def family_voc_pronun(request):
 #     lessons = FamilyLesson.objects.all()

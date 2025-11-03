@@ -23,7 +23,7 @@
     <!-- Lesson Categories Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Numbers Card -->
-        <a href="{% url 'number_lesson_list' %}" class="block">
+        <a href="{% url 'lessons:number_lesson_list' %}" class="block">
             <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-blue-500">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-semibold text-gray-800">Čísla</h3>
@@ -38,7 +38,7 @@
         </a>
 
         <!-- Colours Card -->
-        <a href="{% url 'colour_lesson_list' %}" class="block">
+        <a href="{% url 'lessons:colour_lesson_list' %}" class="block">
             <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-green-500">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-semibold text-gray-800">Farby</h3>
@@ -53,7 +53,7 @@
         </a>
 
         <!-- Family Card -->
-        <a href="{% url 'family_lesson_list' %}" class="block">
+        <a href="{% url 'lessons:family_lesson_list' %}" class="block">
             <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-purple-500">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-semibold text-gray-800">Rodina</h3>
@@ -68,7 +68,7 @@
         </a>
 
         <!-- Food Card -->
-        <a href="{% url 'food_lesson_list' %}" class="block">
+        <a href="{% url 'lessons:food_lesson_list' %}" class="block">
             <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-orange-500">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-semibold text-gray-800">Jedlo</h3>
