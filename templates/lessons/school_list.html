@@ -25,7 +25,7 @@
     <!-- Food Terms Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for school in school_terms %}
-        <a href="{% url 'lessons:food_lesson_detail' food.id %}" class="block">
+        <a href="{% url 'lessons:school_detail' school.id %}" class="block">
             <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6 border-2 border-transparent hover:border-orange-500">
                 <div class="flex items-start justify-between mb-3">
                     <div class="flex-1">
