@@ -30,10 +30,7 @@
                     <span class="text-3xl">🔢</span>
                 </div>
                 <p class="text-gray-600 mb-4">Numbers</p>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-gray-500">{{ number_count }} lessons</span>
-                    <span class="text-blue-600 font-semibold">Learn →</span>
-                </div>
+                
             </div>
         </a>
 
@@ -45,10 +42,7 @@
                     <span class="text-3xl">🎨</span>
                 </div>
                 <p class="text-gray-600 mb-4">Colours</p>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-gray-500">{{ colour_count }} lessons</span>
-                    <span class="text-green-600 font-semibold">Learn →</span>
-                </div>
+                
             </div>
         </a>
 
@@ -60,10 +54,7 @@
                     <span class="text-3xl">👨‍👩‍👧‍👦</span>
                 </div>
                 <p class="text-gray-600 mb-4">Family</p>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-gray-500">{{ family_count }} lessons</span>
-                    <span class="text-purple-600 font-semibold">Learn →</span>
-                </div>
+               
             </div>
         </a>
 
@@ -75,41 +66,33 @@
                     <span class="text-3xl">🍽️</span>
                 </div>
                 <p class="text-gray-600 mb-4">Food</p>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-gray-500">{{ food_count }} lessons</span>
-                    <span class="text-orange-600 font-semibold">Learn →</span>
-                </div>
+                
+                    
+            
             </div>
         </a>
 
         <!-- School -->
         <a href="{% url 'lessons:school_lesson_list' %}" class="block">
-            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-green-500">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-gray-500">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-semibold text-gray-800">Škola</h3>
                     <span class="text-3xl">🏫</span>
                 </div>
                 <p class="text-gray-600 mb-4">School</p>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-gray-500">{{ school_count }} lessons</span>
-                    <span class="text-green-600 font-semibold">Learn →</span>
-                </div>
             </div>
         </a>
 
 
         <!-- Animals -->
-        <a href="{% url 'lessons:school_lesson_list' %}" class="block">
-            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-green-500">
+        <a href="{% url 'lessons:animal_lesson_list' %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-pink-500">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-semibold text-gray-800">Zvieratá</h3>
                     <span class="text-3xl">🐾</span>
                 </div>
                 <p class="text-gray-600 mb-4">Animals</p>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-gray-500">{{ animal_count }} lessons</span>
-                    <span class="text-green-600 font-semibold">Learn →</span>
-                </div>
+                
             </div>
         </a>
     </div>
