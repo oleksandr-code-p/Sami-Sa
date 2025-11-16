@@ -21,7 +21,7 @@ def number_lesson_list(request):
     context = {
         'numbers': numbers,
         'page_title': 'čísla v angličtine',
-        'overview': 'short description',
+        'overview': 'Learn the basic numbers in English, practice pronunciation, and count from 1 to 1000',
     }
 
     return render(request, 'lessons/number_list.html', context)
@@ -43,7 +43,7 @@ def colour_lesson_list(request):
     context = {
         'colours': colours,
         'page_title': 'farby v angličtine',
-        'overview': 'short description',
+        'overview': 'Discover common colours in English and practice saying them correctly.',
     }
 
     return render(request, 'lessons/colour_list.html', context)
@@ -64,7 +64,7 @@ def family_lesson_list(request):
     context = {
         'family_terms': family_terms,
         'page_title': 'rodina v angličtine',
-        'overview': 'short description',
+        'overview': 'Learn family-related words, practice pronunciation, and use them in simple phrases.',
     }
 
     return render(request, 'lessons/family_list.html', context)
@@ -86,7 +86,7 @@ def food_lesson_list(request):
     context = {
         'food_terms': food_terms,
         'page_title': 'jedlo v angličtine',
-        'overview': 'short description',
+        'overview': 'Explore everyday food items, learn their names, and practice pronunciation.',
     }
 
     return render(request, 'lessons/food_list.html', context)
@@ -108,7 +108,7 @@ def school_lesson_list(request):
     context = {
         'school_terms': school_terms,
         'page_title': 'škola v angličtine',
-        'overview': 'short description',
+        'overview': 'Get familiar with school vocabulary, classroom objects, and simple phrases.',
     }
 
     return render(request, 'lessons/school_list.html', context)

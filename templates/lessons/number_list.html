@@ -5,7 +5,7 @@
 
 {% block content %}
 <!-- Header -->
-<header class="bg-blue-600 text-white shadow-lg">
+<header class="bg-blue-600 text-white shadow-lg rounded-b-3xl">
     <div class="container mx-auto px-4 py-6">
         <nav class="mb-4">
             <a href="{% url 'lessons:lesson_dashboard' %}" class="text-blue-100 hover:text-white">← Back to Dashboard</a>
@@ -19,7 +19,15 @@
 <main class="container mx-auto px-4 py-8">
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Number Lessons</h2>
-        <p class="text-gray-600">Click on any number to learn more about it and practice pronunciation.</p>
+        <p class="text-gray-600">
+            Angličtina má jasnú stavbu čísiel. Najprv sa učia základné čísla 0–12, ktoré sú jedinečné. 
+            Čísla 13–19 sa tvoria pridaním <em>-teen</em> (thirteen, fourteen…), kým desiatky 20–90 končia na 
+            <em>-ty</em> (twenty, thirty…). Čísla medzi nimi píšeme s pomlčkou – napríklad 
+            <em>twenty-four</em>. Stovky sa tvoria jednoducho: číslo + “hundred” 
+            (one hundred, five hundred) a ďalšie čísla sa len pridajú za to: 
+            <em>one hundred twenty-three</em>. Číslo 1000 je <em>one thousand</em>. 
+            V tomto kurze používame čísla len do 1000.
+        </p>
     </div>
 
     <!-- Numbers Grid -->
@@ -27,9 +35,9 @@
         {% for number in numbers %}
         <a href="{% url 'lessons:number_lesson_detail' number.id %}" class="block">
             <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6 text-center border-2 border-transparent hover:border-blue-500">
-                <div class="text-4xl font-bold text-blue-600 mb-2">{{ number.digit }}</div>
-                <div class="text-xl font-semibold text-gray-800 mb-1">{{ number.slovak_word }}</div>
-                <div class="text-sm text-gray-500">{{ number.english_word }}</div>
+                <div class="text-4xl font-bold text-blue-600 mb-2">{{ number.number }}</div>
+                <div class="text-xl font-semibold text-gray-800 mb-1">{{ number.name_in_english }}</div>
+                <div class="text-sm text-gray-500">{{ number.pronunciation_in_slovak }}</div>
             </div>
         </a>
         {% empty %}

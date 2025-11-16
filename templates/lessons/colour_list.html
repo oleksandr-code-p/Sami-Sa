@@ -5,7 +5,7 @@
 
 {% block content %}
 <!-- Header -->
-<header class="bg-green-600 text-white shadow-lg">
+<header class="bg-teal-600 text-white shadow-lg">
     <div class="container mx-auto px-4 py-6">
         <nav class="mb-4">
             <a href="{% url 'lessons:lesson_dashboard' %}" class="text-green-100 hover:text-white">← Back to Dashboard</a>
@@ -28,15 +28,15 @@
         <a href="{% url 'lessons:colour_lesson_detail' colour.id %}" class="block">
             <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-transparent hover:border-green-500">
                 <!-- Color Display (assumes colour.hex_code field) -->
-                {% if colour.hex_code %}
+                {% if colour.colour_hex  %}
                 <div class="h-32" style="background-color: {{ colour.hex_code }};"></div>
                 {% else %}
                 <div class="h-32 bg-gradient-to-br from-gray-200 to-gray-300"></div>
                 {% endif %}
                 
                 <div class="p-4 text-center">
-                    <div class="text-xl font-semibold text-gray-800 mb-1">{{ colour.slovak_word }}</div>
-                    <div class="text-sm text-gray-500">{{ colour.english_word }}</div>
+                    <div class="text-xl font-semibold text-gray-800 mb-1">{{ colour.colour_name }}</div>
+                    <div class="text-sm text-gray-500">{{ colour.name_in_english }}</div>
                 </div>
             </div>
         </a>
