@@ -19,27 +19,25 @@
 <main class="container mx-auto px-4 py-8">
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Colour Lessons</h2>
-        <p class="text-gray-600">Click on any colour to learn more about it and practice pronunciation.</p>
     </div>
 
     <!-- Colours Grid -->
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {% for colour in colours %}
-        <a href="{% url 'lessons:colour_lesson_detail' colour.id %}" class="block">
-            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-transparent hover:border-green-500">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border-2 border-transparent hover:border-teal-500">
                 <!-- Color Display (assumes colour.hex_code field) -->
-                {% if colour.colour_hex  %}
-                <div class="h-32" style="background-color: {{ colour.hex_code }};"></div>
+                <!-- Colour Display -->
+                {% if colour.colour_hex %}
+                <div class="h-32" style="background-color: {{ colour.colour_hex }};"></div>
                 {% else %}
                 <div class="h-32 bg-gradient-to-br from-gray-200 to-gray-300"></div>
                 {% endif %}
                 
                 <div class="p-4 text-center">
-                    <div class="text-xl font-semibold text-gray-800 mb-1">{{ colour.colour_name }}</div>
-                    <div class="text-sm text-gray-500">{{ colour.name_in_english }}</div>
+                    <div class="text-xl font-semibold text-gray-800 mb-1">{{ colour.name_in_english }}</div>
+                    <div class="text-sm text-gray-500">{{ colour.pronunciation_in_slovak }}</div>
                 </div>
             </div>
-        </a>
         {% empty %}
         <div class="col-span-full text-center py-12">
             <p class="text-gray-500 text-lg">No colour lessons available yet.</p>

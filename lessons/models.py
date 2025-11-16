@@ -45,9 +45,9 @@ class ColourLesson(models.Model):
 
 class FamilyLesson(models.Model):
     family_term = models.CharField(max_length=100)
-    overview = models.TextField()
     vocabulary = models.TextField()
     pronunciation_in_slovak = models.TextField()
+    emoji = models.CharField(max_length=3)
     order = models.IntegerField()
 
     def str(self):
@@ -61,10 +61,9 @@ class FamilyLesson(models.Model):
 
 class FoodLesson(models.Model):
     name = models.CharField(max_length=10)
-    name_in_english=models.CharField(max_length=20)
-    overview = models.TextField()
     vocabulary = models.TextField()
     pronunciation_in_slovak = models.TextField()
+    emoji = models.CharField(max_length=3)
     order = models.IntegerField()
 
     def __str__(self):
@@ -76,10 +75,9 @@ class FoodLesson(models.Model):
 
 class SchoolLesson(models.Model):
     name = models.CharField(max_length=10)
-    name_in_english=models.CharField(max_length=20)
-    overview = models.TextField()
     vocabulary = models.TextField()
     pronunciation_in_slovak = models.TextField()
+    emoji = models.CharField(max_length=3)
     order = models.IntegerField()
 
     def __str__(self):
@@ -92,8 +90,7 @@ class SchoolLesson(models.Model):
 class AnimalLesson(models.Model):
     name = models.CharField(max_length=10)
     name_in_english=models.CharField(max_length=20)
-    overview = models.TextField()
-    vocabulary = models.TextField()
+    emoji = models.CharField(max_length=3)
     pronunciation_in_slovak = models.TextField()
     order = models.IntegerField()
 

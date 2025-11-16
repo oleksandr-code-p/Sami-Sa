@@ -29,10 +29,11 @@
             <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6 border-2 border-transparent hover:border-indigo-500">
                 <div class="flex items-start justify-between mb-3">
                     <div class="flex-1">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ school.school_term }}</h3>
-                        <p class="text-gray-600">{{ school.name_in_english }}</p>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ school.name }}</h3>
+                        <p class="text-gray-600">{{ school.vocabulary }}</p>
+                        <p class="text-gray-600">{{ school.pronunciation_in_slovak }}</p>
                     </div>
-                    <span class="text-3xl ml-2">🏫</span>
+                    <span class="text-3xl ml-2">{{ school.emoji }}</span>
                 </div>
             </div>
         </a>

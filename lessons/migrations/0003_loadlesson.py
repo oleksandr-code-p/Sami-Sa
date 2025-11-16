@@ -83,29 +83,37 @@ def load_initial_data(apps, schema_editor):
     FamilyLesson = apps.get_model('lessons', 'FamilyLesson')
     
     family_data = [
-        ('rodina', 'Family members in Slovak', 
-         'family - rodina\nfather - otec\nmother - mama\nbrother - brat\nsister - sestra', 
-         'fémi - rodina\nfádr - otec\nmadr - mama\nbrádr - brat\nsistr - sestra'),
-        
-        ('rodičia', 'Parents and immediate family', 
-         'parents - rodičia\nson - syn\ndaughter - dcéra\nhusband - manžel\nwife - manželka', 
-         'pérents - rodičia\nsan - syn\ndótr - dcéra\nhazbend - manžel\nvajf - manželka'),
-        
-        ('starí rodičia', 'Grandparents and extended family', 
-         'grandfather - dedko\ngrandmother - babka\nuncle - ujo\naunt - teta\ncousin - bratranec/sesternica', 
-         'grándfádr - dedko\ngránmadr - babka\nankl - ujo\nant - teta\nkazin - bratranec/sesternica'),
-        
-        ('deti', 'Children and young family members', 
-         'children - deti\nbaby - bábätko\nboy - chlapec\ngirl - dievča\ntoddler - batoľa', 
-         'čildren - deti\nbéjbi - bábätko\nboj - chlapec\ngörl - dievča\ntodlr - batoľa'),
+        ('rodina', 'family', 'fémily', '👨‍👩‍👧'),
+        ('otec', 'father', 'fádr', '👨'),
+        ('mama', 'mother', 'madr', '👩'),
+        ('brat', 'brother', 'brádr', '👦'),
+        ('sestra', 'sister', 'sistr', '👧'),
+
+        ('rodičia', 'parents', 'pérents', '👪'),
+        ('syn', 'son', 'san', '🧒'),
+        ('dcéra', 'daughter', 'dótr', '👧'),
+        ('manžel', 'husband', 'hazbend', '👨‍🦱'),
+        ('manželka', 'wife', 'vajf', '👩‍🦰'),
+
+        ('dedo', 'grandfather', 'grándfádr', '👴'),
+        ('babka', 'grandmother', 'gránmadr', '👵'),
+        ('ujo', 'uncle', 'ankl', '👨‍🦳'),
+        ('teta', 'aunt', 'ant', '👩‍🦳'),
+        ('bratranec/sesternica', 'cousin', 'kazin', '🧑'),
+
+        ('deti', 'children', 'čildren', '👧🧒'),
+        ('bábätko', 'baby', 'béjbi', '👶'),
+        ('chlapec', 'boy', 'boj', '👦'),
+        ('dievča', 'girl', 'görl', '👧'),
+        ('batoľa', 'toddler', 'todlr', '👶'),
     ]
     
-    for i, (term, overview, vocab, pronun) in enumerate(family_data, start=1):
+    for i, (term, vocab, pronun, emoji) in enumerate(family_data, start=1):
         FamilyLesson.objects.create(
             family_term=term,
-            overview=overview,
             vocabulary=vocab,
             pronunciation_in_slovak=pronun,
+            emoji=emoji,
             order=i
         )
     
@@ -113,44 +121,91 @@ def load_initial_data(apps, schema_editor):
     FoodLesson = apps.get_model('lessons', 'FoodLesson')
     
     food_data = [
-        ('chlieb', 'bread', 'Basic Slovak food vocabulary', 'chlieb - bread\nmaslo - butter\ndžem - jam', 'bred - chlieb\nbatr - maslo\ndžem - džem'),
-        ('mlieko', 'milk', 'Dairy products in Slovak', 'mlieko - milk\nsyr - cheese\njogurt - yogurt', 'milk - mlieko\nčíz - syr\njogrt - jogurt'),
-        ('voda', 'water', 'Beverages in Slovak', 'voda - water\nkáva - coffee\nčaj - tea', 'wótr - voda\nkofi - káva\ntí - čaj'),
-        ('jablko', 'apple', 'Fruits in Slovak', 'jablko - apple\nbanán - banana\nhruška - pear', 'epl - jablko\nbanána - banán\npér - hruška'),
-        ('mäso', 'meat', 'Meat products in Slovak', 'mäso - meat\nkura - chicken\nryba - fish', 'mít - mäso\nčikn - kura\nfiš - ryba'),
-        ('zelenina', 'vegetables', 'Vegetables in Slovak', 'zelenina - vegetables\nzemiak - potato\nmrkva - carrot', 'vedžtebls - zelenina\npotejto - zemiak\nkerot - mrkva'),
-        ('raňajky', 'breakfast', 'Meals in Slovak', 'raňajky - breakfast\nobed - lunch\nvečera - dinner', 'brekfast - raňajky\nlanč - obed\ndinr - večera'),
-        ('polievka', 'soup', 'Dishes in Slovak', 'polievka - soup\nšalát - salad\npizza - pizza', 'súp - polievka\nseled - šalát\npica - pizza'),
-    ]
+    ('chlieb', 'bread', 'bred', '🍞'),
+    ('maslo', 'butter', 'batr', '🧈'),
+    ('džem', 'jam', 'džem', '🍯'),
+    ('mlieko', 'milk', 'milk', '🥛'),
+    ('syr', 'cheese', 'číz', '🧀'),
+    ('jogurt', 'yogurt', 'jogrt', '🥣'),
+    ('voda', 'water', 'wótr', '💧'),
+    ('káva', 'coffee', 'kofi', '☕'),
+    ('čaj', 'tea', 'tí', '🫖'),
+    ('jablko', 'apple', 'epl', '🍎'),
+    ('banán', 'banana', 'banána', '🍌'),
+    ('hruška', 'pear', 'pér', '🍐'),
+    ('pomaranč', 'orange', 'orindž', '🍊'),
+    ('jahoda', 'strawberry', 'strobery', '🍓'),
+    ('mäso', 'meat', 'mít', '🍖'),
+    ('kura', 'chicken', 'čikn', '🍗'),
+    ('ryba', 'fish', 'fiš', '🐟'),
+    ('zelenina', 'vegetables', 'vedžtebls', '🥒'),
+    ('zemiak', 'potato', 'potejto', '🥔'),
+    ('mrkva', 'carrot', 'kerot', '🥕'),
+    ('cibuľa', 'onion', 'anjn', '🧅'),
+    ('paradajka', 'tomato', 'tomejto', '🍅'),
+    ('raňajky', 'breakfast', 'brekfast', '🥞'),
+    ('obed', 'lunch', 'lanč', '🍽️'),
+    ('večera', 'dinner', 'dinr', '🍝'),
+    ('polievka', 'soup', 'súp', '🍲'),
+    ('šalát', 'salad', 'seled', '🥗'),
+    ('pizza', 'pizza', 'pica', '🍕'),
+]
+
     
-    for i, (name, english, overview, vocab, pronun) in enumerate(food_data, start=1):
+    for i, (term, english, pronun, emoji) in enumerate(food_data, start=1):
         FoodLesson.objects.create(
-            name=name,
-            name_in_english=english,
-            overview=overview,
-            vocabulary=vocab,
+            name=term,
+            vocabulary=english,
             pronunciation_in_slovak=pronun,
+            emoji=emoji,
             order=i
         )
     
     SchoolLesson = apps.get_model('lessons', 'SchoolLesson')
     
     school_data = [
-        ('škola', 'school', 'Basic school vocabulary', 'škola - school\ntrieda - class\nučiteľ - teacher', 'skúl - škola\nklas - trieda\ntíčr - učiteľ'),
-        ('kniha', 'book', 'School supplies', 'kniha - book\npero - pen\nceruzka - pencil', 'buk - kniha\npen - pero\npensl - ceruzka'),
-        ('tabuľa', 'board', 'Classroom items', 'tabuľa - board\nstôl - desk\nstoličky - chair', 'bórd - tabuľa\ndesk - stôl\nčér - stoličky'),
-        ('študent', 'student', 'People at school', 'študent - student\nžiak - pupil\nriaditeľ - principal', 'stjúdnt - študent\npjúpl - žiak\nprinsipl - riaditeľ'),
-        ('predmet', 'subject', 'School subjects', 'matematika - math\nslovenčina - Slovak\nangličtina - English', 'meth - matematika\nslouvek - slovenčina\ningliš - angličtina'),
-        ('úloha', 'homework', 'School activities', 'úloha - homework\ntest - test\nprojekt - project', 'houmwörk - úloha\ntest - test\nprodžekt - projekt'),
+        ('škola', 'school', 'skúl', '🏫'),
+        ('trieda', 'classroom', 'klásrum', '🏫'),
+        ('učiteľ', 'teacher', 'tíčr', '👨‍🏫'),
+        ('učiteľka', 'teacher', 'tíčr', '👩‍🏫'),
+        ('žiak', 'pupil', 'pjúpl', '🧒'),
+        ('študent', 'student', 'stjúdnt', '🧑‍🎓'),
+        ('kniha', 'book', 'buk', '📘'),
+        ('zošit', 'notebook', 'noutbuk', '📒'),
+        ('pero', 'pen', 'pen', '🖊️'),
+        ('ceruzka', 'pencil', 'pensl', '✏️'),
+        ('guma', 'eraser', 'irejzr', '🩹'),
+        ('pravítko', 'ruler', 'rúlr', '📏'),
+        ('lepka', 'glue', 'glú', '🧴'),
+        ('nožnice', 'scissors', 'sizrz', '✂️'),
+        ('batoh', 'backpack', 'bekpek', '🎒'),
+        ('tabuľa', 'board', 'bórd', '🖥️'),
+        ('stôl', 'desk', 'desk', '🪑'),
+        ('stolička', 'chair', 'čér', '🪑'),
+        ('okno', 'window', 'windou', '🪟'),
+        ('dvere', 'door', 'dór', '🚪'),
+        ('matematika', 'math', 'mahth', '➕'),
+        ('slovenčina', 'Slovak language', 'slovek lengvidž', '📘'),
+        ('angličtina', 'English', 'ingliš', '🇬🇧'),
+        ('dejepis', 'history', 'histri', '📜'),
+        ('geografia', 'geography', 'džiógrafi', '🌍'),
+        ('chémia', 'chemistry', 'kemistri', '⚗️'),
+        ('biológia', 'biology', 'bajolodži', '🧬'),
+        ('fyzika', 'physics', 'fyziks', '🔬'),
+        ('úloha', 'homework', 'houmwörk', '📝'),
+        ('test', 'test', 'test', '🧪'),
+        ('projekt', 'project', 'prodžekt', '📁'),
+        ('prestávka', 'break', 'brejk', '⏰'),
+        ('obed', 'lunch', 'lanč', '🍽️'),
     ]
+
     
-    for i, (name, english, overview, vocab, pronun) in enumerate(school_data, start=1):
+    for i, (name, vocab, pronun, emoji) in enumerate(school_data, start=1):
         SchoolLesson.objects.create(
             name=name,
-            name_in_english=english,
-            overview=overview,
             vocabulary=vocab,
             pronunciation_in_slovak=pronun,
+            emoji=emoji,
             order=i
         )
     
@@ -158,21 +213,41 @@ def load_initial_data(apps, schema_editor):
     AnimalLesson = apps.get_model('lessons', 'AnimalLesson')
     
     animal_data = [
-        ('pes', 'dog', 'Common pets', 'pes - dog\nmačka - cat\nvták - bird', 'dog - pes\nket - mačka\nbőrd - vták'),
-        ('krava', 'cow', 'Farm animals', 'krava - cow\nprasa - pig\nkôň - horse', 'kau - krava\npig - prasa\nhors - kôň'),
-        ('lev', 'lion', 'Wild animals', 'lev - lion\ntiger - tiger\nslon - elephant', 'lajn - lev\ntajgr - tiger\nelifnt - slon'),
-        ('ryba', 'fish', 'Water animals', 'ryba - fish\nžralok - shark\nveľryba - whale', 'fiš - ryba\nšárk - žralok\nwejl - veľryba'),
-        ('vták', 'bird', 'Birds', 'vták - bird\norol - eagle\nsova - owl', 'bőrd - vták\nígl - orol\naul - sova'),
-        ('hmyz', 'insect', 'Insects', 'včela - bee\nmotýľ - butterfly\nmravec - ant', 'bí - včela\nbatrflaj - motýľ\nent - mravec'),
+        ('pes', 'dog', 'dog', '🐶'),
+        ('mačka', 'cat', 'ket', '🐱'),
+        ('králik', 'rabbit', 'rebit', '🐰'),
+        ('škrečok', 'hamster', 'hemstr', '🐹'),
+        ('krava', 'cow', 'kau', '🐮'),
+        ('prasa', 'pig', 'pig', '🐷'),
+        ('ovca', 'sheep', 'šíp', '🐑'),
+        ('koza', 'goat', 'gout', '🐐'),
+        ('kôň', 'horse', 'hors', '🐴'),
+        ('lev', 'lion', 'lajn', '🦁'),
+        ('tiger', 'tiger', 'tajgr', '🐯'),
+        ('slon', 'elephant', 'elifnt', '🐘'),
+        ('opica', 'monkey', 'manki', '🐒'),
+        ('vlk', 'wolf', 'wulf', '🐺'),
+        ('ryba', 'fish', 'fiš', '🐟'),
+        ('žralok', 'shark', 'šark', '🦈'),
+        ('delfín', 'dolphin', 'dolfyn', '🐬'),
+        ('veľryba', 'whale', 'wejl', '🐳'),
+        ('vták', 'bird', 'börd', '🐦'),
+        ('orol', 'eagle', 'ígl', '🦅'),
+        ('sova', 'owl', 'aul', '🦉'),
+        ('včela', 'bee', 'bí', '🐝'),
+        ('motýľ', 'butterfly', 'batrflaj', '🦋'),
+        ('mravec', 'ant', 'ent', '🐜'),
+        ('had', 'snake', 'snejk', '🐍'),
+        ('pavúk', 'spider', 'spajdr', '🕷️'),
     ]
+
     
-    for i, (name, english, overview, vocab, pronun) in enumerate(animal_data, start=1):
+    for i, (term, english, pronun, emoji) in enumerate(animal_data, start=1):
         AnimalLesson.objects.create(
-            name=name,
+            name=term,
             name_in_english=english,
-            overview=overview,
-            vocabulary=vocab,
             pronunciation_in_slovak=pronun,
+            emoji=emoji,
             order=i
         )
 
@@ -195,7 +270,7 @@ def reverse_load_initial_data(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lessons', '0002_animallesson_schoollesson'),
+        ('lessons', '0001_initial'),
     ]
 
     operations = [
