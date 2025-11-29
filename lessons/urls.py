@@ -7,21 +7,15 @@ urlpatterns = [
     path('', views.lesson_dashboard, name='lesson_dashboard'),
 
     path('numbers/', views.number_lesson_list, name='number_lesson_list'),
-    path('numbers/<int:number_id>/', views.number_lesson_detail, name='number_lesson_detail'),
 
     path('colours/', views.colour_lesson_list, name='colour_lesson_list'),
-    path('colours/<int:colour_id>/', views.colour_lesson_detail, name='colour_lesson_detail'),
 
     path('family_terms/', views.family_lesson_list, name='family_lesson_list'),
-    path('family_terms/<int:family_id>/', views.family_lesson_detail, name='family_detail'),
-    
+   
     path('food_terms/', views.food_lesson_list, name='food_lesson_list'),
-    path('food_terms/<int:food_id>/', views.food_lesson_detail, name='food_lesson_detail'),
 
     path('school_terms', views.school_lesson_list, name='school_lesson_list'),
-    path('school_terms/<int:school_id>/', views.school_lesson_detail, name='school_detail'),
 
     path('animals', views.animal_lesson_list, name='animal_lesson_list'),
-    path('animals/<int:animal_id>/', views.animal_lesson_detail, name='animal_detail'),
- 
+  
 ]

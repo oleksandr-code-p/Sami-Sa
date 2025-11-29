@@ -5,10 +5,6 @@ from .models import NumberLesson, ColourLesson, FamilyLesson, FoodLesson, School
 
 def lesson_dashboard(request):
     context = {
-        'number_count': NumberLesson.objects.count(),
-        'colour_count': ColourLesson.objects.count(),
-        'family_count': FamilyLesson.objects.count(),
-        'food_count': FoodLesson.objects.count(),
         'page_title': 'Language Learning Dashboard',
         'welcome_message': 'Welcome to Slovak Language Lessons',
     }
@@ -25,16 +21,6 @@ def number_lesson_list(request):
     }
 
     return render(request, 'lessons/number_list.html', context)
-
-
-def number_lesson_detail(request, number_id):
-    number = get_object_or_404(NumberLesson, id=number_id)
-
-    context = {
-        'number': number,
-    }
-    
-    return render(request, "lessons/number_detail.html", context)
     
 
 def colour_lesson_list(request):
@@ -47,15 +33,6 @@ def colour_lesson_list(request):
     }
 
     return render(request, 'lessons/colour_list.html', context)
-
-def colour_lesson_detail(request, colour_id):
-    colour = get_object_or_404(ColourLesson, id=colour_id)
-
-    context = {
-        'colour': colour,
-    }
-
-    return render(request, 'lessons/colour_detail.html', context)
 
 
 def family_lesson_list(request):
@@ -70,16 +47,6 @@ def family_lesson_list(request):
     return render(request, 'lessons/family_list.html', context)
 
 
-def family_lesson_detail(request, family_id):
-    family = get_object_or_404(FamilyLesson, id=family_id)
-
-    context = {
-        'family': family,
-    }
-
-    return render(request, 'lessons/family_detail.html', context)
-
-
 def food_lesson_list(request):
     food_terms = FoodLesson.objects.all()
 
@@ -90,16 +57,6 @@ def food_lesson_list(request):
     }
 
     return render(request, 'lessons/food_list.html', context)
-
-
-def food_lesson_detail(request, food_id):
-    food = get_object_or_404(FoodLesson, id=food_id)
-
-    context = {
-        'food': food,
-    }
-
-    return render(request, 'lessons/food_detail.html', context)
 
 
 def school_lesson_list(request):
@@ -114,16 +71,6 @@ def school_lesson_list(request):
     return render(request, 'lessons/school_list.html', context)
 
 
-def school_lesson_detail(request, school_id):
-    school = get_object_or_404(SchoolLesson, id=school_id)
-
-    context = {
-        'school': school,
-    }
-
-    return render(request, 'lessons/school_detail.html', context)
-
-
 def animal_lesson_list(request):
     animals = AnimalLesson.objects.all()
 
@@ -135,15 +82,6 @@ def animal_lesson_list(request):
 
     return render(request, 'lessons/animal_list.html', context)
 
-
-def animal_lesson_detail(request, animal_id):
-    animal = get_object_or_404(AnimalLesson, id=animal_id)
-
-    context = {
-        'animal': animal,
-    }
-
-    return render(request, 'lessons/animal_detail.html', context),
 
 # def family_voc_pronun(request):
 #     lessons = FamilyLesson.objects.all()

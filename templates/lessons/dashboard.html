@@ -7,6 +7,7 @@
 <!-- Header -->
 <header class="bg-blue-600 text-white shadow-lg">
     <div class="container mx-auto px-4 py-6">
+        <a href="{% url 'home' %}" class="text-gray-100 hover:text-white">← Back to Home</a>
         <h1 class="text-3xl font-bold">{{ page_title }}</h1>
         <p class="mt-2 text-blue-100">{{ welcome_message }}</p>
     </div>
@@ -65,10 +66,7 @@
                     <h3 class="text-xl font-semibold text-gray-800">Jedlo</h3>
                     <span class="text-3xl">🍽️</span>
                 </div>
-                <p class="text-gray-600 mb-4">Food</p>
-                
-                    
-            
+                <p class="text-gray-600 mb-4">Food</p>  
             </div>
         </a>
 
@@ -86,7 +84,7 @@
 
         <!-- Animals -->
         <a href="{% url 'lessons:animal_lesson_list' %}" class="block">
-            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-pink-500">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6 border-t-4 border-red-500">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-semibold text-gray-800">Zvieratá</h3>
                     <span class="text-3xl">🐾</span>
