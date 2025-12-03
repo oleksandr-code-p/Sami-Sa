@@ -5,21 +5,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
+
     <title>
       {% block title %}Samisa - Learn English from Slovak{% endblock %}
     </title>
     <!-- <link rel="stylesheet" href="{% static 'dist/styles.css' %}" /> -->
-     
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="static/" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="static/" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
   </head>
   <body class="bg-gray-50">
     <!-- Navigation -->
     <nav class="bg-white shadow-md">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-          <div class="flex items-center">
-            <a href="{% url 'home' %}" class="text-2xl font-bold text-blue-600"
-              >Sami-Sa</a
-            >
+          <div class="flex justify-between h-16">
+            <!-- Logo -->
+            <div class="m-8 flex items-center">
+              <img src="{% static 'logo.jpg' %}" alt="Logo Samisa" class="w-400 h-14 rounded-2xl">
+            </div>
+            <div class="flex items-center">
+              <a href="{% url 'home' %}" class="text-2xl font-bold text-blue-600"
+                >Sami-Sa</a>
+            </div>
           </div>
 
           <div class="flex items-center space-x-6">
@@ -77,7 +87,7 @@
     <footer class="bg-white border-t border-gray-200 mt-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <p class="text-center text-gray-600">
-          Â© 2025 Samisa. Learn English from Slovak.
+          Â© 2025 Sami-Sa. Learn English from Slovak.
         </p>
       </div>
     </footer>

@@ -28,10 +28,11 @@
                 <!-- Color Display (assumes colour.hex_code field) -->
                 <!-- Colour Display -->
                 {% if colour.colour_hex %}
-                <div class="h-32 bg-colour: {{ colour.colour_hex }}"></div>
-                {% else %}
-                <div class="h-32 bg-linear-to-br from-gray-200 to-gray-300"></div>
-                {% endif %}
+        <div class="h-32" style="background-color: {{ colour.colour_hex }}"></div>
+        {% else %}
+        <div class="h-32 bg-linear-to-br from-gray-200 to-gray-300"></div>
+        {% endif %}
+
                 
                 <div class="p-4 text-center">
                     <div class="text-xl font-semibold text-gray-800 mb-1">{{ colour.name_in_english }}</div>
