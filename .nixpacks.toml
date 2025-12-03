@@ -1,0 +1,9 @@
+[phases.setup]
+nodejs = "18"
+
+[phases.build]
+cmds = [
+  "npm install",
+  "npm run build",
+  "python manage.py collectstatic --noinput"
+]
