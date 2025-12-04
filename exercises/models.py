@@ -92,7 +92,7 @@ class Sentence_Completion(models.Model):
     hint = models.TextField(blank=True)
 
     def __str__(self):
-        return self.english_sentence
+        return f"{self.english_sentence}"
 
 class UserProgress(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)

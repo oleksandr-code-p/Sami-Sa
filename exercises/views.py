@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.views.decorators.http import require_POST
 from .models import Exercise, Exercise_Choice, Matching_Pair, Word_Scramble, Sentence_Completion, Translation, UserProgress
 from lessons.models import NumberLesson, ColourLesson, FamilyLesson, FoodLesson, SchoolLesson, AnimalLesson
 
@@ -23,6 +24,7 @@ def Exercise_Dashboard(request):
 # --------------------------------------------------
 # CHECK ANSWER (placeholder)
 # --------------------------------------------------
+@require_POST
 def Check_Answer(request):
     answer = request.POST.get("answer")
     correct_answer = request.POST.get("correct_answer")
@@ -92,7 +94,7 @@ def Sentence_Completion_list(request):
         'overview': 'Precvič si zručnosti dopĺňaním do viet.',
     }
 
-    return render(request, 'exercises/sentence_compleion_list.html', context)
+    return render(request, 'exercises/sentence_completion_list.html', context)
 
 
 # --------------------------------------------------
