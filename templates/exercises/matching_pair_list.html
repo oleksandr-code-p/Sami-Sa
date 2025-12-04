@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ page_title }} - Sami-Sa{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-8">
+        <a href="{% url 'exercises:exercise_dashboard' %}" class="text-purple-200 hover:text-white transition inline-flex items-center gap-2 mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Späť na cvičenia
+        </a>
+        <div class="flex items-center gap-4">
+            <span class="text-5xl">🔗</span>
+            <div>
+                <h1 class="text-3xl font-bold">{{ page_title }}</h1>
+                <p class="mt-1 text-purple-100">{{ overview }}</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container mx-auto px-4 py-8">
+    <!-- Filter by lesson type -->
+    <div class="mb-8 flex flex-wrap gap-3">
+        <a href="{% url 'exercises:matching_pair_list' %}" 
+           class="px-4 py-2 rounded-full text-sm font-medium {% if not request.GET.lesson_type %}bg-purple-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
+            Všetky
+        </a>
+        {% for lt, label in lesson_types %}
+        <a href="?lesson_type={{ lt }}" 
+           class="px-4 py-2 rounded-full text-sm font-medium {% if request.GET.lesson_type == lt %}bg-purple-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
+            {{ label }}
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- Instructions -->
+    <div class="bg-purple-50 border border-purple-200 rounded-xl p-4 mb-8">
+        <p class="text-purple-800 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <strong>Návod:</strong> Kliknite na slovenské slovo vľavo a potom na jeho anglický preklad vpravo.
+        </p>
+    </div>
+
+    <!-- Matching Exercises grouped by parent Exercise -->
+    {% regroup pairs by exercise as exercise_groups %}
+    
+    {% for group in exercise_groups %}
+    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 mb-8">
+        <div class="bg-gradient-to-r from-purple-500 to-indigo-500 px-6 py-4">
+            <h2 class="text-xl font-bold text-white">{{ group.grouper.title }}</h2>
+            <p class="text-purple-100 text-sm mt-1">{{ group.grouper.question_text }}</p>
+        </div>
+        
+        <div class="p-6">
+            <div class="matching-game" data-exercise-id="{{ group.grouper.id }}">
+                <div class="grid grid-cols-2 gap-8">
+                    <!-- Left column (Slovak) -->
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Slovensky</h3>
+                        {% for pair in group.list %}
+                        <button data-pair-id="{{ pair.id }}" 
+                                data-side="left"
+                                class="match-btn left-btn w-full text-left px-4 py-3 rounded-lg border-2 border-gray-200 hover:border-purple-400 hover:bg-purple-50 transition-all duration-200 font-medium">
+                            {{ pair.left_text }}
+                        </button>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Right column (English) - Shuffled -->
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">English</h3>
+                        {% for pair in group.list|dictsort:"right_text" %}
+                        <button data-pair-id="{{ pair.id }}" 
+                                data-side="right"
+                                class="match-btn right-btn w-full text-left px-4 py-3 rounded-lg border-2 border-gray-200 hover:border-indigo-400 hover:bg-indigo-50 transition-all duration-200 font-medium">
+                            {{ pair.right_text }}
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Score display -->
+                <div class="mt-6 pt-6 border-t border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <span class="text-gray-600">Skóre:</span>
+                            <span class="score-display font-bold text-xl text-purple-600">0 / {{ group.list|length }}</span>
+                        </div>
+                        <button onclick="resetMatching(this)" 
+                                class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium">
+                            Začať odznova
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="text-center py-12">
+        <div class="text-6xl mb-4">📭</div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Žiadne cvičenia</h3>
+        <p class="text-gray-600">Pre tento filter nie sú k dispozícii žiadne párovanie cvičenia.</p>
+    </div>
+    {% endfor %}
+
+    <!-- Pagination -->
+    {% if pairs.has_other_pages %}
+    <nav class="mt-8 flex justify-center">
+        <ul class="flex items-center gap-2">
+            {% if pairs.has_previous %}
+            <li>
+                <a href="?page={{ pairs.previous_page_number }}{% if request.GET.lesson_type %}&lesson_type={{ request.GET.lesson_type }}{% endif %}" 
+                   class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                    Predchádzajúca
+                </a>
+            </li>
+            {% endif %}
+            
+            <li class="px-4 py-2 bg-purple-600 text-white rounded-lg">
+                {{ pairs.number }} / {{ pairs.paginator.num_pages }}
+            </li>
+            
+            {% if pairs.has_next %}
+            <li>
+                <a href="?page={{ pairs.next_page_number }}{% if request.GET.lesson_type %}&lesson_type={{ request.GET.lesson_type }}{% endif %}" 
+                   class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                    Ďalšia
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.matching-game').forEach(game => {
+        initMatchingGame(game);
+    });
+});
+
+function initMatchingGame(gameContainer) {
+    let selectedLeft = null;
+    let selectedRight = null;
+    let matchedPairs = 0;
+    const totalPairs = gameContainer.querySelectorAll('.left-btn').length;
+    
+    gameContainer.querySelectorAll('.match-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const side = this.dataset.side;
+            const pairId = this.dataset.pairId;
+            
+            if (this.disabled) return;
+            
+            if (side === 'left') {
+                // Deselect previous left selection
+                if (selectedLeft) {
+                    selectedLeft.classList.remove('border-purple-500', 'bg-purple-100', 'ring-2', 'ring-purple-300');
+                }
+                selectedLeft = this;
+                this.classList.add('border-purple-500', 'bg-purple-100', 'ring-2', 'ring-purple-300');
+            } else {
+                // Deselect previous right selection
+                if (selectedRight) {
+                    selectedRight.classList.remove('border-indigo-500', 'bg-indigo-100', 'ring-2', 'ring-indigo-300');
+                }
+                selectedRight = this;
+                this.classList.add('border-indigo-500', 'bg-indigo-100', 'ring-2', 'ring-indigo-300');
+            }
+            
+            // Check if both sides are selected
+            if (selectedLeft && selectedRight) {
+                const leftPairId = selectedLeft.dataset.pairId;
+                const rightPairId = selectedRight.dataset.pairId;
+                
+                if (leftPairId === rightPairId) {
+                    // Correct match!
+                    selectedLeft.classList.remove('border-purple-500', 'bg-purple-100', 'ring-2', 'ring-purple-300');
+                    selectedRight.classList.remove('border-indigo-500', 'bg-indigo-100', 'ring-2', 'ring-indigo-300');
+                    
+                    selectedLeft.classList.add('border-green-500', 'bg-green-100', 'text-green-800');
+                    selectedRight.classList.add('border-green-500', 'bg-green-100', 'text-green-800');
+                    
+                    selectedLeft.disabled = true;
+                    selectedRight.disabled = true;
+                    
+                    matchedPairs++;
+                    updateScore(gameContainer, matchedPairs, totalPairs);
+                    
+                    // Add checkmark
+                    selectedLeft.innerHTML += ' ✓';
+                    selectedRight.innerHTML += ' ✓';
+                    
+                    if (matchedPairs === totalPairs) {
+                        showCompletion(gameContainer);
+                    }
+                } else {
+                    // Wrong match - shake and reset
+                    selectedLeft.classList.add('animate-shake', 'border-red-500', 'bg-red-100');
+                    selectedRight.classList.add('animate-shake', 'border-red-500', 'bg-red-100');
+                    
+                    setTimeout(() => {
+                        selectedLeft.classList.remove('animate-shake', 'border-red-500', 'bg-red-100', 'border-purple-500', 'bg-purple-100', 'ring-2', 'ring-purple-300');
+                        selectedRight.classList.remove('animate-shake', 'border-red-500', 'bg-red-100', 'border-indigo-500', 'bg-indigo-100', 'ring-2', 'ring-indigo-300');
+                    }, 500);
+                }
+                
+                selectedLeft = null;
+                selectedRight = null;
+            }
+        });
+    });
+}
+
+function updateScore(gameContainer, matched, total) {
+    const scoreDisplay = gameContainer.querySelector('.score-display');
+    scoreDisplay.textContent = matched + ' / ' + total;
+    
+    if (matched === total) {
+        scoreDisplay.classList.add('text-green-600');
+    }
+}
+
+function showCompletion(gameContainer) {
+    const scoreArea = gameContainer.querySelector('.border-t');
+    const completionMsg = document.createElement('div');
+    completionMsg.className = 'mt-4 p-4 bg-green-100 text-green-800 rounded-lg text-center font-medium';
+    completionMsg.innerHTML = '🎉 <strong>Výborne!</strong> Všetky páry sú správne spárované!';
+    scoreArea.appendChild(completionMsg);
+}
+
+function resetMatching(button) {
+    const gameContainer = button.closest('.matching-game');
+    
+    gameContainer.querySelectorAll('.match-btn').forEach(btn => {
+        btn.disabled = false;
+        btn.className = 'match-btn ' + (btn.dataset.side === 'left' ? 'left-btn' : 'right-btn') + 
+                       ' w-full text-left px-4 py-3 rounded-lg border-2 border-gray-200 hover:border-' + 
+                       (btn.dataset.side === 'left' ? 'purple' : 'indigo') + '-400 hover:bg-' + 
+                       (btn.dataset.side === 'left' ? 'purple' : 'indigo') + '-50 transition-all duration-200 font-medium';
+        // Remove checkmark if present
+        btn.innerHTML = btn.innerHTML.replace(' ✓', '');
+    });
+    
+    // Reset score
+    const scoreDisplay = gameContainer.querySelector('.score-display');
+    const total = gameContainer.querySelectorAll('.left-btn').length;
+    scoreDisplay.textContent = '0 / ' + total;
+    scoreDisplay.classList.remove('text-green-600');
+    
+    // Remove completion message
+    const completionMsg = gameContainer.querySelector('.bg-green-100.text-green-800');
+    if (completionMsg) {
+        completionMsg.remove();
+    }
+    
+    // Reinitialize game
+    initMatchingGame(gameContainer);
+}
+</script>
+
+<style>
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+.animate-shake {
+    animation: shake 0.3s ease-in-out;
+}
+</style>
+{% endblock %}

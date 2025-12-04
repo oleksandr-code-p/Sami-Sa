@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Výsledok - Sami-Sa{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <div class="max-w-lg mx-auto">
+        {% if is_correct %}
+        <!-- Correct Answer -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-green-200">
+            <div class="bg-gradient-to-r from-green-500 to-emerald-500 px-6 py-8 text-center">
+                <div class="text-6xl mb-4">🎉</div>
+                <h1 class="text-3xl font-bold text-white">Správne!</h1>
+            </div>
+            <div class="p-6 text-center">
+                <p class="text-gray-600 mb-4">Vaša odpoveď:</p>
+                <p class="text-2xl font-bold text-green-600 mb-6">{{ answer }}</p>
+                
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <a href="{% url 'exercises:exercise_dashboard' %}" 
+                       class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium">
+                        Pokračovať
+                    </a>
+                    <button onclick="history.back()" 
+                            class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium">
+                        Späť na cvičenie
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <!-- Wrong Answer -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-red-200">
+            <div class="bg-gradient-to-r from-red-500 to-rose-500 px-6 py-8 text-center">
+                <div class="text-6xl mb-4">😕</div>
+                <h1 class="text-3xl font-bold text-white">Skúste znova</h1>
+            </div>
+            <div class="p-6 text-center">
+                <div class="mb-6">
+                    <p class="text-gray-600 mb-2">Vaša odpoveď:</p>
+                    <p class="text-xl font-medium text-red-600 line-through">{{ answer }}</p>
+                </div>
+                
+                <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <p class="text-gray-600 mb-2">Správna odpoveď:</p>
+                    <p class="text-xl font-bold text-green-600">{{ correct_answer }}</p>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <button onclick="history.back()" 
+                            class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+                        Skúsiť znova
+                    </button>
+                    <a href="{% url 'exercises:exercise_dashboard' %}" 
+                       class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium">
+                        Iné cvičenie
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Motivational message -->
+        <div class="mt-8 text-center">
+            {% if is_correct %}
+            <p class="text-gray-600">
+                🌟 Výborne! Pokračujte v učení a zlepšujte sa každý deň.
+            </p>
+            {% else %}
+            <p class="text-gray-600">
+                💪 Nevzdávajte sa! Chyby sú súčasťou učenia.
+            </p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

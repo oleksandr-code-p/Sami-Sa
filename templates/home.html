@@ -18,14 +18,13 @@ Home - Sami-Sa
   </p>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-    <a
-      href="{% url 'lessons:lesson_dashboard' %}">
-    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
-      <div class="text-4xl mb-4">📚</div>
-      <h3 class="text-xl font-bold text-gray-800 mb-2">Lessons</h3>
-      <p class="text-gray-600">Explore our comprehensive lessons</p>
+    <a href="{% url 'lessons:lesson_dashboard' %}">
+      <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+        <div class="text-4xl mb-4">📚</div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Lessons</h3>
+        <p class="text-gray-600">Explore our comprehensive lessons</p>
+      </div>
     </a>
-    </div>
     <a href="{% url 'exercises:exercise_dashboard' %}">
     <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
         <div class="text-4xl mb-4">📝</div>
@@ -33,11 +32,13 @@ Home - Sami-Sa
         <p class="text-gray-600">Practice with interactive exercises</p>
     </div>
 </a>
+    <a href="{% url 'exercises:user_progress' %}">
     <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
       <div class="text-4xl mb-4">📊</div>
       <h3 class="text-xl font-bold text-gray-800 mb-2">Progress</h3>
       <p class="text-gray-600">Track your learning progress</p>
     </div>
+  </a>
     <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition"> 
           <a
         href="{% url 'alphabet:alphabet_list' %}">

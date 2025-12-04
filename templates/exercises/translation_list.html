@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ page_title }} - Sami-Sa{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-8">
+        <a href="{% url 'exercises:exercise_dashboard' %}" class="text-blue-200 hover:text-white transition inline-flex items-center gap-2 mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Späť na cvičenia
+        </a>
+        <div class="flex items-center gap-4">
+            <span class="text-5xl">🌐</span>
+            <div>
+                <h1 class="text-3xl font-bold">{{ page_title }}</h1>
+                <p class="mt-1 text-blue-100">{{ overview }}</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container mx-auto px-4 py-8">
+    <!-- Filter by lesson type -->
+    <div class="mb-8 flex flex-wrap gap-3">
+        <a href="{% url 'exercises:translation_list' %}" 
+           class="px-4 py-2 rounded-full text-sm font-medium {% if not request.GET.lesson_type %}bg-blue-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
+            Všetky
+        </a>
+        {% for lt, label in lesson_types %}
+        <a href="?lesson_type={{ lt }}" 
+           class="px-4 py-2 rounded-full text-sm font-medium {% if request.GET.lesson_type == lt %}bg-blue-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
+            {{ label }}
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- Instructions -->
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8">
+        <p class="text-blue-800 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <strong>Návod:</strong> Preložte slovenské vety do angličtiny. Napíšte váš preklad do textového poľa.
+        </p>
+    </div>
+
+    <!-- Translation Exercises -->
+    {% regroup translations by exercise as exercise_groups %}
+    
+    {% for group in exercise_groups %}
+    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 mb-8">
+        <div class="bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-4">
+            <h2 class="text-xl font-bold text-white">{{ group.grouper.title }}</h2>
+            <p class="text-blue-100 text-sm mt-1">{{ group.grouper.question_text }}</p>
+        </div>
+        
+        <div class="p-6 space-y-6">
+            {% for translation in group.list %}
+            <div class="translation-card border border-gray-200 rounded-xl p-6 hover:border-blue-300 transition-colors"
+                 data-correct="{{ translation.english_sentence }}"
+                 data-translation-id="{{ translation.id }}">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Slovak sentence (source) -->
+                    <div>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-lg">🇸🇰</span>
+                            <span class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Slovensky</span>
+                        </div>
+                        <p class="text-xl text-gray-800 font-medium bg-gray-50 p-4 rounded-lg">
+                            {{ translation.slovak_sentence }}
+                        </p>
+                        
+                        {% if translation.hint %}
+                        <div class="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                            <p class="text-amber-800 text-sm">
+                                <strong>💡 Pomôcka:</strong> {{ translation.hint }}
+                            </p>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- English translation (target) -->
+                    <div>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-8 h-8 bg-cyan-100 rounded-lg flex items-center justify-center text-lg">🇬🇧</span>
+                            <span class="text-sm font-semibold text-gray-500 uppercase tracking-wide">English</span>
+                        </div>
+                        <textarea class="translation-input w-full h-24 p-4 border-2 border-gray-200 rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition resize-none text-lg"
+                                  placeholder="Napíšte anglický preklad..."></textarea>
+                        
+                        <div class="flex gap-3 mt-3">
+                            <button onclick="checkTranslation(this)" 
+                                    class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium check-btn">
+                                Skontrolovať
+                            </button>
+                            <button onclick="showAnswer(this)" 
+                                    class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition show-btn">
+                                Ukázať odpoveď
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feedback -->
+                <div class="feedback-area hidden mt-4 p-4 rounded-lg"></div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="text-center py-12">
+        <div class="text-6xl mb-4">📭</div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Žiadne cvičenia</h3>
+        <p class="text-gray-600">Pre tento filter nie sú k dispozícii žiadne prekladové cvičenia.</p>
+    </div>
+    {% endfor %}
+
+    <!-- Pagination -->
+    {% if translations.has_other_pages %}
+    <nav class="mt-8 flex justify-center">
+        <ul class="flex items-center gap-2">
+            {% if translations.has_previous %}
+            <li>
+                <a href="?page={{ translations.previous_page_number }}{% if request.GET.lesson_type %}&lesson_type={{ request.GET.lesson_type }}{% endif %}" 
+                   class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                    Predchádzajúca
+                </a>
+            </li>
+            {% endif %}
+            
+            <li class="px-4 py-2 bg-blue-600 text-white rounded-lg">
+                {{ translations.number }} / {{ translations.paginator.num_pages }}
+            </li>
+            
+            {% if translations.has_next %}
+            <li>
+                <a href="?page={{ translations.next_page_number }}{% if request.GET.lesson_type %}&lesson_type={{ request.GET.lesson_type }}{% endif %}" 
+                   class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                    Ďalšia
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+
+<script>
+function normalizeText(text) {
+    return text.toLowerCase()
+               .trim()
+               .replace(/[.,!?;:'"]/g, '')
+               .replace(/\s+/g, ' ');
+}
+
+function checkTranslation(button) {
+    const card = button.closest('.translation-card');
+    const correctAnswer = card.dataset.correct;
+    const userInput = card.querySelector('.translation-input');
+    const feedbackArea = card.querySelector('.feedback-area');
+    
+    const userAnswer = userInput.value.trim();
+    
+    feedbackArea.classList.remove('hidden', 'bg-green-100', 'bg-red-100', 'bg-amber-100', 'text-green-800', 'text-red-800', 'text-amber-800');
+    
+    if (userAnswer.length === 0) {
+        feedbackArea.classList.add('bg-amber-100', 'text-amber-800');
+        feedbackArea.innerHTML = '⚠️ Najprv napíšte váš preklad.';
+        return;
+    }
+    
+    // Normalize both answers for comparison
+    const normalizedUser = normalizeText(userAnswer);
+    const normalizedCorrect = normalizeText(correctAnswer);
+    
+    if (normalizedUser === normalizedCorrect) {
+        feedbackArea.classList.add('bg-green-100', 'text-green-800');
+        feedbackArea.innerHTML = '✅ <strong>Výborne!</strong> Váš preklad je správny!';
+        
+        userInput.classList.remove('border-gray-200');
+        userInput.classList.add('border-green-500', 'bg-green-50');
+        
+        button.disabled = true;
+        button.classList.add('opacity-50', 'cursor-not-allowed');
+    } else {
+        // Check for partial match (similarity)
+        const similarity = calculateSimilarity(normalizedUser, normalizedCorrect);
+        
+        if (similarity > 0.7) {
+            feedbackArea.classList.add('bg-amber-100', 'text-amber-800');
+            feedbackArea.innerHTML = `⚠️ <strong>Takmer správne!</strong> Skontrolujte si pravopis a skúste znova.<br><small class="text-amber-600">Správna odpoveď: ${correctAnswer}</small>`;
+        } else {
+            feedbackArea.classList.add('bg-red-100', 'text-red-800');
+            feedbackArea.innerHTML = `❌ <strong>Nesprávne.</strong> Skúste znova alebo si pozrite správnu odpoveď.`;
+        }
+        
+        userInput.classList.add('border-red-300');
+        setTimeout(() => {
+            userInput.classList.remove('border-red-300');
+        }, 1000);
+    }
+}
+
+function showAnswer(button) {
+    const card = button.closest('.translation-card');
+    const correctAnswer = card.dataset.correct;
+    const feedbackArea = card.querySelector('.feedback-area');
+    const userInput = card.querySelector('.translation-input');
+    
+    feedbackArea.classList.remove('hidden', 'bg-green-100', 'bg-red-100', 'bg-amber-100', 'text-green-800', 'text-red-800', 'text-amber-800');
+    feedbackArea.classList.add('bg-blue-100', 'text-blue-800');
+    feedbackArea.innerHTML = `📖 <strong>Správna odpoveď:</strong> ${correctAnswer}`;
+    
+    // Fill the input with correct answer
+    userInput.value = correctAnswer;
+    userInput.classList.remove('border-gray-200', 'border-red-300');
+    userInput.classList.add('border-blue-400', 'bg-blue-50');
+}
+
+function calculateSimilarity(str1, str2) {
+    const longer = str1.length > str2.length ? str1 : str2;
+    const shorter = str1.length > str2.length ? str2 : str1;
+    
+    if (longer.length === 0) return 1.0;
+    
+    const editDistance = levenshteinDistance(longer, shorter);
+    return (longer.length - editDistance) / longer.length;
+}
+
+function levenshteinDistance(str1, str2) {
+    const matrix = [];
+    
+    for (let i = 0; i <= str2.length; i++) {
+        matrix[i] = [i];
+    }
+    
+    for (let j = 0; j <= str1.length; j++) {
+        matrix[0][j] = j;
+    }
+    
+    for (let i = 1; i <= str2.length; i++) {
+        for (let j = 1; j <= str1.length; j++) {
+            if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+                matrix[i][j] = matrix[i - 1][j - 1];
+            } else {
+                matrix[i][j] = Math.min(
+                    matrix[i - 1][j - 1] + 1,
+                    matrix[i][j - 1] + 1,
+                    matrix[i - 1][j] + 1
+                );
+            }
+        }
+    }
+    
+    return matrix[str2.length][str1.length];
+}
+</script>
+{% endblock %}

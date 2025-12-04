@@ -77,7 +77,7 @@ def animal_lesson_list(request):
     context = {
         'animals': animals,
         'page_title': 'zvierata v angličtine',
-        'overview': 'short description',
+        'overview': 'long description',
     }
 
     return render(request, 'lessons/animal_list.html', context)

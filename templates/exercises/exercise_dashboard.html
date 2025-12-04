@@ -1,37 +1,124 @@
 {% extends "base.html" %}
-{% block title %}Exercises Dashboard{% endblock %}
+{% load static %}
+
+{% block title %}{{ page_title }} - Sami-Sa{% endblock %}
 
 {% block content %}
-<header class="bg-blue-600 text-white shadow-lg">
-    <div class="container mx-auto px-4 py-6">
-        <a href="{% url 'home' %}" class="text-gray-100 hover:text-white">← Back to Home</a>
-        <h1 class="text-3xl font-bold">{{ page_title }}</h1>
-        <p class="mt-2 text-blue-100">{{ welcome_message }}</p>
+<!-- Header -->
+<header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-8">
+        <a href="{% url 'home' %}" class="text-blue-200 hover:text-white transition inline-flex items-center gap-2 mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Späť na hlavnú stránku
+        </a>
+        <h1 class="text-4xl font-bold">{{ page_title }}</h1>
+        <p class="mt-2 text-blue-100 text-lg">{{ welcome_message }}</p>
     </div>
 </header>
 
-        <div class="bg-white shadow p-6 rounded-lg">
-            <h3 class="text-xl font-bold mb-2">Lesson Types</h3>
-            <ul class="text-gray-700">
-                {% for lt in exercise_lt %}
-                <li>{{ lt }}</li>
-                {% empty %}
-                <li>No lesson types found.</li>
-                {% endfor %}
-            </ul>
+<div class="container mx-auto px-4 py-8">
+    <!-- Lesson Types Section -->
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+            <span class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">📚</span>
+            Témy na učenie
+        </h2>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {% for lesson_type, label in lesson_types %}
+            <a href="{% url 'exercises:exercises_by_lesson' lesson_type %}" 
+               class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-300">
+                <div class="p-6">
+                    <div class="text-4xl mb-4">
+                        {% if lesson_type == 'number' %}🔢
+                        {% elif lesson_type == 'colour' %}🎨
+                        {% elif lesson_type == 'family' %}👨‍👩‍👧‍👦
+                        {% elif lesson_type == 'food' %}🍎
+                        {% elif lesson_type == 'school' %}🏫
+                        {% elif lesson_type == 'animal' %}🐾
+                        {% elif lesson_type == 'alphabet' %}🔤
+                        {% else %}📖
+                        {% endif %}
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
+                        {{ label }}
+                    </h3>
+                    {% if exercise_counts %}
+                    <p class="text-gray-500 mt-2 text-sm">
+                        {{ exercise_counts|default_if_none:0 }} cvičení
+                    </p>
+                    {% endif %}
+                </div>
+                <div class="bg-gray-50 px-6 py-3 group-hover:bg-blue-50 transition-colors">
+                    <span class="text-blue-600 text-sm font-medium flex items-center gap-2">
+                        Začať učenie
+                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </span>
+                </div>
+            </a>
+            {% empty %}
+            <p class="text-gray-500 col-span-full">Žiadne témy nie sú k dispozícii.</p>
+            {% endfor %}
         </div>
+    </section>
 
-        <div class="bg-white shadow p-6 rounded-lg">
-            <h3 class="text-xl font-bold mb-2">Exercise Types</h3>
-            <ul class="text-gray-700">
-                {% for et in exercise_et %}
-                <li>{{ et }}</li>
-                {% empty %}
-                <li>No exercise types found.</li>
-                {% endfor %}
-            </ul>
+    <!-- Exercise Types Section -->
+    <section>
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+            <span class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">📝</span>
+            Typy cvičení
+        </h2>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            {% for exercise_type, label in exercise_types %}
+            <a href="{% if exercise_type == 'multiple_choice' %}{% url 'exercises:exercise_choice_list' %}{% elif exercise_type == 'matching' %}{% url 'exercises:matching_pair_list' %}{% elif exercise_type == 'word_scrambles' %}{% url 'exercises:word_scramble_list' %}{% elif exercise_type == 'sentence_completion' %}{% url 'exercises:sentence_completion_list' %}{% elif exercise_type == 'translation' %}{% url 'exercises:translation_list' %}{% endif %}"
+               class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-green-300">
+                <div class="text-3xl mb-3">
+                    {% if exercise_type == 'multiple_choice' %}✅
+                    {% elif exercise_type == 'matching' %}🔗
+                    {% elif exercise_type == 'word_scrambles' %}🔀
+                    {% elif exercise_type == 'sentence_completion' %}✏️
+                    {% elif exercise_type == 'translation' %}🌐
+                    {% else %}📋
+                    {% endif %}
+                </div>
+                <h3 class="text-lg font-bold text-gray-800 group-hover:text-green-600 transition-colors">
+                    {{ label }}
+                </h3>
+                <p class="text-gray-500 mt-1 text-sm">
+                    {% if exercise_type == 'multiple_choice' %}Vyberte správnu odpoveď
+                    {% elif exercise_type == 'matching' %}Spárujte slová
+                    {% elif exercise_type == 'word_scrambles' %}Usporiadajte písmená
+                    {% elif exercise_type == 'sentence_completion' %}Doplňte slová
+                    {% elif exercise_type == 'translation' %}Preložte vety
+                    {% endif %}
+                </p>
+            </a>
+            {% empty %}
+            <p class="text-gray-500 col-span-full">Žiadne typy cvičení nie sú k dispozícii.</p>
+            {% endfor %}
         </div>
+    </section>
 
-    </div>
+    <!-- Quick Stats (for authenticated users) -->
+    {% if user.is_authenticated %}
+    <section class="mt-12">
+        <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-8 text-white">
+            <h2 class="text-2xl font-bold mb-4">Váš pokrok</h2>
+            <p class="text-blue-100 mb-6">Sledujte svoj pokrok a pokračujte v učení!</p>
+            <a href="{% url 'exercises:user_progress' %}"
+               class="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                Zobraziť môj pokrok
+            </a>
+        </div>
+    </section>
+    {% endif %}
 </div>
 {% endblock %}
