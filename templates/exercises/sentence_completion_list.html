@@ -67,7 +67,6 @@
                 <!-- Sentence with blank -->
                 <div class="mb-6">
                     <p class="text-xl text-gray-800 leading-relaxed">
-                        {% with parts=completion.english_sentence|split:"___" %}
                         {% for part in parts %}
                             {{ part }}
                             {% if not forloop.last %}
@@ -79,7 +78,6 @@
                             </span>
                             {% endif %}
                         {% endfor %}
-                        {% endwith %}
                     </p>
                 </div>
                 

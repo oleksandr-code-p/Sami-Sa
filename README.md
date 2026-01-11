@@ -82,11 +82,11 @@ Sami_sa/
 ## Development Stages
 
 - [x] Stage 1: Project Setup & Authentication
-- [ ] Stage 2: Core Navigation & Settings
-- [ ] Stage 3: Dictionary & Vocabulary Management
-- [ ] Stage 4: Alphabet Display
-- [ ] Stage 5: Pre-made Lessons & Theory
-- [ ] Stage 6-9: Exercise Types
+- [x] Stage 2: Core Navigation & Settings
+- [x] Stage 3: Dictionary & Vocabulary Management
+- [x] Stage 4: Alphabet Display
+- [x] Stage 5: Pre-made Lessons & Theory
+- [x] Stage 6-9: Exercise Types
 - [ ] Stage 10: Testing System
 - [ ] Stage 11: Progress Tracking & Polish
 - [ ] Stage 12: Deployment

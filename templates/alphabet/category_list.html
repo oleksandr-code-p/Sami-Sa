@@ -13,9 +13,9 @@
         </h1>
         <p class="text-xl text-gray-600 mb-6">
             {% if category == 'vowel' %}
-            Master the 5 essential vowel sounds in English
+            Ovládni 5 základných samohlások v angličtine
             {% else %}
-            Learn all 21 consonants in English
+            Nauč sa všetkých 21 spoluhlások v angličtine
             {% endif %}
         </p>
 
@@ -23,17 +23,17 @@
         <div class="flex justify-center gap-4 mb-8">
             <a href="{% url 'alphabet:alphabet_list' %}"
                 class="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition font-semibold">
-                ← All Letters
+                ← Všetky písmená
             </a>
             {% if category == 'vowel' %}
             <a href="{% url 'alphabet:consonants' %}"
                 class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold">
-                View Consonants →
+                Spoluhlásky →
             </a>
             {% else %}
             <a href="{% url 'alphabet:vowels' %}"
                 class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-semibold">
-                View Vowels →
+                Samohlásky →
             </a>
             {% endif %}
         </div>
@@ -44,23 +44,17 @@
         class="{% if category == 'vowel' %}bg-green-50 border-green-500{% else %}bg-blue-50 border-blue-500{% endif %} border-l-4 rounded-lg p-6 mb-8">
         <h2 class="text-2xl font-bold text-gray-800 mb-3">
             {% if category == 'vowel' %}
-            📗 About Vowels (O samohláskach)
+            📗 O samohláskach
             {% else %}
-            📘 About Consonants (O spoluhlásákach)
+            📘 O spoluhláskach
             {% endif %}
         </h2>
         <p class="text-gray-700">
             {% if category == 'vowel' %}
-            Vowels are the foundation of English pronunciation. Every English word contains at least one vowel.
-            The five vowels (A, E, I, O, U) can make many different sounds depending on the word.
-            <br><br>
-            <strong>Samohlásky</strong> sú základom anglickej výslovnosti. Každé anglické slovo obsahuje aspoň jednu
-            samohlásku.
+            Samohlásky sú základom anglickej výslovnosti. Každé anglické slovo obsahuje aspoň jednu samohlásku.
+            Päť samohlások (A, E, I, O, U) môže mať rôzne zvuky v závislosti od slova.
             {% else %}
-            Consonants make up the majority of the English alphabet. They work together with vowels to create words.
-            Each consonant has its own unique sound and is essential for clear communication.
-            <br><br>
-            <strong>Spoluhlásky</strong> tvoria väčšinu anglickej abecedy. Spolu so samohláskami vytvárajú slová.
+            Spoluhlásky tvoria väčšinu anglickej abecedy. Spolu so samohláskami tvoria slová a každá spoluhláska má svoj jedinečný zvuk, dôležitý pre jasnú komunikáciu.
             {% endif %}
         </p>
     </div>
@@ -89,7 +83,7 @@
                 {% if letter.pronunciation %}
                 <button onclick="document.getElementById('audio{{ letter.id }}').play()"
                     class="w-full px-4 py-2 {% if category == 'vowel' %}bg-green-600 hover:bg-green-700{% else %}bg-blue-600 hover:bg-blue-700{% endif %} text-white rounded-lg transition font-semibold text-sm mb-2">
-                    🔊 Play
+                    🔊 Prehrať
                 </button>
                 <audio id="audio{{ letter.id }}" src="{{ letter.pronunciation.url }}"></audio>
                 {% endif %}
@@ -97,7 +91,7 @@
                 <!-- Detail Link -->
                 <a href="{% url 'alphabet:letter_detail' letter.id %}"
                     class="block text-{% if category == 'vowel' %}green{% else %}blue{% endif %}-600 hover:text-{% if category == 'vowel' %}green{% else %}blue{% endif %}-800 text-sm font-medium">
-                    Details →
+                    Detaily →
                 </a>
             </div>
         </div>
@@ -108,9 +102,9 @@
     <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
         <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">
             {% if category == 'vowel' %}
-            🎯 Vowel Summary
+            🎯 Zhrnutie samohlások
             {% else %}
-            🎯 Consonant Summary
+            🎯 Zhrnutie spoluhlások
             {% endif %}
         </h2>
 
@@ -123,9 +117,9 @@
                 </div>
                 <p class="text-gray-700 font-semibold">
                     {% if category == 'vowel' %}
-                    Total Vowels
+                    Počet samohlások
                     {% else %}
-                    Total Consonants
+                    Počet spoluhlások
                     {% endif %}
                 </p>
             </div>
@@ -135,7 +129,7 @@
                     26
                 </div>
                 <p class="text-gray-700 font-semibold">
-                    Letters in English Alphabet
+                    Písmená v anglickej abecede
                 </p>
             </div>
 
@@ -144,7 +138,7 @@
                     {% if category == 'vowel' %}📗{% else %}📘{% endif %}
                 </div>
                 <p class="text-gray-700 font-semibold">
-                    Essential for Learning
+                    Dôležité pre učenie
                 </p>
             </div>
         </div>
@@ -154,42 +148,42 @@
     <div
         class="{% if category == 'vowel' %}bg-linear-to-r from-green-50 to-green-100{% else %}bg-linear-to-r from-blue-50 to-blue-100{% endif %} rounded-xl p-8">
         <h2 class="text-2xl font-bold text-gray-800 mb-4">
-            ✍️ Practice Tips (Tipy na cvičenie)
+            ✍️ Tipy na cvičenie
         </h2>
         <ul class="space-y-3 text-gray-700">
             {% if category == 'vowel' %}
             <li class="flex items-start gap-2">
                 <span class="text-green-600 font-bold mt-1">✓</span>
-                <span>Practice each vowel sound individually - they can sound very different from Slovak vowels</span>
+                <span>Precvičuj každý samohláskový zvuk zvlášť – môžu sa veľmi líšiť od slovenských samohlások</span>
             </li>
             <li class="flex items-start gap-2">
                 <span class="text-green-600 font-bold mt-1">✓</span>
-                <span>Remember that vowels can have multiple pronunciations in different words</span>
+                <span>Pamätaj, že samohlásky môžu mať viacero výslovností v rôznych slovách</span>
             </li>
             <li class="flex items-start gap-2">
                 <span class="text-green-600 font-bold mt-1">✓</span>
-                <span>Listen to the audio pronunciation carefully and repeat several times</span>
+                <span>Počúvaj audio výslovnosť a opakuj niekoľkokrát</span>
             </li>
             <li class="flex items-start gap-2">
                 <span class="text-green-600 font-bold mt-1">✓</span>
-                <span>Vowels are the "singing" part of English - practice holding the sounds longer</span>
+                <span>Samohlásky sú "spevácka" časť angličtiny – precvičuj ich dlhšie</span>
             </li>
             {% else %}
             <li class="flex items-start gap-2">
                 <span class="text-blue-600 font-bold mt-1">✓</span>
-                <span>Learn consonants in groups with similar sounds (B, P, D, T)</span>
+                <span>Nauč sa spoluhlásky v skupinách s podobným zvukom (B, P, D, T)</span>
             </li>
             <li class="flex items-start gap-2">
                 <span class="text-blue-600 font-bold mt-1">✓</span>
-                <span>Practice combining consonants with vowels to make simple sounds</span>
+                <span>Precvičuj kombinovanie spoluhlások so samohláskami, aby vznikli jednoduché zvuky</span>
             </li>
             <li class="flex items-start gap-2">
                 <span class="text-blue-600 font-bold mt-1">✓</span>
-                <span>Pay attention to consonants that sound different from Slovak (like H, J, W)</span>
+                <span>Dávaj pozor na spoluhlásky, ktoré znejú inak ako v slovenčine (napr. H, J, W)</span>
             </li>
             <li class="flex items-start gap-2">
                 <span class="text-blue-600 font-bold mt-1">✓</span>
-                <span>Consonants provide structure - practice writing them clearly</span>
+                <span>Spoluhlásky tvoria štruktúru – precvičuj ich jasné písanie</span>
             </li>
             {% endif %}
         </ul>

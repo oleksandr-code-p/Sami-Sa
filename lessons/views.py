@@ -5,8 +5,8 @@ from .models import NumberLesson, ColourLesson, FamilyLesson, FoodLesson, School
 
 def lesson_dashboard(request):
     context = {
-        'page_title': 'Language Learning Dashboard',
-        'welcome_message': 'Welcome to Slovak Language Lessons',
+        'page_title': 'Panel učenia jazykov',
+        'welcome_message': 'Vitajte v lekciách slovenčiny',
     }
     return render(request, 'lessons/dashboard.html', context)
 
@@ -17,7 +17,7 @@ def number_lesson_list(request):
     context = {
         'numbers': numbers,
         'page_title': 'čísla v angličtine',
-        'overview': 'Learn the basic numbers in English, practice pronunciation, and count from 1 to 1000',
+        'overview': 'Nauč sa základné čísla v angličtine, precvičuj výslovnosť a počítaj od 1 do 1000.',
     }
 
     return render(request, 'lessons/number_list.html', context)
@@ -29,7 +29,7 @@ def colour_lesson_list(request):
     context = {
         'colours': colours,
         'page_title': 'farby v angličtine',
-        'overview': 'Discover common colours in English and practice saying them correctly.',
+        'overview': 'Objav bežné farby v angličtine a precvičuj ich správnu výslovnosť.',
     }
 
     return render(request, 'lessons/colour_list.html', context)
@@ -41,7 +41,7 @@ def family_lesson_list(request):
     context = {
         'family_terms': family_terms,
         'page_title': 'rodina v angličtine',
-        'overview': 'Learn family-related words, practice pronunciation, and use them in simple phrases.',
+        'overview': 'Nauč sa slová súvisiace s rodinou, precvičuj výslovnosť a používaj ich v jednoduchých vetách.',
     }
 
     return render(request, 'lessons/family_list.html', context)
@@ -53,7 +53,7 @@ def food_lesson_list(request):
     context = {
         'food_terms': food_terms,
         'page_title': 'jedlo v angličtine',
-        'overview': 'Explore everyday food items, learn their names, and practice pronunciation.',
+        'overview': 'Preskúmaj každodenné potraviny, nauč sa ich názvy a precvičuj výslovnosť.',
     }
 
     return render(request, 'lessons/food_list.html', context)
@@ -65,7 +65,7 @@ def school_lesson_list(request):
     context = {
         'school_terms': school_terms,
         'page_title': 'škola v angličtine',
-        'overview': 'Get familiar with school vocabulary, classroom objects, and simple phrases.',
+        'overview': 'Zoznaj sa so školskou slovnou zásobou, predmetmi v triede a jednoduchými vetami.',
     }
 
     return render(request, 'lessons/school_list.html', context)
@@ -77,7 +77,7 @@ def animal_lesson_list(request):
     context = {
         'animals': animals,
         'page_title': 'zvierata v angličtine',
-        'overview': 'long description',
+        'overview': 'Nauč sa názvy zvierat v angličtine a precvičuj ich výslovnosť.',
     }
 
     return render(request, 'lessons/animal_list.html', context)

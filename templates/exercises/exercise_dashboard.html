@@ -28,7 +28,7 @@
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {% for lesson_type, label in lesson_types %}
-            <a href="{% url 'exercises:exercises_by_lesson' lesson_type %}" 
+            <a href="{% url 'exercises:exercise_choice_list' %}?lesson_type={{ lesson_type }}" 
                class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-300">
                 <div class="p-6">
                     <div class="text-4xl mb-4">

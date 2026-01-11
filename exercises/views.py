@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_POST
-from .models import Exercise, Exercise_Choice, Matching_Pair, Word_Scramble, Sentence_Completion, Translation, UserProgress
+from .models import Exercise, Exercise_Choice, Matching_Pair, Word_Scramble, Sentence_Completion, Translation, UserProgress, LESSON_TYPES, EXERCISE_TYPES
 from lessons.models import NumberLesson, ColourLesson, FamilyLesson, FoodLesson, SchoolLesson, AnimalLesson
 from django.contrib.auth.decorators import login_required
 
@@ -9,14 +9,12 @@ from django.contrib.auth.decorators import login_required
 # DASHBOARD
 # --------------------------------------------------
 def Exercise_Dashboard(request):
-    exercise_lt = Exercise.objects.values_list("lesson_type", flat=True).distinct()
-    exercise_et = Exercise.objects.values_list("exercise_type", flat=True).distinct()
 
     context = {
-        'exercise_lt': exercise_lt,
-        'exercise_et': exercise_et,
-        'page_title': 'Language Learning Dashboard',
-        'welcome_message': 'Welcome to Slovak Language Exercises',
+        'lesson_types': LESSON_TYPES,
+        'exercise_types': EXERCISE_TYPES,
+        'page_title': 'Panel učenia jazykov',
+        'welcome_message': 'Vitajte v cvičeniach zo slovenčiny',
     }
 
     return render(request, 'exercises/exercise_dashboard.html', context)
@@ -60,12 +58,13 @@ def Exercise_Choice_list(request):
 def filter_exercises(request, queryset):
     lesson_type = request.GET.get("lesson_type")
     if lesson_type:
-        queryset = queryset.filter(exercise_lesson_type=lesson_type)
+        queryset = queryset.filter(exercise__lesson_type=lesson_type)
     
     exercise_type = request.GET.get("exercise_type")
     if exercise_type:
-        queryset = queryset.filter(exercise_exercise_type=exercise_type)
+        queryset = queryset.filter(exercise__exercise_type=exercise_type)
 
+    return queryset
     
 # --------------------------------------------------
 # LIST OF MATCHING PAIRS
@@ -106,11 +105,14 @@ def Word_Scramble_list(request):
 # LIST OF SENTENCE COMPLETION
 # --------------------------------------------------
 def Sentence_Completion_list(request):
-    queryset = Sentence_Completion.objects.select_related("exercises")
-    sentence = filter_exercises(request, queryset)
+    queryset = Sentence_Completion.objects.select_related("exercise")
+    completions = filter_exercises(request, queryset)
+
+    for completion in completions:
+        completion.sentence_parts = completion.english_sentence.split("__")
 
     context = {
-        'sentence': sentence,
+        'sentence': completions,
         'lesson_type': LESSON_TYPES,
         'page_title': 'Cvičenia - dopĺňanie do viet',
         'overview': 'Precvič si zručnosti dopĺňaním do viet.',
@@ -123,7 +125,7 @@ def Sentence_Completion_list(request):
 # LIST OF TRANSLATION
 # --------------------------------------------------
 def Translation_list(request):
-    queryset = Translation.objects.select_related("exercises")
+    queryset = Translation.objects.select_related("exercise")
     translate = filter_exercises(request, queryset)
 
     context = {
@@ -155,3 +157,6 @@ def user_progress(request):
     }
 
     return render(request, 'exercises/user_progress.html', context)
+
+
+
