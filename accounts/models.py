@@ -11,5 +11,3 @@ class UserProfile(models.Model):
 
     class Meta():
         ordering = ['-date_joined']
-
-

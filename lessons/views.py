@@ -83,59 +83,6 @@ def animal_lesson_list(request):
     return render(request, 'lessons/animal_list.html', context)
 
 
-# def family_voc_pronun(request):
-#     lessons = FamilyLesson.objects.all()
 
-#     family_vocabulary = {
-#     "family": "rodina",
-#     "father / dad": "otec",
-#     "mother / mom": "mama",
-#     "brother": "brat",
-#     "sister": "sestra",
-#     "grandfather / grandpa": "dedo",
-#     "grandmother / grandma": "babka",
-#     "uncle": "ujo",
-#     "aunt": "teta",
-#     "cousin": "bratranec / sesternica",
-#     "son": "syn",
-#     "daughter": "dcéra",
-#     "husband": "manžel",
-#     "wife": "manželka",
-#     "parents": "rodičia",
-#     "children / kids": "deti",
-#     "baby": "bábätko",
-#     "friend": "kamarát",
-#     "people": "ľudia"
-#     }
-
-#     family_pronunciation = {
-#     "family": "fémi",
-#     "father / dad": "fáder / dád",
-#     "mother / mom": "máder / mám",
-#     "brother": "bráder",
-#     "sister": "sistr",
-#     "grandfather / grandpa": "grándfáder / grándpa",
-#     "grandmother / grandma": "grándmáder / grándma",
-#     "uncle": "ankl",
-#     "aunt": "ant",
-#     "cousin": "kazin",
-#     "son": "san",
-#     "daughter": "dóter",
-#     "husband": "hazbend",
-#     "wife": "vajf",
-#     "parents": "pérents",
-#     "children / kids": "čildren / kids",
-#     "baby": "bébi",
-#     "friend": "frend",
-#     "people": "pípol"
-#     }
-
-#     context = {
-#         'lessons': lessons,
-#         'vocabulary': family_vocabulary,
-#         'pronunciation': family_pronunciation,
-#     }
-        
-#     return render(request, 'family_voc_pronun.html', context)
 
 
