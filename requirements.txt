@@ -25,6 +25,7 @@ pydantic_core==2.41.5
 python-decouple==3.8
 PyYAML==6.0.3
 psycopg2-binary
+dj-database-url
 requests==2.32.3
 shellingham==1.5.4
 sniffio==1.3.1
