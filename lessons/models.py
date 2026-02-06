@@ -46,7 +46,7 @@ class FamilyLesson(models.Model):
     family_term = models.CharField(max_length=100)
     vocabulary = models.TextField()
     pronunciation_in_slovak = models.TextField()
-    emoji = models.CharField(max_length=10)  # zvýšené max_length
+    emoji = models.CharField(max_length=10)  # upravené
     order = models.IntegerField()
 
     def __str__(self):
@@ -62,7 +62,7 @@ class FoodLesson(models.Model):
     name = models.CharField(max_length=10)
     vocabulary = models.TextField()
     pronunciation_in_slovak = models.TextField()
-    emoji = models.CharField(max_length=10)  # zvýšené max_length
+    emoji = models.CharField(max_length=10)  # upravené
     order = models.IntegerField()
 
     def __str__(self):
@@ -76,7 +76,7 @@ class SchoolLesson(models.Model):
     name = models.CharField(max_length=10)
     vocabulary = models.TextField()
     pronunciation_in_slovak = models.TextField()
-    emoji = models.CharField(max_length=10)  # zvýšené max_length
+    emoji = models.CharField(max_length=10)  # upravené
     order = models.IntegerField()
 
     def __str__(self):
@@ -89,7 +89,7 @@ class SchoolLesson(models.Model):
 class AnimalLesson(models.Model):
     name = models.CharField(max_length=10)
     name_in_english = models.CharField(max_length=20)
-    emoji = models.CharField(max_length=10)  # zvýšené max_length
+    emoji = models.CharField(max_length=10)  # upravené
     pronunciation_in_slovak = models.TextField()
     order = models.IntegerField()
 
