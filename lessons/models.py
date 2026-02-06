@@ -17,7 +17,7 @@ class NumberLesson(models.Model):
     pronunciation_in_slovak = models.CharField(max_length=50)
     order = models.IntegerField()
 
-    def str(self):
+    def __str__(self):
         return f"{self.number} - {self.name_in_english}"
 
     class Meta:
@@ -33,7 +33,7 @@ class ColourLesson(models.Model):
     pronunciation_in_slovak = models.CharField(max_length=50)
     order = models.IntegerField()
 
-    def str(self):
+    def __str__(self):
         return f"{self.colour_name} - {self.name_in_english}"
 
     class Meta:
@@ -42,15 +42,14 @@ class ColourLesson(models.Model):
         verbose_name_plural = "Colour Lessons"
 
 
-
 class FamilyLesson(models.Model):
     family_term = models.CharField(max_length=100)
     vocabulary = models.TextField()
     pronunciation_in_slovak = models.TextField()
-    emoji = models.CharField(max_length=3)
+    emoji = models.CharField(max_length=10)  # zvýšené max_length
     order = models.IntegerField()
 
-    def str(self):
+    def __str__(self):
         return self.family_term
 
     class Meta:
@@ -63,11 +62,11 @@ class FoodLesson(models.Model):
     name = models.CharField(max_length=10)
     vocabulary = models.TextField()
     pronunciation_in_slovak = models.TextField()
-    emoji = models.CharField(max_length=3)
+    emoji = models.CharField(max_length=10)  # zvýšené max_length
     order = models.IntegerField()
 
     def __str__(self):
-        return f"{name}"
+        return self.name
 
     class Meta:
         ordering = ['order']
@@ -77,11 +76,11 @@ class SchoolLesson(models.Model):
     name = models.CharField(max_length=10)
     vocabulary = models.TextField()
     pronunciation_in_slovak = models.TextField()
-    emoji = models.CharField(max_length=3)
+    emoji = models.CharField(max_length=10)  # zvýšené max_length
     order = models.IntegerField()
 
     def __str__(self):
-        return f"{name}"
+        return self.name
 
     class Meta:
         ordering = ['order']
@@ -89,13 +88,13 @@ class SchoolLesson(models.Model):
 
 class AnimalLesson(models.Model):
     name = models.CharField(max_length=10)
-    name_in_english=models.CharField(max_length=20)
-    emoji = models.CharField(max_length=3)
+    name_in_english = models.CharField(max_length=20)
+    emoji = models.CharField(max_length=10)  # zvýšené max_length
     pronunciation_in_slovak = models.TextField()
     order = models.IntegerField()
 
     def __str__(self):
-        return f"{name}"
+        return self.name
 
     class Meta:
         ordering = ['order']
