@@ -8,7 +8,7 @@ CATEGORY_CHOICES = [
 
 
 class Letter(models.Model):
-    name = models.CharField(max_length=1)
+    name = models.CharField(max_length=5)
     uppercase = models.CharField(max_length=5)
     lowercase = models.CharField(max_length=5)
     pronunciation = models.FileField(upload_to='letters/', blank=True, null=True)

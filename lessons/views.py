@@ -6,7 +6,7 @@ from .models import NumberLesson, ColourLesson, FamilyLesson, FoodLesson, School
 def lesson_dashboard(request):
     context = {
         'page_title': 'Panel učenia jazykov',
-        'welcome_message': 'Vitajte v lekciách slovenčiny',
+        'welcome_message': 'Vitajte v lekciách angličtiny',
     }
     return render(request, 'lessons/dashboard.html', context)
 

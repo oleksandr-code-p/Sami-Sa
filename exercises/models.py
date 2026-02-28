@@ -103,7 +103,7 @@ class UserProgress(models.Model):
     best_score = models.FloatField(default=0.0)
 
 
-    def str(self):
+    def __str__(self):
         return f"{self.user.username} - {self.exercise.title}"
 
 

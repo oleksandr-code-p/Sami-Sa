@@ -4,8 +4,10 @@
 {% block title %}{{ page_title }} - Sami-Sa{% endblock %}
 
 {% block content %}
+
+
 <!-- Header -->
-<header class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg">
+<header class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg rounded-2xl">
     <div class="container mx-auto px-4 py-8">
         <a href="{% url 'home' %}" class="text-emerald-200 hover:text-white transition inline-flex items-center gap-2 mb-4">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,7 +35,7 @@
                 </div>
                 <div>
                     <p class="text-gray-500 text-sm">Celkové pokusy</p>
-                    <p class="text-2xl font-bold text-gray-800">{{ total_attempts }}</p>
+                    <p class="text-2xl font-bold text-gray-800">{{ attempts }}</p>
                 </div>
             </div>
         </div>
@@ -45,7 +47,7 @@
                 </div>
                 <div>
                     <p class="text-gray-500 text-sm">Správne odpovede</p>
-                    <p class="text-2xl font-bold text-green-600">{{ total_correct }}</p>
+                    <p class="text-2xl font-bold text-green-600">{{ correct_attempts }}</p>
                 </div>
             </div>
         </div>
@@ -102,14 +104,13 @@
                      class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center transition-all duration-500
                         {% if overall_accuracy >= 80 %}bg-gradient-to-r from-green-400 to-green-600
                         {% elif overall_accuracy >= 60 %}bg-gradient-to-r from-amber-400 to-amber-600
-                        {% else %}bg-gradient-to-r from-red-400 to-red-600{% endif %}">
+                        {% else %}bg-gradient-to-r from-red-200 to-red-600{% endif %}">
                 </div>
             </div>
         </div>
     </div>
     {% endif %}
 
-    <!-- Detailed Progress Table -->
     <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
         <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
             <h2 class="text-lg font-bold text-gray-800">Detailný prehľad cvičení</h2>

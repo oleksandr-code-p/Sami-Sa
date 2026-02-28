@@ -14,7 +14,7 @@ def Exercise_Dashboard(request):
         'lesson_types': LESSON_TYPES,
         'exercise_types': EXERCISE_TYPES,
         'page_title': 'Panel učenia jazykov',
-        'welcome_message': 'Vitajte v cvičeniach zo slovenčiny',
+        'welcome_message': 'Vitajte v cvičeniach zo angličtiny',
     }
 
     return render(request, 'exercises/exercise_dashboard.html', context)
@@ -43,10 +43,10 @@ def Check_Answer(request):
 # --------------------------------------------------
 def Exercise_Choice_list(request):
     queryset = Exercise_Choice.objects.select_related("exercise")
-    choices = filter_exercises(request, queryset)
+    exercise_choice = filter_exercises(request, queryset)
 
     context = {
-        'choices': choices,
+        'exercise_choice': exercise_choice,
         'lesson_type': LESSON_TYPES,
         'page_title': 'Cvičenia - výber správnej odpovede',
         'overview': 'Precvič si zručnosti výberom odpovede.',
@@ -54,6 +54,50 @@ def Exercise_Choice_list(request):
 
     return render(request, 'exercises/exercise_choice_list.html', context)
 
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+import json
+
+# ...existing code...
+
+@login_required
+@require_POST
+def submit_answer(request):
+    """Handle answer submission for all exercise types"""
+    try:
+        # Handle both POST form data and JSON data
+        if request.content_type == 'application/json':
+            data = json.loads(request.body)
+            exercise_id = data.get("exercise_id")
+            is_correct = data.get("is_correct")
+        else:
+            exercise_id = request.POST.get("exercise_id")
+            is_correct = request.POST.get("is_correct") == 'true'
+        
+        exercise = Exercise.objects.get(id=exercise_id)
+        
+        progress, created = UserProgress.objects.get_or_create(
+            user=request.user,
+            exercise=exercise
+        )
+
+        progress.attempts += 1
+
+        if is_correct:
+            progress.correct_attempts += 1
+            progress.is_completed = True
+
+        progress.save()
+
+        return JsonResponse({
+            "success": True,
+            "correct": is_correct,
+            "attempts": progress.attempts,
+            "correct_attempts": progress.correct_attempts,
+            "accuracy": round((progress.correct_attempts / progress.attempts) * 100, 1)
+        })
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)}, status=400)
 
 def filter_exercises(request, queryset):
     lesson_type = request.GET.get("lesson_type")
@@ -125,38 +169,40 @@ def Sentence_Completion_list(request):
 # LIST OF TRANSLATION
 # --------------------------------------------------
 def Translation_list(request):
-    queryset = Translation.objects.select_related("exercise")
-    translate = filter_exercises(request, queryset)
+    queryset = Translation.objects.select_related("exercise").order_by("id")
+    translations = filter_exercises(request, queryset)
 
     context = {
-        'translate': translate,
-        'lesson_type': LESSON_TYPES,         
-        'page_title': 'Cvičenia - preklad',
-        'overview': 'Precvič si zručnosti prekladom viet.',
+        "translations": translations,
+        "lesson_types": LESSON_TYPES,
+        "page_title": "Cvičenia - preklad",
+        "overview": "Precvič si zručnosti prekladom viet.",
     }
-
-    return render(request, 'exercises/translation_list.html', context)
+    return render(request, "exercises/translation_list.html", context)
 
 
 @login_required
 def user_progress(request):
-    """Display user's progress across all exercises."""
     progress_list = UserProgress.objects.filter(user=request.user).select_related('exercise').order_by('-correct_attempts')
+    attempts = 0
+    correct_attempts = 0
+    for p in progress_list:
+        attempts += p.attempts
+        correct_attempts += p.correct_attempts
+    if attempts > 0:
+        overall_accuracy = correct_attempts / attempts * 100
+    else: 
+        overall_accuracy = 0
 
-    # Calculate overall stats
-    total_attempts = sum(p.attempts for p in progress_list)
-    total_correct = sum(p.correct_attempts for p in progress_list)
-    overall_accuracy = (total_correct / total_attempts * 100) if total_attempts > 0 else 0
 
     context = {
         'progress_list': progress_list,
-        'total_attempts': total_attempts,
-        'total_correct': total_correct,
+        'attempts': attempts,
+        'correct_attempts': correct_attempts,
         'overall_accuracy': round(overall_accuracy, 1),
         'page_title': 'Môj pokrok',
     }
 
     return render(request, 'exercises/user_progress.html', context)
-
 
 

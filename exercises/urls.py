@@ -18,5 +18,7 @@ urlpatterns = [
 
     path("check_answer", views.Check_Answer, name="check_answer"),
 
-    path("user_progress", views.user_progress, name="user_progress")
+    path("user_progress", views.user_progress, name="user_progress"),
+
+    path("submit-answer/", views.submit_answer, name="submit_answer"),
 ]

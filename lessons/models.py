@@ -12,7 +12,7 @@ class Lesson(models.Model):
 
 
 class NumberLesson(models.Model):
-    number = models.CharField(max_length=5)
+    number = models.CharField(max_length=50)
     name_in_english = models.CharField(max_length=50)
     pronunciation_in_slovak = models.CharField(max_length=50)
     order = models.IntegerField()
@@ -46,7 +46,7 @@ class FamilyLesson(models.Model):
     family_term = models.CharField(max_length=100)
     vocabulary = models.TextField()
     pronunciation_in_slovak = models.TextField()
-    emoji = models.CharField(max_length=10)  # upravené
+    emoji = models.CharField(max_length=100)  # upravené
     order = models.IntegerField()
 
     def __str__(self):
@@ -59,10 +59,10 @@ class FamilyLesson(models.Model):
 
 
 class FoodLesson(models.Model):
-    name = models.CharField(max_length=10)
+    name = models.CharField(max_length=100)
     vocabulary = models.TextField()
     pronunciation_in_slovak = models.TextField()
-    emoji = models.CharField(max_length=10)  # upravené
+    emoji = models.CharField(max_length=100)  # upravené
     order = models.IntegerField()
 
     def __str__(self):
@@ -73,10 +73,10 @@ class FoodLesson(models.Model):
 
 
 class SchoolLesson(models.Model):
-    name = models.CharField(max_length=10)
+    name = models.CharField(max_length=100)
     vocabulary = models.TextField()
     pronunciation_in_slovak = models.TextField()
-    emoji = models.CharField(max_length=10)  # upravené
+    emoji = models.CharField(max_length=100)  # upravené
     order = models.IntegerField()
 
     def __str__(self):
@@ -87,9 +87,9 @@ class SchoolLesson(models.Model):
 
 
 class AnimalLesson(models.Model):
-    name = models.CharField(max_length=10)
-    name_in_english = models.CharField(max_length=20)
-    emoji = models.CharField(max_length=10)  # upravené
+    name = models.CharField(max_length=100)
+    name_in_english = models.CharField(max_length=200)
+    emoji = models.CharField(max_length=100)  # upravené
     pronunciation_in_slovak = models.TextField()
     order = models.IntegerField()
 

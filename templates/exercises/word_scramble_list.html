@@ -4,6 +4,7 @@
 {% block title %}{{ page_title }} - Sami-Sa{% endblock %}
 
 {% block content %}
+{% csrf_token %}
 <!-- Header -->
 <header class="bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg">
     <div class="container mx-auto px-4 py-8">
@@ -49,7 +50,7 @@
     </div>
 
     <!-- Word Scramble Exercises -->
-    {% regroup scrambles by exercise as exercise_groups %}
+    {% regroup word by exercise as exercise_groups %}
     
     {% for group in exercise_groups %}
     <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 mb-8">
@@ -63,7 +64,8 @@
                 {% for scramble in group.list %}
                 <div class="scramble-card bg-gray-50 rounded-xl p-6 border border-gray-200" 
                      data-original="{{ scramble.original_word|lower }}"
-                     data-scramble-id="{{ scramble.id }}">
+                     data-scramble-id="{{ scramble.id }}"
+                     data-exercise-id="{{ group.grouper.id }}">
                     
                     <!-- Scrambled letters display -->
                     <div class="mb-4">
@@ -125,12 +127,12 @@
     {% endfor %}
 
     <!-- Pagination -->
-    {% if scrambles.has_other_pages %}
+    {% if word.has_other_pages %}
     <nav class="mt-8 flex justify-center">
         <ul class="flex items-center gap-2">
-            {% if scrambles.has_previous %}
+            {% if word.has_previous %}
             <li>
-                <a href="?page={{ scrambles.previous_page_number }}{% if request.GET.lesson_type %}&lesson_type={{ request.GET.lesson_type }}{% endif %}" 
+                <a href="?page={{ word.previous_page_number }}{% if request.GET.lesson_type %}&lesson_type={{ request.GET.lesson_type }}{% endif %}" 
                    class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                     Predchádzajúca
                 </a>
@@ -138,12 +140,12 @@
             {% endif %}
             
             <li class="px-4 py-2 bg-orange-500 text-white rounded-lg">
-                {{ scrambles.number }} / {{ scrambles.paginator.num_pages }}
+                {{ word.number }} / {{ word.paginator.num_pages }}
             </li>
             
-            {% if scrambles.has_next %}
+            {% if word.has_next %}
             <li>
-                <a href="?page={{ scrambles.next_page_number }}{% if request.GET.lesson_type %}&lesson_type={{ request.GET.lesson_type }}{% endif %}" 
+                <a href="?page={{ word.next_page_number }}{% if request.GET.lesson_type %}&lesson_type={{ request.GET.lesson_type }}{% endif %}" 
                    class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
                     Ďalšia
                 </a>
@@ -204,6 +206,7 @@ function removeLetter(answerTile) {
 function checkScramble(button) {
     const card = button.closest('.scramble-card');
     const originalWord = card.dataset.original;
+    const exerciseId = card.dataset.exerciseId;
     const answerArea = card.querySelector('.answer-area');
     const feedbackArea = card.querySelector('.feedback-area');
     
@@ -214,11 +217,24 @@ function checkScramble(button) {
         currentAnswer += tile.textContent.toLowerCase();
     });
     
-    feedbackArea.classList.remove('hidden', 'bg-green-100', 'bg-red-100', 'text-green-800', 'text-red-800');
+    feedbackArea.classList.remove('hidden', 'bg-green-100', 'bg-red-100', 'bg-amber-100', 'text-green-800', 'text-red-800', 'text-amber-800');
     
     if (currentAnswer === originalWord) {
         feedbackArea.classList.add('bg-green-100', 'text-green-800');
         feedbackArea.innerHTML = '✅ <strong>Správne!</strong> Výborne, to je správna odpoveď!';
+        
+        // TRACK CORRECT ANSWER
+        fetch('{% url "exercises:submit_answer" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
+            },
+            body: JSON.stringify({
+                exercise_id: exerciseId,
+                is_correct: true
+            })
+        }).catch(error => console.error('Error:', error));
         
         // Disable further interaction
         button.disabled = true;
@@ -233,6 +249,19 @@ function checkScramble(button) {
     } else {
         feedbackArea.classList.add('bg-red-100', 'text-red-800');
         feedbackArea.innerHTML = '❌ <strong>Skúste znova.</strong> Toto nie je správna odpoveď.';
+        
+        // TRACK FAILED ATTEMPT
+        fetch('{% url "exercises:submit_answer" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
+            },
+            body: JSON.stringify({
+                exercise_id: exerciseId,
+                is_correct: false
+            })
+        }).catch(error => console.error('Error:', error));
         
         // Add shake animation
         answerArea.classList.add('animate-shake');

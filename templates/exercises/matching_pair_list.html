@@ -4,6 +4,7 @@
 {% block title %}{{ page_title }} - Sami-Sa{% endblock %}
 
 {% block content %}
+{% csrf_token %}
 <!-- Header -->
 <header class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg">
     <div class="container mx-auto px-4 py-8">
@@ -24,19 +25,6 @@
 </header>
 
 <div class="container mx-auto px-4 py-8">
-    <!-- Filter by lesson type -->
-    <div class="mb-8 flex flex-wrap gap-3">
-        <a href="{% url 'exercises:matching_pair_list' %}" 
-           class="px-4 py-2 rounded-full text-sm font-medium {% if not request.GET.lesson_type %}bg-purple-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
-            Všetky
-        </a>
-        {% for lt, label in lesson_types %}
-        <a href="?lesson_type={{ lt }}" 
-           class="px-4 py-2 rounded-full text-sm font-medium {% if request.GET.lesson_type == lt %}bg-purple-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
-            {{ label }}
-        </a>
-        {% endfor %}
-    </div>
 
     <!-- Instructions -->
     <div class="bg-purple-50 border border-purple-200 rounded-xl p-4 mb-8">
@@ -110,35 +98,6 @@
     </div>
     {% endfor %}
 
-    <!-- Pagination -->
-    {% if pairs.has_other_pages %}
-    <nav class="mt-8 flex justify-center">
-        <ul class="flex items-center gap-2">
-            {% if pairs.has_previous %}
-            <li>
-                <a href="?page={{ pairs.previous_page_number }}{% if request.GET.lesson_type %}&lesson_type={{ request.GET.lesson_type }}{% endif %}" 
-                   class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                    Predchádzajúca
-                </a>
-            </li>
-            {% endif %}
-            
-            <li class="px-4 py-2 bg-purple-600 text-white rounded-lg">
-                {{ pairs.number }} / {{ pairs.paginator.num_pages }}
-            </li>
-            
-            {% if pairs.has_next %}
-            <li>
-                <a href="?page={{ pairs.next_page_number }}{% if request.GET.lesson_type %}&lesson_type={{ request.GET.lesson_type }}{% endif %}" 
-                   class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                    Ďalšia
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
-    {% endif %}
-</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -231,10 +190,32 @@ function updateScore(gameContainer, matched, total) {
 
 function showCompletion(gameContainer) {
     const scoreArea = gameContainer.querySelector('.border-t');
+    const exerciseId = gameContainer.dataset.exerciseId;
+    
+    console.log('Completion - exerciseId:', exerciseId);
+    
     const completionMsg = document.createElement('div');
     completionMsg.className = 'mt-4 p-4 bg-green-100 text-green-800 rounded-lg text-center font-medium';
     completionMsg.innerHTML = '🎉 <strong>Výborne!</strong> Všetky páry sú správne spárované!';
     scoreArea.appendChild(completionMsg);
+    
+    // TRACK PROGRESS
+    console.log('Sending matching completion - exerciseId:', exerciseId);
+    fetch('{% url "exercises:submit_answer" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
+        },
+        body: JSON.stringify({
+            exercise_id: exerciseId,
+            is_correct: true
+        })
+    }).then(r => {
+        console.log('Response:', r.status);
+        return r.json();
+    }).then(data => console.log('Success:', data))
+      .catch(error => console.error('Error:', error));
 }
 
 function resetMatching(button) {
