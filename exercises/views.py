@@ -41,12 +41,17 @@ def Check_Answer(request):
 # --------------------------------------------------
 # LIST OF MULTIPLE CHOICE EXERCISES
 # --------------------------------------------------
+# ...existing code...
+
 def Exercise_Choice_list(request):
-    queryset = Exercise_Choice.objects.select_related("exercise")
-    exercise_choice = filter_exercises(request, queryset)
+    queryset = Exercise.objects.filter(exercise_type='multiple_choice').prefetch_related('choices')
+
+    lesson_type = request.GET.get("lesson_type")
+    if lesson_type:
+        queryset = queryset.filter(lesson_type=lesson_type)
 
     context = {
-        'exercise_choice': exercise_choice,
+        'exercises': queryset,
         'lesson_type': LESSON_TYPES,
         'page_title': 'Cvičenia - výber správnej odpovede',
         'overview': 'Precvič si zručnosti výberom odpovede.',
@@ -148,21 +153,37 @@ def Word_Scramble_list(request):
 # --------------------------------------------------
 # LIST OF SENTENCE COMPLETION
 # --------------------------------------------------
-def Sentence_Completion_list(request):
-    queryset = Sentence_Completion.objects.select_related("exercise")
-    completions = filter_exercises(request, queryset)
+# ...existing code...
 
-    for completion in completions:
-        completion.sentence_parts = completion.english_sentence.split("__")
+# ...existing code...
+
+def Sentence_Completion_list(request):
+    completions = Sentence_Completion.objects.select_related("exercise")
+    
+    lesson_type = request.GET.get("lesson_type")
+    if lesson_type:
+        completions = completions.filter(exercise__lesson_type=lesson_type)
 
     context = {
-        'sentence': completions,
-        'lesson_type': LESSON_TYPES,
+        'completions': completions,
+        'lesson_types': LESSON_TYPES,
         'page_title': 'Cvičenia - dopĺňanie do viet',
         'overview': 'Precvič si zručnosti dopĺňaním do viet.',
     }
 
     return render(request, 'exercises/sentence_completion_list.html', context)
+
+
+def filter_exercises(request, queryset):
+    lesson_type = request.GET.get("lesson_type")
+    if lesson_type:
+        # For Sentence_Completion, filter by exercise's lesson_type
+        if hasattr(queryset.model, 'exercise'):
+            queryset = queryset.filter(exercise__lesson_type=lesson_type)
+        else:
+            queryset = queryset.filter(lesson_type=lesson_type)
+    
+    return queryset
 
 
 # --------------------------------------------------
@@ -204,5 +225,3 @@ def user_progress(request):
     }
 
     return render(request, 'exercises/user_progress.html', context)
-
-

@@ -125,7 +125,7 @@ def seed_exercises(apps, schema_editor):
 
     number_sentences = [
         ('Mám jeden dom.', 'I have one house.', 'dom = house'),
-        ('Vidím dva autá.', 'I see two cars.', 'autá = cars'),
+        ('Vidím dve autá.', 'I see two cars.', 'autá = cars'),
         ('Mám tri jablká.', 'I have three apples.', 'jablká = apples'),
         ('Je tu päť detí.', 'There are five children here.', 'deti = children'),
         ('Mám desať rokov.', 'I am ten years old.', 'rokov = years old'),
@@ -998,8 +998,8 @@ def seed_exercises(apps, schema_editor):
     for i, (sentence, missing, hint) in enumerate(alphabet_completions):
         Sentence_Completion.objects.create(
             exercise=completion_exercise,
-            english_sentence=sentence,
-            missing_word=missing,
+            sentence=sentence,          # ✅ CORRECT
+            correct_answer=missing,     # ✅ CORRECT
             hint=hint,
         )
 

@@ -6,7 +6,7 @@
 {% block content %}
 {% csrf_token %}
 <!-- Header -->
-<header class="bg-gradient-to-r from-pink-600 to-rose-500 text-white shadow-lg">
+<header class="bg-gradient-to-r from-pink-600 to-rose-500 text-white shadow-lg rounded-2xl">
     <div class="container mx-auto px-4 py-8">
         <a href="{% url 'exercises:exercise_dashboard' %}" class="text-pink-200 hover:text-white transition inline-flex items-center gap-2 mb-4">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,219 +41,112 @@
 
     <!-- Instructions -->
     <div class="bg-pink-50 border border-pink-200 rounded-xl p-4 mb-8">
-        <p class="text-pink-800 flex items-center gap-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            <strong>Návod:</strong> Doplňte chýbajúce anglické slovo do vety. Slovo v zátvorke je slovenský preklad.
+        <p class="text-pink-800">
+            <strong>💡 Návod:</strong> Doplňte chýbajúce anglické slovo do vety.
         </p>
     </div>
 
-    <!-- Sentence Completion Exercises -->
-    {% regroup completions by exercise as exercise_groups %}
-    
-    {% for group in exercise_groups %}
-    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 mb-8">
-        <div class="bg-gradient-to-r from-pink-600 to-rose-500 px-6 py-4">
-            <h2 class="text-xl font-bold text-white">{{ group.grouper.title }}</h2>
-            <p class="text-pink-100 text-sm mt-1">{{ group.grouper.question_text }}</p>
-        </div>
-        
-        <div class="p-6 space-y-6">
-            {% for completion in group.list %}
-            <div class="completion-card bg-gray-50 rounded-xl p-6 border border-gray-200"
-                 data-correct="{{ completion.missing_word|lower }}"
-                 data-completion-id="{{ completion.id }}">
-                
-                <!-- Sentence with blank -->
-                <div class="mb-6">
-                    <p class="text-xl text-gray-800 leading-relaxed">
-                        {% for part in parts %}
-                            {{ part }}
-                            {% if not forloop.last %}
-                            <span class="inline-flex items-center mx-1">
-                                <input type="text" 
-                                       class="completion-input w-32 sm:w-40 px-3 py-2 border-b-4 border-pink-400 bg-white text-center text-lg font-medium focus:border-pink-600 focus:outline-none transition"
-                                       placeholder="..."
-                                       autocomplete="off">
-                            </span>
-                            {% endif %}
-                        {% endfor %}
-                    </p>
-                </div>
-                
-                <!-- Hint -->
-                {% if completion.hint %}
-                <div class="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-                    <p class="text-amber-800 text-sm">
-                        <strong>💡 Pomôcka:</strong> {{ completion.hint }}
-                    </p>
-                </div>
-                {% endif %}
-                
-                <!-- Action buttons -->
-                <div class="flex flex-wrap gap-3">
-                    <button onclick="checkCompletion(this)" 
-                            class="px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition font-medium check-btn">
-                        Skontrolovať
-                    </button>
-                    <button onclick="showCompletionAnswer(this)" 
-                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
-                        Ukázať odpoveď
-                    </button>
-                    <button onclick="resetCompletion(this)" 
-                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                        </svg>
-                    </button>
-                </div>
-                
-                <!-- Feedback -->
-                <div class="feedback-area hidden mt-4 p-4 rounded-lg"></div>
+    <!-- Exercises -->
+    <div class="space-y-6">
+        {% for completion in completions %}
+        <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100 completion-card"
+             data-correct="{{ completion.sentence|lower }}"
+             data-completion-id="{{ completion.id }}">
+            
+            <!-- Title -->
+            <h2 class="text-xl font-bold text-pink-600 mb-2">{{ completion.exercise.title }}</h2>
+            
+            <!-- Sentence -->
+            <div class="bg-gray-50 p-4 rounded-lg mb-4 border-l-4 border-pink-400">
+                <p class="text-lg text-gray-800">
+                    {{ completion.correct_answer }}
+                    <input type="text" 
+                           class="completion-input px-3 py-2 border-b-4 border-pink-400 bg-white text-center font-medium focus:outline-none transition ml-2"
+                           placeholder="..."
+                           autocomplete="off"
+                           style="width: 100px;">
+                </p>
             </div>
-            {% endfor %}
+            
+               
+            <!-- Buttons -->
+            <div class="flex gap-2 mb-4">
+                <button onclick="checkCompletion(this)" class="px-4 py-2 bg-pink-600 text-white rounded hover:bg-pink-700 font-medium check-btn">
+                    ✓ Skontrolovať
+                </button>
+                <button onclick="showAnswer(this)" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">
+                    💡 Ukázať
+                </button>
+                <button onclick="resetForm(this)" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">
+                    🔄 Znova
+                </button>
+            </div>
+            
+            <!-- Feedback -->
+            <div class="feedback-area hidden p-4 rounded text-center font-bold"></div>
         </div>
+        {% empty %}
+        <p class="text-center text-gray-600 py-8">Žiadne cvičenia</p>
+        {% endfor %}
     </div>
-    {% empty %}
-    <div class="text-center py-12">
-        <div class="text-6xl mb-4">📭</div>
-        <h3 class="text-xl font-bold text-gray-800 mb-2">Žiadne cvičenia</h3>
-        <p class="text-gray-600">Pre tento filter nie sú k dispozícii žiadne doplňovacie cvičenia.</p>
-    </div>
-    {% endfor %}
-
-    <!-- Pagination -->
-    {% if completions.has_other_pages %}
-    <nav class="mt-8 flex justify-center">
-        <ul class="flex items-center gap-2">
-            {% if completions.has_previous %}
-            <li>
-                <a href="?page={{ completions.previous_page_number }}{% if request.GET.lesson_type %}&lesson_type={{ request.GET.lesson_type }}{% endif %}" 
-                   class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                    Predchádzajúca
-                </a>
-            </li>
-            {% endif %}
-            
-            <li class="px-4 py-2 bg-pink-600 text-white rounded-lg">
-                {{ completions.number }} / {{ completions.paginator.num_pages }}
-            </li>
-            
-            {% if completions.has_next %}
-            <li>
-                <a href="?page={{ completions.next_page_number }}{% if request.GET.lesson_type %}&lesson_type={{ request.GET.lesson_type }}{% endif %}" 
-                   class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                    Ďalšia
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
-    {% endif %}
 </div>
 
 <script>
 function checkCompletion(button) {
     const card = button.closest('.completion-card');
-    const correctAnswer = card.dataset.correct;
+    const correct = card.dataset.correct;
     const input = card.querySelector('.completion-input');
-    const feedbackArea = card.querySelector('.feedback-area');
+    const feedback = card.querySelector('.feedback-area');
     
-    const userAnswer = input.value.trim().toLowerCase();
+    const answer = input.value.trim().toLowerCase();
     
-    feedbackArea.classList.remove('hidden', 'bg-green-100', 'bg-red-100', 'bg-amber-100', 'text-green-800', 'text-red-800', 'text-amber-800');
+    feedback.classList.remove('hidden', 'bg-green-100', 'bg-red-100', 'text-green-800', 'text-red-800');
     
-    if (userAnswer.length === 0) {
-        feedbackArea.classList.add('bg-amber-100', 'text-amber-800');
-        feedbackArea.innerHTML = '⚠️ Najprv doplňte chýbajúce slovo.';
-        input.focus();
+    if (!answer) {
+        feedback.classList.add('bg-yellow-100', 'text-yellow-800');
+        feedback.textContent = '⚠️ Napíšte odpoveď';
         return;
     }
     
-    if (userAnswer === correctAnswer) {
-        feedbackArea.classList.add('bg-green-100', 'text-green-800');
-        feedbackArea.innerHTML = '✅ <strong>Správne!</strong> Výborne!';
-        
-        input.classList.remove('border-pink-400');
-        input.classList.add('border-green-500', 'bg-green-100', 'text-green-800');
+    if (answer === correct) {
+        feedback.classList.add('bg-green-100', 'text-green-800');
+        feedback.textContent = '✅ Správne! Výborne!';
         input.disabled = true;
-        
         button.disabled = true;
-        button.classList.add('opacity-50', 'cursor-not-allowed');
     } else {
-        feedbackArea.classList.add('bg-red-100', 'text-red-800');
-        feedbackArea.innerHTML = '❌ <strong>Nesprávne.</strong> Skúste znova!';
-        
-        input.classList.add('border-red-500', 'bg-red-50');
-        input.classList.add('animate-shake');
-        
-        setTimeout(() => {
-            input.classList.remove('border-red-500', 'bg-red-50', 'animate-shake');
-        }, 500);
-        
-        input.select();
+        feedback.classList.add('bg-red-100', 'text-red-800');
+        feedback.textContent = '❌ Zle. Skúste znova.';
+        input.value = '';
     }
 }
 
-function showCompletionAnswer(button) {
+function showAnswer(button) {
     const card = button.closest('.completion-card');
-    const correctAnswer = card.dataset.correct;
     const input = card.querySelector('.completion-input');
-    const feedbackArea = card.querySelector('.feedback-area');
-    
-    feedbackArea.classList.remove('hidden', 'bg-green-100', 'bg-red-100', 'bg-amber-100');
-    feedbackArea.classList.add('bg-blue-100', 'text-blue-800');
-    feedbackArea.innerHTML = `📖 <strong>Správna odpoveď:</strong> ${correctAnswer}`;
-    
-    input.value = correctAnswer;
-    input.classList.remove('border-pink-400');
-    input.classList.add('border-blue-500', 'bg-blue-50');
+    const correct = card.dataset.correct;
+    input.value = correct;
 }
 
-function resetCompletion(button) {
+function resetForm(button) {
     const card = button.closest('.completion-card');
     const input = card.querySelector('.completion-input');
-    const feedbackArea = card.querySelector('.feedback-area');
+    const feedback = card.querySelector('.feedback-area');
     const checkBtn = card.querySelector('.check-btn');
     
     input.value = '';
     input.disabled = false;
-    input.classList.remove('border-green-500', 'bg-green-100', 'text-green-800', 'border-blue-500', 'bg-blue-50');
-    input.classList.add('border-pink-400');
-    
-    feedbackArea.classList.add('hidden');
-    
+    feedback.classList.add('hidden');
     checkBtn.disabled = false;
-    checkBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-    
     input.focus();
 }
 
-// Allow Enter key to submit
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.completion-input').forEach(input => {
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const card = this.closest('.completion-card');
-                const checkBtn = card.querySelector('.check-btn');
-                if (!checkBtn.disabled) {
-                    checkCompletion(checkBtn);
-                }
-            }
-        });
+// Enter key submits
+document.querySelectorAll('.completion-input').forEach(input => {
+    input.addEventListener('keypress', e => {
+        if (e.key === 'Enter') {
+            input.closest('.completion-card').querySelector('.check-btn').click();
+        }
     });
 });
 </script>
-
-<style>
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-.animate-shake {
-    animation: shake 0.3s ease-in-out;
-}
-</style>
 {% endblock %}

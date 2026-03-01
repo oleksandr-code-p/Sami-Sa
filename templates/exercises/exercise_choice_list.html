@@ -24,55 +24,68 @@
     </div>
 </header>
 
+<div class="container mx-auto px-4 py-8">
+    <!-- Filter by lesson type -->
+    <div class="mb-8 flex flex-wrap gap-3">
+        <a href="{% url 'exercises:exercise_choice_list' %}" 
+           class="px-4 py-2 rounded-full text-sm font-medium {% if not request.GET.lesson_type %}bg-green-500 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
+            Všetky
+        </a>
+        {% for lt, label in lesson_type %}
+        <a href="?lesson_type={{ lt }}" 
+           class="px-4 py-2 rounded-full text-sm font-medium {% if request.GET.lesson_type == lt %}bg-green-500 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %} transition">
+            {{ label }}
+        </a>
+        {% endfor %}
+    </div>
 
     <!-- Exercise Cards -->
-<div class="space-y-6">
-    {% for choice in exercise_choice %}
-    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow">
-        <div class="p-6">
-            <div class="flex items-start justify-between mb-4">
-                <div>
-                    <span class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium mb-2">
-                        {{ choice.exercise.get_lesson_type_display }}
+    <div class="space-y-6">
+        {% for exercise in exercises %}
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow">
+            <div class="p-6">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium mb-2">
+                            {{ exercise.get_lesson_type_display }}
+                        </span>
+                        <h3 class="text-xl font-bold text-gray-800">{{ exercise.title }}</h3>
+                    </div>
+                    <span class="text-2xl">
+                        {% if exercise.lesson_type == 'number' %}🔢
+                        {% elif exercise.lesson_type == 'colour' %}🎨
+                        {% elif exercise.lesson_type == 'family' %}👨‍👩‍👧‍👦
+                        {% elif exercise.lesson_type == 'food' %}🍎
+                        {% elif exercise.lesson_type == 'school' %}🏫
+                        {% elif exercise.lesson_type == 'animal' %}🐾
+                        {% elif exercise.lesson_type == 'alphabet' %}🔤
+                        {% endif %}
                     </span>
-                    <h3 class="text-xl font-bold text-gray-800">{{ choice.exercise.title }}</h3>
                 </div>
-                <span class="text-2xl">
-                    {% if choice.exercise.lesson_type == 'number' %}🔢
-                    {% elif choice.exercise.lesson_type == 'colour' %}🎨
-                    {% elif choice.exercise.lesson_type == 'family' %}👨‍👩‍👧‍👦
-                    {% elif choice.exercise.lesson_type == 'food' %}🍎
-                    {% elif choice.exercise.lesson_type == 'school' %}🏫
-                    {% elif choice.exercise.lesson_type == 'animal' %}🐾
-                    {% elif choice.exercise.lesson_type == 'alphabet' %}🔤
-                    {% endif %}
-                </span>
-            </div>
-                
-            <p class="text-gray-600 mb-4">{{ choice.exercise.question_text }}</p>
-                
+                    
+                <p class="text-gray-600 mb-4">{{ exercise.question_text }}</p>
+                    
                 <!-- Choice options -->
-                <div class="space-y-2" id="choices-{{ choice.exercise.id }}">
-                    {% for ch in choice.exercise.choices.all %}
-                    <button onclick="selectChoice(this, {{ ch.is_correct|yesno:'true,false' }}, '{{ choice.exercise.correct_answer }}')"
-"
+                <div class="space-y-2" id="choices-{{ exercise.id }}">
+                    {% for choice in exercise.choices.all %}
+                    <button onclick="selectChoice(this, {{ choice.is_correct|yesno:'true,false' }}, '{{ exercise.correct_answer }}')"
                             class="w-full text-left px-4 py-3 rounded-lg border-2 border-gray-200 hover:border-green-400 hover:bg-green-50 transition-all duration-200 choice-btn">
                         <span class="inline-flex items-center gap-3">
                             <span class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center text-sm choice-indicator">
                                 {{ forloop.counter }}
                             </span>
-                            <span class="choice-text">{{ ch.choice_text }}</span>
+                            <span class="choice-text">{{ choice.choice_text }}</span>
                         </span>
                     </button>
                     {% endfor %}
                 </div>
-                
+                    
                 <!-- Feedback area -->
-                <div class="mt-4 hidden feedback-area" id="feedback-{{ choice.exercise.id }}">
+                <div class="mt-4 hidden feedback-area" id="feedback-{{ exercise.id }}">
                     <div class="p-4 rounded-lg">
                         <p class="font-medium feedback-message"></p>
-                        {% if choice.exercise.explanation %}
-                        <p class="text-sm mt-2 text-gray-600">{{ choice.exercise.explanation }}</p>
+                        {% if exercise.explanation %}
+                        <p class="text-sm mt-2 text-gray-600">{{ exercise.explanation }}</p>
                         {% endif %}
                     </div>
                 </div>
@@ -86,7 +99,7 @@
         </div>
         {% endfor %}
     </div>
-    
+</div>
 
 <script>
 function selectChoice(button, isCorrect, correctAnswer) {
