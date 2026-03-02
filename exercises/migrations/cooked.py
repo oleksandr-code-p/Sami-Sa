@@ -726,12 +726,14 @@ def seed_exercises(apps, schema_editor):
     ]
 
     for i, (sentence, missing, hint) in enumerate(school_completions):
+        Sentence_Completion = apps.get_model('exercises', 'Sentence_Completion')
         Sentence_Completion.objects.create(
-            exercise=completion_exercise,
-            english_sentence=sentence,
-            missing_word=missing,
-            hint=hint,
-        )
+        exercise=completion_exercise,
+        sentence=sentence,
+        correct_answer=missing,
+        hint=hint,
+        order=i,
+    )
 
     # ==========================================================
     # ANIMAL EXERCISES (Zvieratá)
