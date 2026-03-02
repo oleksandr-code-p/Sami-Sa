@@ -85,15 +85,17 @@ class Translation(models.Model):
         return f"{self.slovak_sentence}"
 
 
+
 class Sentence_Completion(models.Model):
-    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='sentence_completions')
-    sentence = models.TextField()  # The sentence with __ placeholder
-    correct_answer = models.TextField()  # The missing word
+    exercise = models.ForeignKey('Exercise', on_delete=models.CASCADE, related_name='sentence_completions')
+    english_sentence = models.TextField()  
+    missing_word = models.TextField()     
     hint = models.TextField(blank=True, null=True)
     order = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.exercise.title} - {self.sentence[:50]}"
+        return f"{self.exercise.title} - {self.english_sentence[:50]}"
+
 
 class UserProgress(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
