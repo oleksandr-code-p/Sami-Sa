@@ -159,7 +159,7 @@ def Word_Scramble_list(request):
 
 def Sentence_Completion_list(request):
     completions = Sentence_Completion.objects.select_related("exercise")
-    
+
     lesson_type = request.GET.get("lesson_type")
     if lesson_type:
         completions = completions.filter(exercise__lesson_type=lesson_type)

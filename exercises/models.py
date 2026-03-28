@@ -1,6 +1,8 @@
 from django.db import models
 from lessons.models import NumberLesson, ColourLesson, FamilyLesson, FoodLesson, SchoolLesson, AnimalLesson
 
+from .sentence_completion_seed_data import lookup_seed_sentence
+
 EXERCISE_TYPES = [
     ('matching', 'Matching'),
     ('multiple_choice', 'Multiple Choice'),
@@ -77,12 +79,29 @@ class Word_Scramble(models.Model):
 
 class Sentence_Completion(models.Model):
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='sentence_completions')
-    sentence = models.TextField()    
+    sentence = models.TextField()
+    display_sentence = models.TextField(blank=True, null=True)
+    correct_answer = models.TextField(blank=True, null=True)
     hint = models.TextField(blank=True, null=True)
     order = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.exercise.title} - {self.sentence[:50]}"
+        return f"{self.exercise.title} - {self.sentence_text[:50]}"
+
+    @property
+    def answer_text(self):
+        return self.correct_answer or self.sentence
+
+    @property
+    def sentence_text(self):
+        if self.display_sentence:
+            return self.display_sentence
+
+        return lookup_seed_sentence(
+            self.exercise.lesson_type,
+            self.answer_text,
+            self.hint,
+        ) or self.sentence
 
 
 class UserProgress(models.Model):
