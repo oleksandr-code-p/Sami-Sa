@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_POST
-from .models import Exercise, Exercise_Choice, Matching_Pair, Word_Scramble, Sentence_Completion, Translation, UserProgress, LESSON_TYPES, EXERCISE_TYPES
+from .models import Exercise, Exercise_Choice, Matching_Pair, Word_Scramble, Sentence_Completion, UserProgress, LESSON_TYPES, EXERCISE_TYPES
 from lessons.models import NumberLesson, ColourLesson, FamilyLesson, FoodLesson, SchoolLesson, AnimalLesson
 from django.contrib.auth.decorators import login_required
 

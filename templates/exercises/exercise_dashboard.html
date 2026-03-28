@@ -19,53 +19,6 @@
 </header>
 
 <div class="container mx-auto px-4 py-8">
-    <!-- Lesson Types Section -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-            <span class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">📚</span>
-            Témy na učenie
-        </h2>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {% for lesson_type, label in lesson_types %}
-            <a href="{% url 'exercises:exercise_choice_list' %}?lesson_type={{ lesson_type }}" 
-               class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-300">
-                <div class="p-6">
-                    <div class="text-4xl mb-4">
-                        {% if lesson_type == 'number' %}🔢
-                        {% elif lesson_type == 'colour' %}🎨
-                        {% elif lesson_type == 'family' %}👨‍👩‍👧‍👦
-                        {% elif lesson_type == 'food' %}🍎
-                        {% elif lesson_type == 'school' %}🏫
-                        {% elif lesson_type == 'animal' %}🐾
-                        {% elif lesson_type == 'alphabet' %}🔤
-                        {% else %}📖
-                        {% endif %}
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
-                        {{ label }}
-                    </h3>
-                    {% if exercise_counts %}
-                    <p class="text-gray-500 mt-2 text-sm">
-                        {{ exercise_counts|default_if_none:0 }} cvičení
-                    </p>
-                    {% endif %}
-                </div>
-                <div class="bg-gray-50 px-6 py-3 group-hover:bg-blue-50 transition-colors">
-                    <span class="text-blue-600 text-sm font-medium flex items-center gap-2">
-                        Začať učenie
-                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </span>
-                </div>
-            </a>
-            {% empty %}
-            <p class="text-gray-500 col-span-full">Žiadne témy nie sú k dispozícii.</p>
-            {% endfor %}
-        </div>
-    </section>
-
     <!-- Exercise Types Section -->
     <section>
         <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
@@ -73,7 +26,7 @@
             Typy cvičení
         </h2>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4">
             {% for exercise_type, label in exercise_types %}
             <a href="{% if exercise_type == 'multiple_choice' %}{% url 'exercises:exercise_choice_list' %}{% elif exercise_type == 'matching' %}{% url 'exercises:matching_pair_list' %}{% elif exercise_type == 'word_scrambles' %}{% url 'exercises:word_scramble_list' %}{% elif exercise_type == 'sentence_completion' %}{% url 'exercises:sentence_completion_list' %}{% elif exercise_type == 'translation' %}{% url 'exercises:translation_list' %}{% endif %}"
                class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-green-300">
@@ -82,7 +35,6 @@
                     {% elif exercise_type == 'matching' %}🔗
                     {% elif exercise_type == 'word_scrambles' %}🔀
                     {% elif exercise_type == 'sentence_completion' %}✏️
-                    {% elif exercise_type == 'translation' %}🌐
                     {% else %}📋
                     {% endif %}
                 </div>
@@ -94,7 +46,6 @@
                     {% elif exercise_type == 'matching' %}Spárujte slová
                     {% elif exercise_type == 'word_scrambles' %}Usporiadajte písmená
                     {% elif exercise_type == 'sentence_completion' %}Doplňte slová
-                    {% elif exercise_type == 'translation' %}Preložte vety
                     {% endif %}
                 </p>
             </a>

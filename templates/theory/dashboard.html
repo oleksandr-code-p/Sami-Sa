@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Teória angličtiny{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="bg-indigo-600 text-white shadow-lg rounded-2xl">
+    <div class="container mx-auto px-4 py-6">
+        <a href="{% url 'home' %}" class="text-gray-100 hover:text-white">← Späť na domov</a>
+        <h1 class="text-3xl font-bold">Teória angličtiny</h1>
+        <p class="mt-2 text-indigo-100">Pochop základy gramatiky a tvorby viet.</p>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="container mx-auto px-4 py-8">
+
+    <!-- Intro -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Základy angličtiny</h2>
+        <p class="text-gray-600">Vyber si tému a nauč sa, ako funguje anglický jazyk.</p>
+    </div>
+
+    <!-- Theory Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Sentence Structure -->
+        <a href="{% url 'sentences' %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition p-6 border-t-4 border-blue-500">
+                <div class="flex justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Tvorba viet</h3>
+                    <span class="text-3xl">🧩</span>
+                </div>
+                <p class="text-gray-600">Ako správne skladať anglické vety.</p>
+            </div>
+        </a>
+
+        <!-- Present Simple -->
+        <a href="{% url 'present_simple' %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition p-6 border-t-4 border-green-500">
+                <div class="flex justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Present Simple</h3>
+                    <span class="text-3xl">⏱️</span>
+                </div>
+                <p class="text-gray-600">Základný čas pre fakty a rutiny.</p>
+            </div>
+        </a>
+
+        <!-- Present Continuous -->
+        <a href="{% url 'present_continuous' %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition p-6 border-t-4 border-teal-500">
+                <div class="flex justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Present Continuous</h3>
+                    <span class="text-3xl">🔄</span>
+                </div>
+                <p class="text-gray-600">Čo sa deje práve teraz.</p>
+            </div>
+        </a>
+
+        <!-- Past Simple -->
+        <a href="{% url 'past_simple' %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition p-6 border-t-4 border-orange-500">
+                <div class="flex justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Past Simple</h3>
+                    <span class="text-3xl">⏳</span>
+                </div>
+                <p class="text-gray-600">Minulé deje a udalosti.</p>
+            </div>
+        </a>
+
+        <!-- Future -->
+        <a href="{% url 'future' %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition p-6 border-t-4 border-purple-500">
+                <div class="flex justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Budúci čas</h3>
+                    <span class="text-3xl">🚀</span>
+                </div>
+                <p class="text-gray-600">Will, going to a plánovanie.</p>
+            </div>
+        </a>
+
+        <!-- Questions -->
+        <a href="{% url 'questions' %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition p-6 border-t-4 border-red-500">
+                <div class="flex justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Otázky</h3>
+                    <span class="text-3xl">❓</span>
+                </div>
+                <p class="text-gray-600">Ako sa pýtať v angličtine.</p>
+            </div>
+        </a>
+
+        <!-- Negations -->
+        <a href="{% url 'negations' %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition p-6 border-t-4 border-gray-500">
+                <div class="flex justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Zápory</h3>
+                    <span class="text-3xl">🚫</span>
+                </div>
+                <p class="text-gray-600">Ako tvoriť záporné vety.</p>
+            </div>
+        </a>
+
+        <!-- Articles -->
+        <a href="{% url 'articles' %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition p-6 border-t-4 border-yellow-500">
+                <div class="flex justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Členy (a, an, the)</h3>
+                    <span class="text-3xl">🔤</span>
+                </div>
+                <p class="text-gray-600">Kedy použiť a / an / the.</p>
+            </div>
+        </a>
+
+        <!-- Prepositions -->
+        <a href="{% url 'prepositions' %}" class="block">
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition p-6 border-t-4 border-pink-500">
+                <div class="flex justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Predložky</h3>
+                    <span class="text-3xl">📍</span>
+                </div>
+                <p class="text-gray-600">In, on, at a ďalšie.</p>
+            </div>
+        </a>
+
+    </div>
+</main>
+{% endblock %}

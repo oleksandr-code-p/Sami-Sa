@@ -112,34 +112,6 @@ def seed_exercises(apps, schema_editor):
             hint=f'Slovensky: {slovak} ({num})',
         )
 
-    # Number - Translation (Slovak to English)
-    translation_exercise = Exercise.objects.create(
-        title='Čísla - Preklad',
-        lesson_type='number',
-        exercise_type='translation',
-        question_text='Preložte vety do angličtiny.',
-        correct_answer='',
-        explanation='Precvičte si použitie čísiel v anglických vetách.',
-        order=3,
-    )
-
-    number_sentences = [
-        ('Mám jeden dom.', 'I have one house.', 'dom = house'),
-        ('Vidím dve autá.', 'I see two cars.', 'autá = cars'),
-        ('Mám tri jablká.', 'I have three apples.', 'jablká = apples'),
-        ('Je tu päť detí.', 'There are five children here.', 'deti = children'),
-        ('Mám desať rokov.', 'I am ten years old.', 'rokov = years old'),
-    ]
-
-    for i, (slovak, english, hint) in enumerate(number_sentences):
-        Translation.objects.create(
-            exercise=translation_exercise,
-            slovak_sentence=slovak,
-            english_sentence=english,
-            hint=hint,
-        )
-
-    # Number - Sentence Completion (complete English sentences)
     completion_exercise = Exercise.objects.create(
         title='Čísla - Doplň slovo',
         lesson_type='number',
@@ -152,11 +124,30 @@ def seed_exercises(apps, schema_editor):
 
     number_completions = [
         ('I have ___ apple. (jedno)', 'one', 'jeden'),
-        ('She has ___ cats. (dve)', 'two', 'dva'),
-        ('There are ___ days in a week. (sedem)', 'seven', 'sedem'),
-        ('A decade is ___ years. (desať)', 'ten', 'desať'),
-        ('I see ___ birds. (päť)', 'five', 'päť'),
-    ]
+        ('She has ___ cats at home. (dve)', 'two', 'dva'),
+        ('I see ___ dogs in the park. (tri)', 'three', 'tri'),
+        ('He has ___ pens on the table. (päť)', 'five', 'päť'),
+        ('I have ___ books to read. (desať)', 'ten', 'desať'),
+        ('There are ___ chairs in the room. (dvadsať)', 'twenty', 'dvadsať'),
+        ('I see ___ birds on the tree. (tridsať)', 'thirty', 'tridsať'),
+        ('She has ___ balls in the garden. (päťdesiat)', 'fifty', 'päťdesiat'),
+        ('I have ___ toys for my friends. (sto)', 'one hundred', 'sto'),
+        ('He has ___ apples in the basket. (dvesto)', 'two hundred', 'dvesto'),
+        ('I see ___ cars on the street. (päťsto)', 'five hundred', 'päťsto'),
+        ('She has ___ pencils for school. (tisíc)', 'one thousand', 'tisíc'),
+        ('I bought ___ oranges yesterday. (šesť)', 'six', 'šesť'),
+        ('They have ___ chairs in the hall. (osem)', 'eight', 'osem'),
+        ('I saw ___ flowers in the garden. (deväť)', 'nine', 'deväť'),
+        ('He drank ___ glasses of water. (sedem)', 'seven', 'sedem'),
+        ('I found ___ coins on the floor. (dvadsaťpäť)', 'twenty-five', 'dvadsaťpäť'),
+        ('She has ___ hats in her shop. (tridsaťpäť)', 'thirty-five', 'tridsaťpäť'),
+        ('I saw ___ cats on the street. (šesťdesiat)', 'sixty', 'šesťdesiat'),
+        ('He bought ___ books yesterday. (osemdesiat)', 'eighty', 'osemdesiat'),
+        ('I have ___ chairs in my room. (sto päť)', 'one hundred five', 'sto päť'),
+        ('They own ___ bicycles. (dvesto päťdesiat)', 'two hundred fifty', 'dvesto päťdesiat'),
+        ('I saw ___ stars in the sky. (tristo)', 'three hundred', 'tristo'),
+        ('She found ___ coins in the drawer. (šesťsto)', 'six hundred', 'šesťsto'),
+]
 
     for i, (sentence, missing, hint) in enumerate(number_completions):
         Sentence_Completion.objects.create(
@@ -248,34 +239,6 @@ def seed_exercises(apps, schema_editor):
             hint=f'Slovensky: {slovak}',
         )
 
-    # Colour - Translation
-    translation_exercise = Exercise.objects.create(
-        title='Farby - Preklad',
-        lesson_type='colour',
-        exercise_type='translation',
-        question_text='Preložte vety do angličtiny.',
-        correct_answer='',
-        explanation='Precvičte si použitie farieb v anglických vetách.',
-        order=3,
-    )
-
-    colour_sentences = [
-        ('Mám červené auto.', 'I have a red car.', 'auto = car'),
-        ('Obloha je modrá.', 'The sky is blue.', 'obloha = sky'),
-        ('Tráva je zelená.', 'The grass is green.', 'tráva = grass'),
-        ('Slnko je žlté.', 'The sun is yellow.', 'slnko = sun'),
-        ('Moja mačka je čierna.', 'My cat is black.', 'mačka = cat'),
-        ('Sneh je biely.', 'Snow is white.', 'sneh = snow'),
-    ]
-
-    for i, (slovak, english, hint) in enumerate(colour_sentences):
-        Translation.objects.create(
-            exercise=translation_exercise,
-            slovak_sentence=slovak,
-            english_sentence=english,
-            hint=hint,
-        )
-
     # Colour - Sentence Completion
     completion_exercise = Exercise.objects.create(
         title='Farby - Doplň slovo',
@@ -293,6 +256,14 @@ def seed_exercises(apps, schema_editor):
         ('The sun is ___. (žltá)', 'yellow', 'žltá'),
         ('Snow is ___. (biela)', 'white', 'biela'),
         ('Coal is ___. (čierna)', 'black', 'čierna'),
+        ('My car is ___. (červená)', 'red', 'červená'),
+        ('The flower is ___. (oranžová)', 'orange', 'oranžová'),
+        ('Her dress is ___. (ružová)', 'pink', 'ružová'),
+        ('The table is ___. (sivá)', 'gray', 'sivá'),
+        ('My house is ___. (hnedá)', 'brown', 'hnedá'),
+        ('The ring is ___. (zlatá)', 'gold', 'zlatá'),
+        ('The bracelet is ___. (strieborná)', 'silver', 'strieborná'),
+        ('The balloon is ___. (fialová)', 'purple', 'fialová'),
     ]
 
     for i, (sentence, missing, hint) in enumerate(colour_completions):
@@ -387,35 +358,6 @@ def seed_exercises(apps, schema_editor):
             hint=f'Slovensky: {slovak}',
         )
 
-    # Family - Translation
-    translation_exercise = Exercise.objects.create(
-        title='Rodina - Preklad',
-        lesson_type='family',
-        exercise_type='translation',
-        question_text='Preložte vety do angličtiny.',
-        correct_answer='',
-        explanation='Precvičte si slovíčka o rodine v anglických vetách.',
-        order=3,
-    )
-
-    family_sentences = [
-        ('Moja mama je učiteľka.', 'My mother is a teacher.', 'učiteľka = teacher'),
-        ('Môj otec pracuje v banke.', 'My father works in a bank.', 'pracuje = works'),
-        ('Mám jedného brata.', 'I have one brother.', 'jedného = one'),
-        ('Moja sestra je mladšia.', 'My sister is younger.', 'mladšia = younger'),
-        ('Babka varí obed.', 'Grandmother is cooking lunch.', 'varí = is cooking'),
-        ('Dedko číta noviny.', 'Grandfather is reading the newspaper.', 'noviny = newspaper'),
-        ('Moji rodičia sú doma.', 'My parents are at home.', 'doma = at home'),
-    ]
-
-    for i, (slovak, english, hint) in enumerate(family_sentences):
-        Translation.objects.create(
-            exercise=translation_exercise,
-            slovak_sentence=slovak,
-            english_sentence=english,
-            hint=hint,
-        )
-
     # Family - Sentence Completion
     completion_exercise = Exercise.objects.create(
         title='Rodina - Doplň slovo',
@@ -429,11 +371,28 @@ def seed_exercises(apps, schema_editor):
 
     family_completions = [
         ('My ___ is my female parent. (mama)', 'mother', 'mama'),
-        ('My ___ is my male parent. (otec)', 'father', 'otec'),
-        ('My ___ is my parent\'s daughter. (sestra)', 'sister', 'sestra'),
-        ('My ___ is my parent\'s son. (brat)', 'brother', 'brat'),
-        ('My ___ is my mother\'s mother. (babka)', 'grandmother', 'babka'),
-    ]
+        ('I love my ___. (otec)', 'father', 'otec'),
+        ('Her ___ is older than me. (sestra)', 'sister', 'sestra'),
+        ('His ___ plays football. (brat)', 'brother', 'brat'),
+        ('My ___ makes delicious cookies. (babka)', 'grandmother', 'babka'),
+        ('His ___ tells funny stories. (dedko)', 'grandfather', 'dedko'),
+        ('I visited my ___. (teta)', 'aunt', 'teta'),
+        ('We saw our ___. (strýko)', 'uncle', 'strýko'),
+        ('My ___ is very clever. (synovec)', 'nephew', 'synovec'),
+        ('Her ___ likes drawing. (neter)', 'niece', 'neter'),
+        ('My ___ helps me every day. (manžel)', 'husband', 'manžel'),
+        ('Her ___ cooks well. (manželka)', 'wife', 'manželka'),
+        ('Their ___ goes to school. (syn)', 'son', 'syn'),
+        ('Our ___ is very kind. (dcéra)', 'daughter', 'dcéra'),
+        ('I met my ___. (švagriná)', 'sister-in-law', 'švagriná'),
+        ('He talks to his ___. (švagor)', 'brother-in-law', 'švagor'),
+        ('My ___ lives next door. (bratranec / sesternica)', 'cousin', 'bratranec / sesternica'),
+        ('Her ___ loves football. (bratranec)', 'cousin', 'bratranec'),
+        ('I met my ___. (svokra)', 'mother-in-law', 'svokra'),
+        ('His ___ is very friendly. (svokor)', 'father-in-law', 'svokor'),
+        ('They like their ___. (švagor)', 'brother-in-law', 'švagor'),
+        ('We talked to our ___. (švagriná)', 'sister-in-law', 'švagriná'),
+]
 
     for i, (sentence, missing, hint) in enumerate(family_completions):
         Sentence_Completion.objects.create(
@@ -533,35 +492,6 @@ def seed_exercises(apps, schema_editor):
             hint=f'Slovensky: {slovak}',
         )
 
-    # Food - Translation
-    translation_exercise = Exercise.objects.create(
-        title='Jedlo - Preklad',
-        lesson_type='food',
-        exercise_type='translation',
-        question_text='Preložte vety do angličtiny.',
-        correct_answer='',
-        explanation='Precvičte si slovíčka o jedle v anglických vetách.',
-        order=3,
-    )
-
-    food_sentences = [
-        ('Chcem chlieb s maslom.', 'I want bread with butter.', 'chcem = I want'),
-        ('Pijem mlieko.', 'I drink milk.', 'pijem = I drink'),
-        ('Mám rád syr.', 'I like cheese.', 'mám rád = I like'),
-        ('Jablko je červené.', 'The apple is red.', 'červené = red'),
-        ('Polievka je horúca.', 'The soup is hot.', 'horúca = hot'),
-        ('Dáte si kávu alebo čaj?', 'Would you like coffee or tea?', 'dáte si = would you like'),
-        ('Potrebujem zeleninu.', 'I need vegetables.', 'potrebujem = I need'),
-    ]
-
-    for i, (slovak, english, hint) in enumerate(food_sentences):
-        Translation.objects.create(
-            exercise=translation_exercise,
-            slovak_sentence=slovak,
-            english_sentence=english,
-            hint=hint,
-        )
-
     # Food - Sentence Completion
     completion_exercise = Exercise.objects.create(
         title='Jedlo - Doplň slovo',
@@ -579,7 +509,22 @@ def seed_exercises(apps, schema_editor):
         ('An ___ a day keeps the doctor away. (jablko)', 'apple', 'jablko'),
         ('I put ___ on my bread. (maslo)', 'butter', 'maslo'),
         ('___ is white and comes from cows. (mlieko)', 'Milk', 'mlieko'),
-    ]
+        ('I like ___ with my salad. (syr)', 'cheese', 'syr'),
+        ('I cook ___ for dinner. (mäso)', 'meat', 'mäso'),
+        ('We eat ___ on Fridays. (ryba)', 'fish', 'ryba'),
+        ('I eat ___ every day. (zelenina)', 'vegetables', 'zelenina'),
+        ('She likes ___ after lunch. (ovocie)', 'fruit', 'ovocie'),
+        ('I eat a ___ for snack. (banán)', 'banana', 'banán'),
+        ('I love ___ in summer. (jahoda)', 'strawberry', 'jahoda'),
+        ('I cook ___ with meat. (zemiaky)', 'potatoes', 'zemiaky'),
+        ('I eat ___ with curry. (ryža)', 'rice', 'ryža'),
+        ('I eat ___ before dinner. (polievka)', 'soup', 'polievka'),
+        ('I eat ___ with my lunch. (šalát)', 'salad', 'šalát'),
+        ('I drink ___ in the morning. (čaj)', 'tea', 'čaj'),
+        ('I drink ___ when I am thirsty. (voda)', 'water', 'voda'),
+        ('I eat a ___ or a pear. (hruška)', 'pear', 'hruška'),
+        ('I peel an ___ before eating. (pomaranč)', 'orange', 'pomaranč'),
+]
 
     for i, (sentence, missing, hint) in enumerate(food_completions):
         Sentence_Completion.objects.create(
@@ -677,35 +622,6 @@ def seed_exercises(apps, schema_editor):
                 hint=f'Slovensky: {slovak}',
             )
 
-    # School - Translation
-    translation_exercise = Exercise.objects.create(
-        title='Škola - Preklad',
-        lesson_type='school',
-        exercise_type='translation',
-        question_text='Preložte vety do angličtiny.',
-        correct_answer='',
-        explanation='Precvičte si školské slovíčka v anglických vetách.',
-        order=3,
-    )
-
-    school_sentences = [
-        ('Idem do školy.', 'I am going to school.', 'idem = I am going'),
-        ('Učiteľka píše na tabuľu.', 'The teacher is writing on the blackboard.', 'píše = is writing'),
-        ('Moja kniha je na stole.', 'My book is on the desk.', 'na stole = on the desk'),
-        ('Potrebujem ceruzku.', 'I need a pencil.', 'potrebujem = I need'),
-        ('Máme prestávku.', 'We have a break.', 'máme = we have'),
-        ('Zabudol som domácu úlohu.', 'I forgot my homework.', 'zabudol som = I forgot'),
-        ('Skúška je zajtra.', 'The exam is tomorrow.', 'zajtra = tomorrow'),
-    ]
-
-    for i, (slovak, english, hint) in enumerate(school_sentences):
-        Translation.objects.create(
-            exercise=translation_exercise,
-            slovak_sentence=slovak,
-            english_sentence=english,
-            hint=hint,
-        )
-
     # School - Sentence Completion
     completion_exercise = Exercise.objects.create(
         title='Škola - Doplň slovo',
@@ -723,16 +639,28 @@ def seed_exercises(apps, schema_editor):
         ('The ___ teaches students. (učiteľ)', 'teacher', 'učiteľ'),
         ('I sit on a ___. (stolička)', 'chair', 'stolička'),
         ('I carry my books in a ___. (taška)', 'bag', 'taška'),
+        ('I take notes in a ___. (zošit)', 'notebook', 'zošit'),
+        ('We have a ___ every morning. (hodina)', 'lesson', 'hodina'),
+        ('The ___ is green and big. (tabuľa)', 'blackboard', 'tabuľa'),
+        ('I sit at a ___. (stôl)', 'desk', 'stôl'),
+        ('I am a ___. (žiak/žiačka)', 'student', 'žiak/žiačka'),
+        ('Our ___ shows our subjects. (rozvrh)', 'schedule', 'rozvrh'),
+        ('I do my ___ at home. (domáca úloha)', 'homework', 'domáca úloha'),
+        ('I have a ___ tomorrow. (skúška)', 'exam', 'skúška'),
+        ('We have a short ___ now. (prestávka)', 'break', 'prestávka'),
+        ('I got a good ___ on my test. (známka)', 'grade', 'známka'),
+        ('The ___ writes on the blackboard. (učiteľ/učiteľka)', 'teacher', 'učiteľ/učiteľka'),
+        ('I read my ___ before class. (kniha)', 'book', 'kniha'),
+        ('I write my answers in my ___. (zošit)', 'notebook', 'zošit'),
+        ('I put my pen and pencil in my ___. (taška)', 'bag', 'taška'),
     ]
-
     for i, (sentence, missing, hint) in enumerate(school_completions):
-       Sentence_Completion.objects.create(
-        exercise=completion_exercise,
-        sentence=sentence,
-        correct_answer=missing,
-        hint=hint,
-        order=i,
-    )
+        Sentence_Completion.objects.create(
+            exercise=completion_exercise,
+            english_sentence=sentence,
+            missing_word=missing,
+            hint=hint,
+        )
 
     # ==========================================================
     # ANIMAL EXERCISES (Zvieratá)
@@ -828,35 +756,6 @@ def seed_exercises(apps, schema_editor):
             hint=f'Slovensky: {slovak}',
         )
 
-    # Animal - Translation
-    translation_exercise = Exercise.objects.create(
-        title='Zvieratá - Preklad',
-        lesson_type='animal',
-        exercise_type='translation',
-        question_text='Preložte vety do angličtiny.',
-        correct_answer='',
-        explanation='Precvičte si názvy zvierat v anglických vetách.',
-        order=3,
-    )
-
-    animal_sentences = [
-        ('Môj pes je veľký.', 'My dog is big.', 'veľký = big'),
-        ('Mačka spí na posteli.', 'The cat is sleeping on the bed.', 'spí = is sleeping'),
-        ('Kôň beží rýchlo.', 'The horse runs fast.', 'beží = runs'),
-        ('Vidím vtáka na strome.', 'I see a bird in the tree.', 'na strome = in the tree'),
-        ('Slon je veľké zviera.', 'An elephant is a big animal.', 'zviera = animal'),
-        ('Líška je chytrá.', 'The fox is clever.', 'chytrá = clever'),
-        ('Králik má dlhé uši.', 'The rabbit has long ears.', 'dlhé uši = long ears'),
-    ]
-
-    for i, (slovak, english, hint) in enumerate(animal_sentences):
-        Translation.objects.create(
-            exercise=translation_exercise,
-            slovak_sentence=slovak,
-            english_sentence=english,
-            hint=hint,
-        )
-
     # Animal - Sentence Completion
     completion_exercise = Exercise.objects.create(
         title='Zvieratá - Doplň slovo',
@@ -869,12 +768,33 @@ def seed_exercises(apps, schema_editor):
     )
 
     animal_completions = [
-        ('A ___ says "woof". (pes)', 'dog', 'pes'),
-        ('A ___ says "meow". (mačka)', 'cat', 'mačka'),
-        ('A ___ gives us milk. (krava)', 'cow', 'krava'),
-        ('A ___ has a long trunk. (slon)', 'elephant', 'slon'),
-        ('A ___ is the king of the jungle. (lev)', 'lion', 'lev'),
-    ]
+        ('My ___ barks loudly. (pes)', '', 'dog', 'pes'),
+        ('I walk my __ every morning. (pes)', '', 'dog', 'pes'),
+        ('The ___ sleeps on the sofa. (mačka)', '', 'cat', 'mačka'),
+        ('I feed my ___ milk. (mačka)', '', 'cat', 'mačka'),
+        ('The ___ runs fast in the field. (kôň)', '', 'horse', 'kôň'),
+        ('I ride a ___ on weekends. (kôň)', '', 'horse', 'kôň'),
+        ('We milk the ___ every day. (krava)', '', 'cow', 'krava'),
+        ('The ___ rolls in the mud. (prasa)', '', 'pig', 'prasa'),
+        ('The ___ gives us wool. (ovca)', '', 'sheep', 'ovca'),
+        ('I see a ___ on the hill. (koza)', '', 'goat', 'koza'),
+        ('The ___ lays eggs every morning. (sliepka)', '', 'chicken', 'sliepka'),
+        ('The ___ crows at dawn. (kohút)', '', 'rooster', 'kohút'),
+        ('The ___ swims in the pond. (kačica)', '', 'duck', 'kačica'),
+        ('The ___ honks loudly. (hus)', '', 'goose', 'hus'),
+        ('The ___ hops fast. (králik)', '', 'rabbit', 'králik'),
+        ('The ___ likes cheese. (myš)', '', 'mouse', 'myš'),
+        ('The ___ sings in the morning. (vták)', '', 'bird', 'vták'),
+        ('I see a ___ in the aquarium. (ryba)', '', 'fish', 'ryba'),
+        ('The ___ slithers on the ground. (had)', '', 'snake', 'had'),
+        ('The ___ jumps into the water. (žaba)', '', 'frog', 'žaba'),
+        ('The ___ lives in the forest. (medveď)', '', 'bear', 'medveď'),
+        ('The ___ howls at night. (vlk)', '', 'wolf', 'vlk'),
+        ('The ___ is clever and fast. (líška)', '', 'fox', 'líška'),
+        ('The ___ runs in the forest. (jeleň)', '', 'deer', 'jeleň'),
+        ('The ___ has orange stripes. (tiger)', '', 'tiger', 'tiger'),
+        ('The ___ climbs trees. (opica)', '', 'monkey', 'opica'),
+]
 
     for i, (sentence, missing, hint) in enumerate(animal_completions):
         Sentence_Completion.objects.create(
@@ -949,34 +869,6 @@ def seed_exercises(apps, schema_editor):
                 order=j,
             )
 
-    # Alphabet - Translation with tricky English sounds
-    translation_exercise = Exercise.objects.create(
-        title='Anglická abeceda - Slová',
-        lesson_type='alphabet',
-        exercise_type='translation',
-        question_text='Preložte slová s ťažkými anglickými hláskami.',
-        correct_answer='',
-        explanation='Precvičte si slová s ťažkými anglickými hláskami.',
-        order=3,
-    )
-
-    alphabet_sentences = [
-        ('Ďakujem.', 'Thank you.', 'th = jazyk medzi zuby'),
-        ('Myslím, že áno.', 'I think so.', 'th = jazyk medzi zuby'),
-        ('Toto je moja loď.', 'This is my ship.', 'sh = š'),
-        ('Telefonujem mame.', 'I am phoning my mom.', 'ph = f'),
-        ('Dosť!', 'Enough!', 'gh = f na konci'),
-        ('Prečo?', 'Why?', 'wh = hw alebo w'),
-    ]
-
-    for i, (slovak, english, hint) in enumerate(alphabet_sentences):
-        Translation.objects.create(
-            exercise=translation_exercise,
-            slovak_sentence=slovak,
-            english_sentence=english,
-            hint=hint,
-        )
-
     # Alphabet - Sentence Completion
     completion_exercise = Exercise.objects.create(
         title='Anglická abeceda - Doplň slovo',
@@ -989,18 +881,33 @@ def seed_exercises(apps, schema_editor):
     )
 
     alphabet_completions = [
-        ('___ you very much! (Ďakujem)', 'Thank', 'th = jazyk medzi zuby'),
-        ('I ___ so. (Myslím)', 'think', 'th = jazyk medzi zuby'),
-        ('The ___ is sailing. (loď)', 'ship', 'sh = š'),
-        ('My ___ number is 123. (telefónne)', 'phone', 'ph = f'),
-        ('I have ___ money. (dosť)', 'enough', 'gh = f'),
-    ]
+        ('___ you very much! (Ďakujem)', '', 'Thank', 'th = jazyk medzi zuby'),
+        ('I ___ so. (Myslím)', '', 'think', 'th = jazyk medzi zuby'),
+        ('The ___ is sailing. (loď)', '', 'ship', 'sh = š'),
+        ('My ___ number is 123. (telefónne)', '', 'phone', 'ph = f'),
+        ('I have ___ money. (dosť)', '', 'enough', 'gh = f'),
+        ('Please ___ the door. (zatvorte)', '', 'shut', 'sh = š'),
+        ('I ___ reading books. (milujem)', '', 'love', 'v = zvuk v angličtine'),
+        ('The baby is ___ loudly. (pláče)', '', 'crying', 'y = aj/e'),
+        ('He ___ the guitar well. (hrá)', '', 'plays', 'ay = ej'),
+        ('I ___ my keys. (stratil)', '', 'lost', 'o = krátke o'),
+        ('They ___ to school every day. (chodia)', '', 'go', 'o = krátke o'),
+        ('I need to ___ a letter. (napísať)', '', 'write', 'wr = tiché w'),
+        ('She ___ her homework quickly. (robí)', '', 'does', 'o = krátke o'),
+        ('The ___ is very bright. (slnko)', '', 'sun', 'u = krátke u'),
+        ('I ___ a lot of water. (pijem)', '', 'drink', 'i = krátke i'),
+        ('He ___ a beautiful song. (spieva)', '', 'sings', 'ng = nosový zvuk'),
+        ('We ___ pizza for lunch. (jem)', '', 'eat', 'ea = i dlhé'),
+        ('The cat ___ on the mat. (sedí)', '', 'sits', 'i = krátke i'),
+        ('___ you like ice cream? (Máš rád)', '', 'Do', 'D = dlhé d'),
+        ('I ___ very happy today. (som)', '', 'am', 'a = krátke a'),
+]
 
     for i, (sentence, missing, hint) in enumerate(alphabet_completions):
         Sentence_Completion.objects.create(
             exercise=completion_exercise,
-            sentence=sentence,          # ✅ CORRECT
-            correct_answer=missing,     # ✅ CORRECT
+            sentence=sentence,          
+            correct_answer=missing,     
             hint=hint,
         )
 

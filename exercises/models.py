@@ -2,7 +2,6 @@ from django.db import models
 from lessons.models import NumberLesson, ColourLesson, FamilyLesson, FoodLesson, SchoolLesson, AnimalLesson
 
 EXERCISE_TYPES = [
-    ('translation', 'Translation'),
     ('matching', 'Matching'),
     ('multiple_choice', 'Multiple Choice'),
     ('sentence_completion', 'Sentence Completion'),
@@ -75,26 +74,15 @@ class Word_Scramble(models.Model):
         return f"{self.scrambled_word} → {self.original_word}"
 
 
-class Translation(models.Model):
-    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='translations')
-    slovak_sentence = models.TextField()
-    english_sentence = models.TextField()
-    hint = models.TextField(blank=True)
-
-    def __str__(self):
-        return f"{self.slovak_sentence}"
-
-
 
 class Sentence_Completion(models.Model):
-    exercise = models.ForeignKey('Exercise', on_delete=models.CASCADE, related_name='sentence_completions')
-    english_sentence = models.TextField()  
-    missing_word = models.TextField()     
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name='sentence_completions')
+    sentence = models.TextField()    
     hint = models.TextField(blank=True, null=True)
     order = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.exercise.title} - {self.english_sentence[:50]}"
+        return f"{self.exercise.title} - {self.sentence[:50]}"
 
 
 class UserProgress(models.Model):

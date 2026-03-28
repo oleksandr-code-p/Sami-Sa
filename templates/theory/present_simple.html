@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Prítomný čas jednoduchý - Sami-Sa{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<!-- Header -->
+<header class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg rounded-2xl">
+    <div class="container mx-auto px-4 py-8">
+        <a href="{% url 'theory_dashboard' %}" class="text-purple-200 hover:text-white transition inline-flex items-center gap-2 mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Späť na lekcie
+        </a>
+        <div class="flex items-center gap-4">
+            <span class="text-5xl">📄</span>
+            <div>
+                <h1 class="text-3xl font-bold">Prítomný čas jednoduchý (Present Simple)</h1>
+                <p class="mt-1 text-purple-100">Používame ho na činnosti, ktoré sa dejú pravidelne alebo sú vždy pravdivé.</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container mx-auto px-4 py-8">
+
+    <!-- ZAKLAD -->
+    <div class="bg-purple-50 border border-purple-200 rounded-xl p-4 mb-6">
+        <h2 class="font-bold text-lg text-purple-900 mb-2">Základ</h2>
+
+        <p class="text-purple-800 mb-2">
+            Present Simple používame na <strong>zvyky, rutiny a fakty</strong>.
+        </p>
+
+        <p class="text-purple-800 mb-3">
+            Často sa používa so slovami: <strong>always, usually, often, sometimes, never</strong>.
+        </p>
+
+        <p class="font-semibold text-purple-900">
+            základný tvar slovesa
+        </p>
+    </div>
+
+    <!-- TVORBA -->
+    <div class="bg-white border rounded-xl p-4 mb-6 shadow-sm">
+        <h2 class="font-bold text-lg mb-2">Tvorba</h2>
+
+        <p class="text-gray-700 mb-2">
+            Pri väčšine osôb používame základný tvar slovesa:
+        </p>
+
+        <ul class="list-disc list-inside text-gray-700 mb-3">
+            <li>I play</li>
+            <li>You work</li>
+            <li>They eat</li>
+        </ul>
+
+        <p class="text-gray-700 mb-2">
+            Pri <strong>he / she / it</strong> pridávame <strong>-s</strong>:
+        </p>
+
+        <ul class="list-disc list-inside text-gray-700">
+            <li>He plays</li>
+            <li>She works</li>
+            <li>It eats</li>
+        </ul>
+    </div>
+
+    <!-- ZAPOR -->
+    <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+        <h2 class="font-bold text-lg text-red-900 mb-2">Záporné vety</h2>
+
+        <p class="text-red-800 mb-2">
+            Používame <strong>do not (don't)</strong> alebo <strong>does not (doesn't)</strong>.
+        </p>
+
+        <ul class="list-disc list-inside text-red-700 mb-3">
+            <li>I do not play. → I don't play.</li>
+            <li>They do not work.</li>
+            <li>He does not play. → He doesn't play.</li>
+        </ul>
+
+        <p class="text-red-700">
+            Po "does not" už sloveso nemá -s!
+        </p>
+    </div>
+
+    <!-- OTAZKY -->
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+        <h2 class="font-bold text-lg text-blue-900 mb-2">Otázky</h2>
+
+        <p class="text-blue-800 mb-2">
+            Otázky tvoríme pomocou <strong>do / does</strong>.
+        </p>
+
+        <p class="font-semibold text-blue-900 mb-2">
+            Do / Does + osoba + sloveso?
+        </p>
+
+        <ul class="list-disc list-inside text-blue-700">
+            <li>Do you play?</li>
+            <li>Does she work?</li>
+        </ul>
+    </div>
+
+    <!-- POUZITIE -->
+    <div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-6">
+        <h2 class="font-bold text-lg text-green-900 mb-2">Použitie</h2>
+
+        <ul class="list-disc list-inside text-green-700">
+            <li>zvyky: I go to school every day.</li>
+            <li>fakty: The sun rises in the east.</li>
+            <li>harmonogramy: The train leaves at 6.</li>
+        </ul>
+    </div>
+
+    <!-- TIP -->
+    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+        <h2 class="font-bold text-lg text-yellow-900 mb-2">Tip</h2>
+
+        <p class="text-yellow-800">
+            Najčastejšia chyba: zabudnuté -s pri he/she/it (❌ "He play").
+            Správne: ✔ "He plays".
+        </p>
+    </div>
+
+</div>
+{% endblock %}

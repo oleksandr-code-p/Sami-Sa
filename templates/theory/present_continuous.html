@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Prítomný priebehový čas - Sami-Sa{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<header class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg rounded-2xl">
+    <div class="container mx-auto px-4 py-8">
+        <a href="{% url 'theory_dashboard' %}" class="text-purple-200 hover:text-white transition inline-flex items-center gap-2 mb-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Späť na lekcie
+        </a>
+        <div class="flex items-center gap-4">
+            <div>
+                <h1 class="text-3xl font-bold">Prítomný priebehový čas (Present Continuous)</h1>
+                <p class="mt-1 text-purple-100">Používame ho na činnosti, ktoré sa dejú práve teraz alebo sú dočasné.</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container mx-auto px-4 py-8">
+
+    <!-- ZAKLAD -->
+    <div class="bg-purple-50 border border-purple-200 rounded-xl p-4 mb-6">
+        <h2 class="font-bold text-lg text-purple-900 mb-2">Základ</h2>
+
+        <p class="text-purple-800 mb-2">
+            Tento čas opisuje dej, ktorý prebieha práve teraz (v momente hovorenia).
+        </p>
+
+        <p class="text-purple-800 mb-3">
+            Často ho používame so slovami ako: <strong>now, right now, at the moment</strong>.
+        </p>
+
+        <p class="font-semibold text-purple-900">
+            am / is / are + sloveso + ing
+        </p>
+    </div>
+
+    <!-- TVORBA -->
+    <div class="bg-white border rounded-xl p-4 mb-6 shadow-sm">
+        <h2 class="font-bold text-lg mb-2">Tvorba</h2>
+
+        <ul class="list-disc list-inside text-gray-700 mb-3">
+            <li>I am working</li>
+            <li>You are playing</li>
+            <li>He is reading</li>
+        </ul>
+
+        <p class="text-gray-600">
+            Sloveso vždy končí na <strong>-ing</strong>.
+        </p>
+    </div>
+
+    <!-- ZAPOR -->
+    <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+        <h2 class="font-bold text-lg text-red-900 mb-2">Záporné vety</h2>
+
+        <p class="text-red-800 mb-2">
+            Zápor vytvoríme pridaním <strong>not</strong>.
+        </p>
+
+        <ul class="list-disc list-inside text-red-700 mb-3">
+            <li>I am not working.</li>
+            <li>He is not sleeping. → He isn't sleeping.</li>
+            <li>They are not playing. → They aren't playing.</li>
+        </ul>
+    </div>
+
+    <!-- OTAZKY -->
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+        <h2 class="font-bold text-lg text-blue-900 mb-2">Otázky</h2>
+
+        <p class="text-blue-800 mb-2">
+            Otázky tvoríme zmenou poradia slovesa "to be".
+        </p>
+
+        <p class="font-semibold text-blue-900 mb-2">
+            Am / Is / Are + osoba + sloveso-ing?
+        </p>
+
+        <ul class="list-disc list-inside text-blue-700">
+            <li>Are you working?</li>
+            <li>Is she reading?</li>
+        </ul>
+    </div>
+
+    <!-- POUZITIE -->
+    <div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-6">
+        <h2 class="font-bold text-lg text-green-900 mb-2">Použitie</h2>
+
+        <ul class="list-disc list-inside text-green-700">
+            <li>činnosti teraz: I am eating now.</li>
+            <li>dočasné situácie: I am living in London (len dočasne)</li>
+        </ul>
+    </div>
+
+    <!-- TIP -->
+    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+        <h2 class="font-bold text-lg text-yellow-900 mb-2">Tip</h2>
+
+        <p class="text-yellow-800">
+            Nepoužívame tento čas so stavovými slovesami (napr. like, know, want).
+            Nehovoríme ❌ "I am knowing", ale ✔ "I know".
+        </p>
+    </div>
+
+</div>
+{% endblock %}
