@@ -3,11 +3,10 @@ from django.views.decorators.http import require_POST
 from .models import Exercise, Exercise_Choice, Matching_Pair, Word_Scramble, Sentence_Completion, UserProgress, LESSON_TYPES, EXERCISE_TYPES
 from lessons.models import NumberLesson, ColourLesson, FamilyLesson, FoodLesson, SchoolLesson, AnimalLesson
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+import json
 
 
-# --------------------------------------------------
-# DASHBOARD
-# --------------------------------------------------
 def Exercise_Dashboard(request):
 
     context = {
@@ -20,28 +19,10 @@ def Exercise_Dashboard(request):
     return render(request, 'exercises/exercise_dashboard.html', context)
 
 
-# --------------------------------------------------
-# CHECK ANSWER (placeholder)
-# --------------------------------------------------
-@require_POST
-def Check_Answer(request):
-    answer = request.POST.get("answer")
-    correct_answer = request.POST.get("correct_answer")
-    is_correct = answer.lower() == correct_answer.lower()
-
-    context = {
-        'answer': answer,
-        'correct_answer': correct_answer,
-        'is_correct': is_correct,
-    }
-
-    return render(request, 'exercises/check_answer.html', context)
-
 
 # --------------------------------------------------
 # LIST OF MULTIPLE CHOICE EXERCISES
 # --------------------------------------------------
-# ...existing code...
 
 def Exercise_Choice_list(request):
     queryset = Exercise.objects.filter(exercise_type='multiple_choice').prefetch_related('choices')
@@ -59,18 +40,11 @@ def Exercise_Choice_list(request):
 
     return render(request, 'exercises/exercise_choice_list.html', context)
 
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-import json
-
-# ...existing code...
 
 @login_required
 @require_POST
 def submit_answer(request):
-    """Handle answer submission for all exercise types"""
     try:
-        # Handle both POST form data and JSON data
         if request.content_type == 'application/json':
             data = json.loads(request.body)
             exercise_id = data.get("exercise_id")
@@ -115,9 +89,7 @@ def filter_exercises(request, queryset):
 
     return queryset
     
-# --------------------------------------------------
-# LIST OF MATCHING PAIRS
-# --------------------------------------------------
+
 def Matching_Pair_list(request):
     queryset = Matching_Pair.objects.select_related("exercise")
     pairs = filter_exercises(request, queryset)
@@ -133,9 +105,6 @@ def Matching_Pair_list(request):
     return render(request, 'exercises/matching_pair_list.html', context)
 
 
-# --------------------------------------------------
-# LIST OF WORD SCRAMBLES
-# --------------------------------------------------
 def Word_Scramble_list(request):
     queryset = Word_Scramble.objects.select_related("exercise")
     word = filter_exercises(request, queryset)
@@ -149,13 +118,6 @@ def Word_Scramble_list(request):
 
     return render(request, 'exercises/word_scramble_list.html', context)
 
-
-# --------------------------------------------------
-# LIST OF SENTENCE COMPLETION
-# --------------------------------------------------
-# ...existing code...
-
-# ...existing code...
 
 def Sentence_Completion_list(request):
     completions = Sentence_Completion.objects.select_related("exercise")
@@ -184,22 +146,6 @@ def filter_exercises(request, queryset):
             queryset = queryset.filter(lesson_type=lesson_type)
     
     return queryset
-
-
-# --------------------------------------------------
-# LIST OF TRANSLATION
-# --------------------------------------------------
-def Translation_list(request):
-    queryset = Translation.objects.select_related("exercise").order_by("id")
-    translations = filter_exercises(request, queryset)
-
-    context = {
-        "translations": translations,
-        "lesson_types": LESSON_TYPES,
-        "page_title": "Cvičenia - preklad",
-        "overview": "Precvič si zručnosti prekladom viet.",
-    }
-    return render(request, "exercises/translation_list.html", context)
 
 
 @login_required

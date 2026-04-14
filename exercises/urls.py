@@ -12,11 +12,7 @@ urlpatterns = [
 
     path("scrambles/", views.Word_Scramble_list, name="word_scramble_list"),
 
-    path("translations/", views.Translation_list, name="translation_list"),
-
     path("completion/", views.Sentence_Completion_list, name="sentence_completion_list"),
-
-    path("check_answer", views.Check_Answer, name="check_answer"),
 
     path("user_progress", views.user_progress, name="user_progress"),
 
