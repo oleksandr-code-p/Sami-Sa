@@ -1,9 +1,3 @@
-"""
-Data migration to seed English language exercises for Slovak speakers.
-Place this file in: exercises/migrations/
-Run with: python manage.py migrate exercises
-"""
-
 import random
 from django.db import migrations
 
@@ -25,7 +19,6 @@ def seed_exercises(apps, schema_editor):
     Exercise_Choice = apps.get_model('exercises', 'Exercise_Choice')
     Matching_Pair = apps.get_model('exercises', 'Matching_Pair')
     Word_Scramble = apps.get_model('exercises', 'Word_Scramble')
-    Translation = apps.get_model('exercises', 'Translation')
     Sentence_Completion = apps.get_model('exercises', 'Sentence_Completion')
 
     # ==========================================================
@@ -50,7 +43,7 @@ def seed_exercises(apps, schema_editor):
     ]
 
     # Number - Multiple Choice
-    for i, (english, slovak, num) in enumerate(numbers_data[:10]):
+    for i, (english, slovak, num) in enumerate(numbers_data):
         mc_exercise = Exercise.objects.create(
             title=f'Čo znamená "{slovak}"?',
             lesson_type='number',
@@ -85,7 +78,7 @@ def seed_exercises(apps, schema_editor):
         order=1,
     )
 
-    for i, (english, slovak, _) in enumerate(numbers_data[:10]):
+    for i, (english, slovak, _) in enumerate(numbers_data):
         Matching_Pair.objects.create(
             exercise=matching_exercise,
             left_text=slovak,
@@ -93,7 +86,7 @@ def seed_exercises(apps, schema_editor):
             order=i,
         )
 
-    # Number - Word Scramble (scramble English words)
+    # Number - Word Scramble
     scramble_exercise = Exercise.objects.create(
         title='Čísla - Rozhádzané písmená',
         lesson_type='number',
@@ -104,7 +97,7 @@ def seed_exercises(apps, schema_editor):
         order=2,
     )
 
-    for i, (english, slovak, num) in enumerate(numbers_data[:10]):
+    for i, (english, slovak, num) in enumerate(numbers_data):
         Word_Scramble.objects.create(
             exercise=scramble_exercise,
             original_word=english,
@@ -112,6 +105,7 @@ def seed_exercises(apps, schema_editor):
             hint=f'Slovensky: {slovak} ({num})',
         )
 
+    # Number - Sentence Completion
     completion_exercise = Exercise.objects.create(
         title='Čísla - Doplň slovo',
         lesson_type='number',
@@ -147,14 +141,15 @@ def seed_exercises(apps, schema_editor):
         ('They own ___ bicycles. (dvesto päťdesiat)', 'two hundred fifty', 'dvesto päťdesiat'),
         ('I saw ___ stars in the sky. (tristo)', 'three hundred', 'tristo'),
         ('She found ___ coins in the drawer. (šesťsto)', 'six hundred', 'šesťsto'),
-]
+    ]
 
-    for i, (sentence, missing, hint) in enumerate(number_completions):
+    for i, (sentence, correct_answer, hint) in enumerate(number_completions):
         Sentence_Completion.objects.create(
             exercise=completion_exercise,
-            english_sentence=sentence,
-            missing_word=missing,
+            sentence=sentence,
+            correct_answer=correct_answer,
             hint=hint,
+            order=i,
         )
 
     # ==========================================================
@@ -177,7 +172,7 @@ def seed_exercises(apps, schema_editor):
     ]
 
     # Colour - Multiple Choice
-    for i, (english, slovak) in enumerate(colours_data[:10]):
+    for i, (english, slovak) in enumerate(colours_data):
         mc_exercise = Exercise.objects.create(
             title=f'Ako sa povie "{slovak}"?',
             lesson_type='colour',
@@ -212,7 +207,7 @@ def seed_exercises(apps, schema_editor):
         order=1,
     )
 
-    for i, (english, slovak) in enumerate(colours_data[:10]):
+    for i, (english, slovak) in enumerate(colours_data):
         Matching_Pair.objects.create(
             exercise=matching_exercise,
             left_text=slovak,
@@ -231,7 +226,7 @@ def seed_exercises(apps, schema_editor):
         order=2,
     )
 
-    for i, (english, slovak) in enumerate(colours_data[:10]):
+    for i, (english, slovak) in enumerate(colours_data):
         Word_Scramble.objects.create(
             exercise=scramble_exercise,
             original_word=english,
@@ -266,12 +261,13 @@ def seed_exercises(apps, schema_editor):
         ('The balloon is ___. (fialová)', 'purple', 'fialová'),
     ]
 
-    for i, (sentence, missing, hint) in enumerate(colour_completions):
+    for i, (sentence, correct_answer, hint) in enumerate(colour_completions):
         Sentence_Completion.objects.create(
             exercise=completion_exercise,
-            english_sentence=sentence,
-            missing_word=missing,
+            sentence=sentence,
+            correct_answer=correct_answer,
             hint=hint,
+            order=i,
         )
 
     # ==========================================================
@@ -331,7 +327,7 @@ def seed_exercises(apps, schema_editor):
         order=1,
     )
 
-    for i, (english, slovak, _) in enumerate(family_data[:10]):
+    for i, (english, slovak, _) in enumerate(family_data):
         Matching_Pair.objects.create(
             exercise=matching_exercise,
             left_text=slovak,
@@ -350,7 +346,7 @@ def seed_exercises(apps, schema_editor):
         order=2,
     )
 
-    for i, (english, slovak, _) in enumerate(family_data[:10]):
+    for i, (english, slovak, _) in enumerate(family_data):
         Word_Scramble.objects.create(
             exercise=scramble_exercise,
             original_word=english,
@@ -392,14 +388,15 @@ def seed_exercises(apps, schema_editor):
         ('His ___ is very friendly. (svokor)', 'father-in-law', 'svokor'),
         ('They like their ___. (švagor)', 'brother-in-law', 'švagor'),
         ('We talked to our ___. (švagriná)', 'sister-in-law', 'švagriná'),
-]
+    ]
 
-    for i, (sentence, missing, hint) in enumerate(family_completions):
+    for i, (sentence, correct_answer, hint) in enumerate(family_completions):
         Sentence_Completion.objects.create(
             exercise=completion_exercise,
-            english_sentence=sentence,
-            missing_word=missing,
+            sentence=sentence,
+            correct_answer=correct_answer,
             hint=hint,
+            order=i,
         )
 
     # ==========================================================
@@ -524,14 +521,15 @@ def seed_exercises(apps, schema_editor):
         ('I drink ___ when I am thirsty. (voda)', 'water', 'voda'),
         ('I eat a ___ or a pear. (hruška)', 'pear', 'hruška'),
         ('I peel an ___ before eating. (pomaranč)', 'orange', 'pomaranč'),
-]
+    ]
 
-    for i, (sentence, missing, hint) in enumerate(food_completions):
+    for i, (sentence, correct_answer, hint) in enumerate(food_completions):
         Sentence_Completion.objects.create(
             exercise=completion_exercise,
-            english_sentence=sentence,
-            missing_word=missing,
+            sentence=sentence,
+            correct_answer=correct_answer,
             hint=hint,
+            order=i,
         )
 
     # ==========================================================
@@ -613,7 +611,7 @@ def seed_exercises(apps, schema_editor):
         order=2,
     )
 
-    for i, (english, slovak) in enumerate(school_data[:10]):
+    for i, (english, slovak) in enumerate(school_data):
         if ' ' not in english:
             Word_Scramble.objects.create(
                 exercise=scramble_exercise,
@@ -654,12 +652,14 @@ def seed_exercises(apps, schema_editor):
         ('I write my answers in my ___. (zošit)', 'notebook', 'zošit'),
         ('I put my pen and pencil in my ___. (taška)', 'bag', 'taška'),
     ]
-    for i, (sentence, missing, hint) in enumerate(school_completions):
+
+    for i, (sentence, correct_answer, hint) in enumerate(school_completions):
         Sentence_Completion.objects.create(
             exercise=completion_exercise,
-            english_sentence=sentence,
-            missing_word=missing,
+            sentence=sentence,
+            correct_answer=correct_answer,
             hint=hint,
+            order=i,
         )
 
     # ==========================================================
@@ -769,7 +769,7 @@ def seed_exercises(apps, schema_editor):
 
     animal_completions = [
         ('My ___ barks loudly. (pes)', 'dog', 'pes'),
-        ('I walk my __ every morning. (pes)', 'dog', 'pes'),
+        ('I walk my ___ every morning. (pes)', 'dog', 'pes'),
         ('The ___ sleeps on the sofa. (mačka)', 'cat', 'mačka'),
         ('I feed my ___ milk. (mačka)', 'cat', 'mačka'),
         ('The ___ runs fast in the field. (kôň)', 'horse', 'kôň'),
@@ -794,20 +794,20 @@ def seed_exercises(apps, schema_editor):
         ('The ___ runs in the forest. (jeleň)', 'deer', 'jeleň'),
         ('The ___ has orange stripes. (tiger)', 'tiger', 'tiger'),
         ('The ___ climbs trees. (opica)', 'monkey', 'opica'),
-]
+    ]
 
-    for i, (sentence, missing, hint) in enumerate(animal_completions):
+    for i, (sentence, correct_answer, hint) in enumerate(animal_completions):
         Sentence_Completion.objects.create(
             exercise=completion_exercise,
-            english_sentence=sentence,
-            missing_word=missing,
+            sentence=sentence,
+            correct_answer=correct_answer,
             hint=hint,
+            order=i,
         )
 
     # ==========================================================
-    # ALPHABET EXERCISES (Abeceda) - English alphabet for Slovaks
+    # ALPHABET EXERCISES (Abeceda)
     # ==========================================================
-    # Focus on letters/sounds that are different or tricky for Slovak speakers
     alphabet_data = [
         ('A a', 'ej', 'ako v "day"'),
         ('E e', 'í', 'ako v "see"'),
@@ -836,7 +836,7 @@ def seed_exercises(apps, schema_editor):
         order=1,
     )
 
-    for i, (letter, sound, description) in enumerate(alphabet_data[:10]):
+    for i, (letter, sound, description) in enumerate(alphabet_data):
         Matching_Pair.objects.create(
             exercise=matching_exercise,
             left_text=letter,
@@ -901,14 +901,15 @@ def seed_exercises(apps, schema_editor):
         ('The cat ___ on the mat. (sedí)', 'sits', 'i = krátke i'),
         ('___ you like ice cream? (Máš rád)', 'Do', 'D = dlhé d'),
         ('I ___ very happy today. (som)', 'am', 'a = krátke a'),
-]
+    ]
 
-    for i, (sentence, missing, hint) in enumerate(alphabet_completions):
+    for i, (sentence, correct_answer, hint) in enumerate(alphabet_completions):
         Sentence_Completion.objects.create(
             exercise=completion_exercise,
-            english_sentence=sentence,
-            missing_word=missing,
+            sentence=sentence,
+            correct_answer=correct_answer,
             hint=hint,
+            order=i,
         )
 
 
@@ -921,7 +922,7 @@ def reverse_seed(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('exercises', '0001_initial'),  # Update this to your latest migration
+        ('exercises', '0001_initial'),
     ]
 
     operations = [

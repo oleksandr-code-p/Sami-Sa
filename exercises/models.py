@@ -1,7 +1,6 @@
 from django.db import models
 from lessons.models import NumberLesson, ColourLesson, FamilyLesson, FoodLesson, SchoolLesson, AnimalLesson
 
-from .sentence_completion_seed_data import lookup_seed_sentence
 
 EXERCISE_TYPES = [
     ('matching', 'Matching'),
@@ -96,6 +95,7 @@ class Sentence_Completion(models.Model):
     def sentence_text(self):
         if self.display_sentence:
             return self.display_sentence
+        return self.sentence  
 
         return lookup_seed_sentence(
             self.exercise.lesson_type,
